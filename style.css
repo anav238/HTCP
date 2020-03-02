@@ -1,0 +1,61 @@
+@font-face {
+    font-family: MarioFont;
+    src: url('fonts/SuperMario256.ttf');
+}
+
+@font-face {
+    font-family: Pixeled;
+    src: url('fonts/Pixeled.ttf');
+}
+
+body.sign-in {
+    /*background: linear-gradient(rgb(108, 193, 226), rgb(4, 156, 216));*/
+    background: url('images/bg-login.jpg');
+    background-size: 90%;
+}
+
+.sign-in button {
+    background: linear-gradient(#e74938,#E52521);
+    border: 1px solid rgb(145, 145, 145);
+    border-radius: 7px;
+    color: white;
+    display: block;
+    font-family: Pixeled;
+    font-size: .6em;
+    margin: 10px auto;
+    padding: 12px 15px;
+    transition: all 1s linear;
+    width: 250px;
+}
+
+.sign-in button:hover {
+    background-color: rgb(201, 15, 12);
+}
+
+.sign-in div {
+    text-align: center;
+    margin: auto;
+}
+
+.sign-in h1 {
+    color: white;
+    font-family: MarioFont;
+    margin-top: 0;
+}
+
+.sign-in h1 span {
+    color: #FBD000;
+    
+}
+
+.sign-in main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 97.5vh;
+}
+
+.sign-in button i {
+    font-size: 1.5em;
+    margin-right: 7px;
+}
