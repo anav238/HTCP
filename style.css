@@ -1,3 +1,19 @@
+@media only screen and (max-width: 640px) and (orientation: landscape) {
+    body.sign-in button {
+        font-size: .6em;
+        margin: 3px auto;
+        padding: 5px;
+        width: 250px;
+    }
+    .sign-in button i {
+        font-size: 1em;
+        margin-right: 3px;
+    }   
+    .sign-in h1 {
+        margin-bottom: 10px;
+    }
+  }
+
 @font-face {
     font-family: MarioFont;
     src: url('fonts/SuperMario256.ttf');
@@ -11,7 +27,12 @@
 body.sign-in {
     /*background: linear-gradient(rgb(108, 193, 226), rgb(4, 156, 216));*/
     background: url('images/bg-login.jpg');
-    background-size: 90%;
+    background-size: cover;
+    background-position: right bottom;
+}
+
+nav li {
+    display: inline-block;
 }
 
 .sign-in button {
