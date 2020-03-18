@@ -1,3 +1,10 @@
+:root {
+    --marioBlue:#06c;
+    --marioRed: #E52521;
+    --marioYellow: #FBD000;
+    --marioGreen: #3BB143;
+}
+
 @media only screen and (max-width: 640px) and (orientation: landscape) {
     body.sign-in button {
         font-size: .6em;
@@ -24,6 +31,11 @@
     src: url('fonts/Pixeled.ttf');
 }
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
 body.sign-in {
     /*background: linear-gradient(rgb(108, 193, 226), rgb(4, 156, 216));*/
     background: url('images/bg-login.jpg');
@@ -31,12 +43,76 @@ body.sign-in {
     background-position: right bottom;
 }
 
-nav li {
+nav {
+    background-color: var(--marioGreen);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    min-height: 80px;
+    overflow: auto;
+    padding: 0 10px;
+}
+
+nav ul {
     display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0 10px;
+    padding: 5px 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+nav h1 {
+    font-family: MarioFont;
+    margin: 0 30px;
+}
+
+nav h1 span {
+    color: var(--marioYellow);
+}
+
+nav .menu {
+    display: flex;
+    align-content: center;
+}
+
+nav .profile {
+    display: flex;
+    align-items: center;
+    margin: 0 30px;
+    position: relative;
+}
+
+nav .profile ul {
+    display: none;
+    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+nav .profile img {
+    max-width: 30px;
+    margin-right: 5px;
+}
+
+nav .profile li {
+    display: block;
 }
 
 .sign-in button {
-    background: linear-gradient(#e74938,#E52521);
+    background: linear-gradient(#e74938,var(--marioRed));
     border: 1px solid rgb(145, 145, 145);
     border-radius: 7px;
     color: white;
@@ -65,8 +141,7 @@ nav li {
 }
 
 .sign-in h1 span {
-    color: #FBD000;
-    
+    color: var(--marioYellow);
 }
 
 .sign-in main {
