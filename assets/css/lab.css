@@ -130,7 +130,7 @@ header ul.links li {
     z-index: 1;
 }
 .divider::after {
-    background-image: url(../img/divider-brick-yellow.png);
+    background-image: url("../img/divider-brick-yellow.png");
     background-position: 0 50%;
     background-repeat: repeat-x;
     background-size: 30px 32px;
@@ -154,9 +154,54 @@ main {
     display: flex;
 }
 nav {
-    height: 100%;
-    padding: 15px 25px;
+    height: calc(100% - 50px);
+    padding: 25px;
+    white-space: nowrap;
+    font-weight: 600;
+    text-align: center;
+    position: relative;
+    background-position: 50% 0%;
+    background-repeat: repeat;
+    background-size: 18px auto;
+}
+nav h1 {
+    font-family: "Chakra Patch", sans-serif;
+    text-transform: uppercase;
+    font-size: 1.25em;
+    margin-top: 0;
+    font-weight: 700;
+    color: var(--adv-green);
+}
+nav.nav-green {
+    background-image: url("../img/bg-grid-green.png");
+}
+nav.nav-green h1 {
+    color: var(--adv-green);
+}
+nav.nav-red {
+    background-image: url("../img/bg-grid-red.png");
+}
+nav.nav-red h1 {
+    color: var(--adv-red);
+}
+nav.nav-blue {
+    background-image: url("../img/bg-grid-blue.png");
+}
+nav.nav-blue h1 {
+    color: var(--adv-blue);
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+nav ul li + li {
+    margin-top: 20px;
+}
+nav ul li .button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
 }
 main section {
-    padding: 15px 25px;
+    padding: 25px;
 }
