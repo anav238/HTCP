@@ -1,157 +1,232 @@
 :root {
-    --marioBlue:#06c;
-    --marioRed: #E52521;
-    --marioYellow: #FBD000;
-    --marioGreen: #3BB143;
+    --adv-green: #008529;
+    --adv-red: #d11a0e;
+    --adv-yellow: #facd00;
+    --adv-blue: #2f70b7;
 }
-
-@media only screen and (max-width: 640px) and (orientation: landscape) {
-    body.sign-in button {
-        font-size: .6em;
-        margin: 3px auto;
-        padding: 5px;
-        width: 250px;
-    }
-    .sign-in button i {
-        font-size: 1em;
-        margin-right: 3px;
-    }   
-    .sign-in h1 {
-        margin-bottom: 10px;
-    }
-  }
-
 @font-face {
-    font-family: MarioFont;
-    src: url('fonts/SuperMario256.ttf');
+    font-family: "Chakra Patch";
+    src: url("../fonts/ChakraPetch-Regular.ttf");
 }
-
 @font-face {
-    font-family: Pixeled;
-    src: url('fonts/Pixeled.ttf');
+    font-family: "Chakra Patch";
+    src: url("../fonts/ChakraPetch-Medium.ttf");
+    font-weight: 500;
 }
-
+@font-face {
+    font-family: "Chakra Patch";
+    src: url("../fonts/ChakraPetch-SemiBold.ttf");
+    font-weight: 600;
+}
+@font-face {
+    font-family: "Chakra Patch";
+    src: url("../fonts/ChakraPetch-Bold.ttf");
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Source Sans Pro";
+    src: url("../fonts/SourceSansPro-Regular.ttf");
+}
+@font-face {
+    font-family: "Source Sans Pro";
+    src: url("../fonts/SourceSansPro-Light.ttf");
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Source Sans Pro";
+    src: url("../fonts/SourceSansPro-SemiBold.ttf");
+    font-weight: 600;
+}
+@font-face {
+    font-family: "Source Sans Pro";
+    src: url("../fonts/SourceSansPro-Bold.ttf");
+    font-weight: 700;
+}
 body {
+    font-family: "Source Sans Pro", apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin: 0;
-    padding: 0;
+    height: 100vh;
 }
-
-body.sign-in {
-    /*background: linear-gradient(rgb(108, 193, 226), rgb(4, 156, 216));*/
-    background: url('images/bg-login.jpg');
-    background-size: cover;
-    background-position: right bottom;
-}
-
-nav {
-    background-color: var(--marioGreen);
+header {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    color: white;
-    min-height: 80px;
-    overflow: auto;
-    padding: 0 10px;
+    background: var(--adv-yellow);
+    color: #000000;
+    padding: .75em 1.25em;
+    font-family: "Chakra Patch", sans-serif;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
 }
-
-nav ul {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-}
-
-nav li {
-    border: 1px solid lightgrey;
-    border-radius: 10px;
-    display: inline-block;
-    margin: 0 10px;
-    padding: 5px 10px;
-}
-
-nav a {
-    color: white;
+header a.site-title {
+    text-align: center;
     text-decoration: none;
+    line-height: 1;
+    font-size: 1.5em;
+    color: inherit;
+    font-weight: 700;
+    z-index: 3;
 }
-
-nav h1 {
-    font-family: MarioFont;
-    margin: 0 30px;
+header a.site-title small {
+    font-weight: 600;
+    font-size: .85em;
 }
-
-nav h1 span {
-    color: var(--marioYellow);
+header ul.links {
+    padding: 0 0 3px 0;
+    margin: 0;
+    z-index: 3;
 }
-
-nav .menu {
-    display: flex;
-    align-content: center;
+header ul.links li {
+    display: inline;
+    margin: 0 4px;
 }
-
-nav .profile {
-    display: flex;
-    align-items: center;
-    margin: 0 30px;
-    position: relative;
+.button {
+    font-family: "Chakra Patch", sans-serif;
+    text-transform: uppercase;
+    background-color: #111111;
+    color: #ffffff;
+    text-decoration: none;
+    border: 3px solid transparent;
+    border-radius: 7px;
+    box-shadow: 0 4px 1px 0 rgba(0, 0, 0, 0.18);
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    font-size: 0.85em;
+    padding: 0.5em 1.25em;
+    transition: border-color 0.1s linear, background-color 0.1s linear, color 0.1s linear;
 }
-
-nav .profile ul {
-    display: none;
-    position: relative;
+.button-green {
+    background-color: var(--adv-green);
+}
+.button-red {
+    background-color: var(--adv-red);
+}
+.button-blue {
+    background-color: var(--adv-blue);
+}
+.button:hover, .button.button-active {
+    background: #ffffff;
+    color: #000000;
+}
+.button-green:hover, .button-green.button-active {
+    border-color: var(--adv-green);
+    color: var(--adv-green);
+}
+.button-red:hover, .button-red.button-active {
+    border-color: var(--adv-red);
+    color: var(--adv-red);
+}
+.button-blue:hover, .button-blue.button-active {
+    border-color: var(--adv-blue);
+    color: var(--adv-blue);
+}
+.divider {
     position: absolute;
     top: 0;
+    right: 0;
+    bottom: 0;
     left: 0;
+    z-index: 1;
 }
-
-nav .profile img {
-    max-width: 30px;
-    margin-right: 5px;
-}
-
-nav .profile li {
+.divider::after {
+    background-image: url("../img/divider-brick-yellow.png");
+    background-position: 0 50%;
+    background-repeat: repeat-x;
+    background-size: 30px 32px;
+    height: 32px;
+    content: '';
     display: block;
+    position: absolute;
+    bottom: -32px;
+    width: 100%;
+    z-index: 1;
 }
-
-.sign-in button {
-    background: linear-gradient(#e74938,var(--marioRed));
-    border: 1px solid rgb(145, 145, 145);
-    border-radius: 7px;
-    color: white;
-    display: block;
-    font-family: Pixeled;
-    font-size: .6em;
-    margin: 10px auto;
-    padding: 12px 15px;
-    transition: all 1s linear;
-    width: 250px;
+.divider-stone::after {
+    background-image: url("../img/divider-brick-grey.png");
+    background-size: 30px 30px;
+    height: 30px;
+    bottom: -30px;
 }
-
-.sign-in button:hover {
-    background-color: rgb(201, 15, 12);
+main {
+    height: calc(100vh - 102px);
+    margin-top: 30px;
+    display: flex;
 }
-
-.sign-in div {
+nav {
+    height: calc(100% - 50px);
+    padding: 25px;
+    white-space: nowrap;
+    font-weight: 600;
     text-align: center;
-    margin: auto;
+    position: relative;
+    background-position: 50% 0%;
+    background-repeat: repeat;
+    background-size: 18px auto;
 }
-
-.sign-in h1 {
-    color: white;
-    font-family: MarioFont;
+nav h1 {
+    font-family: "Chakra Patch", sans-serif;
+    text-transform: uppercase;
+    font-size: 1.25em;
     margin-top: 0;
+    font-weight: 700;
+    color: var(--adv-green);
 }
-
-.sign-in h1 span {
-    color: var(--marioYellow);
+nav.nav-green {
+    background-image: url("../img/bg-grid-green.png");
 }
-
-.sign-in main {
+nav.nav-green h1 {
+    color: var(--adv-green);
+}
+nav.nav-red {
+    background-image: url("../img/bg-grid-red.png");
+}
+nav.nav-red h1 {
+    color: var(--adv-red);
+}
+nav.nav-blue {
+    background-image: url("../img/bg-grid-blue.png");
+}
+nav.nav-blue h1 {
+    color: var(--adv-blue);
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+nav ul li + li {
+    margin-top: 20px;
+}
+nav ul li .button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+.right {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 97.5vh;
+    box-shadow: -4px 0px 11px 0px rgba(0, 0, 0, 0.18);
+    z-index: 1;
+    width: 100%;
+    background: linear-gradient(180deg, #005da0, #bee1f4);
+    color: #ffffff;
 }
-
-.sign-in button i {
-    font-size: 1.5em;
-    margin-right: 7px;
+.right .content {
+    padding: 25px;
+    flex: 1;
+}
+.right .content h1 {
+    margin-top: 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: "Chakra Patch", sans-serif;
+}
+.right footer {
+    background-color: #D39415;
+    background-image: url("../img/ground.jpg");
+    background-position: 50% 0;
+    background-repeat: repeat-x;
+    background-size: 165px auto;
+    height: 165px;
 }
