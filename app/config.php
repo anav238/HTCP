@@ -1,4 +1,4 @@
 <?php
-$GLOBALS['IMG_PATH'] = '/HTCP/public/assets/img';
-$GLOBALS['CSS_PATH'] = '/HTCP/public/assets/css';
+$GLOBALS['IMG_PATH'] = '/public/assets/img';
+$GLOBALS['CSS_PATH'] = '/public/assets/css';
 ?>

@@ -23,9 +23,9 @@
 			Adventure
 		</a>
 		<ul class="links">
-			<li><a class="button button-green" href="/HTCP/html">HTML World</a></li>
+			<li><a class="button button-green" href="/html">HTML World</a></li>
 			<li><a class="button button-red button-active" href="#">CSS World</a></li>
-			<li><a class="button button-blue" href="/HTCP/profile">Profile</a></li>
+			<li><a class="button button-blue" href="/profile">Profile</a></li>
 		</ul>
 		<div class="divider"></div>
 	</header>

@@ -24,8 +24,8 @@
 		</a>
 		<ul class="links">
 			<li><a class="button button-green button-active" href="#">HTML World</a></li>
-			<li><a class="button button-red" href="/HTCP/css">CSS World</a></li>
-			<li><a class="button button-blue" href="/HTCP/profile">Profile</a></li>
+			<li><a class="button button-red" href="/css">CSS World</a></li>
+			<li><a class="button button-blue" href="/profile">Profile</a></li>
 		</ul>
 		<div class="divider"></div>
 	</header>
