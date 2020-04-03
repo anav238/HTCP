@@ -11,7 +11,7 @@
 	<link rel="icon" type="image/x-icon" href="assets/img/icons/512.png" />
 	<link rel="manifest" href="assets/js/manifest.json">
 	-->
-	<link href="assets/css/style.css" rel="stylesheet" />
+	<link href="<?php echo $GLOBALS['CSS_PATH']; ?>/style.css" rel="stylesheet" />
 </head>
 <body>
 	<header>
@@ -23,9 +23,9 @@
 			Adventure
 		</a>
 		<ul class="links">
-			<li><a class="button button-green button-active" href="#">HTML World</a></li>
-			<li><a class="button button-red" href="#">CSS World</a></li>
-			<li><a class="button button-blue" href="#">Profile</a></li>
+			<li><a class="button button-green" href="/HTCP/html">HTML World</a></li>
+			<li><a class="button button-red button-active" href="#">CSS World</a></li>
+			<li><a class="button button-blue" href="/HTCP/profile">Profile</a></li>
 		</ul>
 		<div class="divider"></div>
 	</header>
@@ -72,10 +72,10 @@
 					</div>
 				</div>
 				<div class="resultArea" id="marioStory">
-                    <img src="assets/img/luigi.png" id="luigi">
-                    <img src="assets/img/mario.png" id="mario">
-                    <img src="assets/img/goomba.png" class="goomba">
-                    <img src="assets/img/goomba.png" class="goomba">
+                    <img src="<?=$GLOBALS['IMG_PATH']?>/luigi.png" id="luigi">
+                    <img src="<?=$GLOBALS['IMG_PATH']?>/mario.png" id="mario">
+                    <img src="<?=$GLOBALS['IMG_PATH']?>/goomba.png" class="goomba">
+                    <img src="<?=$GLOBALS['IMG_PATH']?>/goomba.png" class="goomba">
 				</div>
 			</div>
 			
