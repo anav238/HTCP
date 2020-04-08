@@ -33,41 +33,25 @@
 		<nav class="nav nav-green">
 			<h1>HTML Challenges</h1>
 			<ul>
-				<li><a href="#" class="button button-green button-active">Level 1</a></li>
-				<li><a href="#" class="button button-green">Level 2</a></li>
-				<li><a href="#" class="button button-green">Level 3</a></li>
-				<li><a href="#" class="button button-green">Level 4</a></li>
-				<li><a href="#" class="button button-green">Level 5</a></li>
+				<li><a href="/html/1" class="button button-green button-active">Level 1</a></li>
+				<li><a href="/html/2" class="button button-green">Level 2</a></li>
+				<li><a href="/html/3" class="button button-green">Level 3</a></li>
+				<li><a href="/html/4" class="button button-green">Level 4</a></li>
+				<li><a href="/html/5" class="button button-green">Level 5</a></li>
 			</ul>
 		</nav>
 		<div class="right">
 			<div class="content">
 				<div class="userArea">
 					<div class="instructions">
-						<h1>HTML Adventure - Level 1</h1>
+						<h1>HTML Adventure - Level <?php echo $data->level; ?></h1>
 						<p>
-							Let's start our HTML Adventure. As any story, our story has to be formatted nicely. To do this, we'll use the following
-							HTML elements:
-							<ul>
-								<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements">Headings - h1 and h2</a></li>
-								<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/p">Paragraphs</a></li>
-							</ul>
-							Use the headings and paragraphs accordingly. And remember, the <code>&lt;br&gt;</code> tag is not a good solution for breaking down 
-							titles/paragraphs! 
+							<?php echo $data->description; ?>
 						</p>
 					</div>
 					<div class="codeArea">
 						<code>
-							<input type="text">Luigi's Adventure<input type="text"><br>
-							<input type="text"><br>
-								Tired of saving kingdoms and plumbing in his spare time, Luigi started to think about getting a career change.
-								Guess what? He wants to become a web developer!<br>
-							<input type="text"><br>
-							<input type="text"><br>
-								After googling what are the steps you need to take to 
-								learn web development, he arrived to the conclusion that he needs to learn HTML first. And you'll be
-								part of this journey!<br>
-							<input type="text"><br>
+							<?php echo $data->problem; ?>
 						</code>
 						<a class="button button-green">Submit</a>
 					</div>

@@ -49,24 +49,14 @@
 			<div class="content">
 				<div class="userArea">
 					<div class="instructions">
-						<h1>CSS Adventure - Level 1</h1>
+						<h1>CSS Adventure - Level <?php echo $data->level; ?></h1>
 						<p>
-                            Our CSS Adventure is waiting for you! This adventure's hero will be Mario, so we have to send Luigi home.
-                            The Goombas also have to disappear, so Mario can start his journey. To make them disappear, you'll have to 
-                            use the display property and the correct selectors (clue: you'll have to use classes and ids!)
-							Useful documentation:
-							<ul>
-                                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors">CSS Selectors</a></li>
-								<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display">Display property</a></li>
-							</ul>
+							<?php echo $data->description; ?>
 						</p>
 					</div>
 					<div class="codeArea">
 						<code>
-							<input type="text">luigi { <br>
-                            display: <input type="text">;<br>}<br>
-							<input type="text">goompa<br>
-							display: <input type="text">;<br>}
+							<?php echo $data->problem; ?>
 						</code>
 						<a class="button button-green">Submit</a>
 					</div>

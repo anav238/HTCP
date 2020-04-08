@@ -3,7 +3,9 @@
     {
         public function index($level='1') 
         {
-            $this->view('css');
+            $data = ['level' => $level, 'type' => 'CSS'];
+            $exercise = $this->model('Exercise', $data);
+            $this->view('css', $exercise);
         }
     }
 ?>

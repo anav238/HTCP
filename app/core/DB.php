@@ -9,16 +9,11 @@ class DBClass {
     public $connection;
 
     // get the database connection
-    public function getConnection(){
+    public function __construct() {
 
         $connection = pg_connect("host=" . $this->host . " dbname=" . $this->database . " user=" . $this->username . " password=" . $this->password)
                 or die("Can't connect to database".pg_last_error());
-        $result = pg_query($connection, 'SELECT * FROM public."Exercises"');
-        /*while ($row = pg_fetch_row($result)) {
-            echo "!";
-            echo "Type: $row[0]  Level: $row[1] Description: $row[2]";
-            echo "<br />\n";
-        }*/
+        $GLOBALS['DB_CON'] = $connection;
         return $this->connection;
     }
 }
