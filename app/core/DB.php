@@ -1,5 +1,5 @@
 <?php
-class DBClass {
+class DB {
 
     private $host = "ec2-46-137-84-140.eu-west-1.compute.amazonaws.com";
     private $username = "rngufmgdpjpctb";

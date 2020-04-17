@@ -31,8 +31,8 @@
 	</header>
 	<main>
 		<nav class="nav nav-blue">
-			<img src="<?=$GLOBALS['IMG_PATH']?>/placeholder-profile-pic.png" class="profilePicture">
-			<h1>Mario's profile</h1>
+			<img src="<?=$data->avatar?>" class="profilePicture">
+			<h1><?php echo $data->username; ?>'s profile</h1>
 			<ul>
 				<li><a href="#" class="button button-blue button-active">Personal statistics</a></li>
 				<li><a href="#" class="button button-blue">Leaderboard</a></li>

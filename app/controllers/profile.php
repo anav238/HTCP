@@ -3,7 +3,8 @@
     {
         public function index() 
         {
-            $this->view('profile');
+            $user = $this->model('User', $_SESSION['user']);
+            $this->view('profile', $user);
         }
     }
 ?>
