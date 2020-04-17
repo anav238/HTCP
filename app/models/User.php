@@ -10,7 +10,11 @@ class User
         $this->username = $username;
         $this->avatar = $avatar;
 
-        if ($this->avatar != "") {
+        $query = 'SELECT "Avatar" FROM public."Users" where "Username"=\'' . $this->username . '\'';
+        $result = pg_query($this->connection, $query);
+
+        $row = pg_fetch_row($result);
+        if (!$row) {
             $data = array("Username" => $this->username, "Avatar" => $this->$avatar);
 
             $res = pg_insert($this->connection, 'Users', $data);
@@ -21,10 +25,6 @@ class User
             }
         }
         else {
-            $query = 'SELECT "Avatar" FROM public."Users" where "Username"=\'' . $this->username . '\'';
-            $result = pg_query($this->connection, $query);
-
-            $row = pg_fetch_row($result);
             $this->avatar = $row[0];
         }
     }
