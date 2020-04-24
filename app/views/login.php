@@ -6,6 +6,7 @@
     <script src="https://kit.fontawesome.com/0e5e6d76c0.js" crossorigin="anonymous"></script>
     <title>Login</title>
     <link href="<?=$GLOBALS['CSS_PATH']?>/style-old.css" rel="stylesheet" />
+    <script src="<?=$GLOBALS['JS_PATH']?>/script.js" type="text/javascript"></script>
 </head>
 <body class="sign-in">
     <main>

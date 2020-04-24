@@ -12,6 +12,7 @@
 	<link rel="manifest" href="assets/js/manifest.json">
 	-->
 	<link href="<?=$GLOBALS['CSS_PATH']?>/style.css" rel="stylesheet" />
+	<script src="<?=$GLOBALS['JS_PATH']?>/script.js" type="text/javascript"></script>
 </head>
 <body>
 	<header>

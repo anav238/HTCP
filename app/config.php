@@ -1,6 +1,7 @@
 <?php
 $GLOBALS['IMG_PATH'] = '/public/assets/img';
 $GLOBALS['CSS_PATH'] = '/public/assets/css';
+$GLOBALS['JS_PATH'] = '/public/assets/js';
 $GLOBALS['GITHUB_CLIENT_ID'] = "1f8f2d806605f1414a9c";
 $GLOBALS['GITHUB_CLIENT_SECRET'] = "dfb8dc5f204f516fb55c0b450d3d32c7d2c337c0";
 $GLOBALS['TWITTER_KEY'] = "KPApkG6bvhDNcnPj0Drr2TPUm";

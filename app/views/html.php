@@ -53,18 +53,11 @@
 						<code>
 							<?php echo $data->problem; ?>
 						</code>
-						<a class="button button-green">Submit</a>
+						<a class="button button-green" id="submit">Submit</a>
 					</div>
 				</div>
-				<div class="resultArea" id="luigiStory">
-					Luigi's Adventure
-					Tired of saving kingdoms and plumbing in his spare time, Luigi started to think about getting a career change.
-					Guess what? He wants to become a web developer!
-					After googling what are the steps you need to take to 
-					learn web development, he arrived to the conclusion that he needs to learn HTML first. And you'll be
-					part of this journey!
-					<img src="<?=$GLOBALS['IMG_PATH']?>/luigi.png">
-				</div>
+				<iframe class="resultArea">
+				</iframe>
 			</div>
 			
 			<footer>
@@ -73,5 +66,7 @@
 		</div>
 		
 	</main>
+
+	<script src="<?=$GLOBALS['JS_PATH']?>/script.js" type="text/javascript"></script>
 </body>
 </html>
