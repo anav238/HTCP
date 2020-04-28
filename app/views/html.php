@@ -46,13 +46,13 @@
 					<div class="instructions">
 						<h1>HTML Adventure - Level <?php echo $data->level; ?></h1>
 						<p>
-							<?php echo $data->description; ?>
+                            <?php echo $data->problem; ?>
 						</p>
 					</div>
 					<div class="codeArea">
 						<code>
-							<?php echo $data->problem; ?>
-						</code>
+                            <?php echo $data->problem; ?>
+                        </code>
 						<a class="button button-green" id="submit">Submit</a>
 					</div>
 				</div>
