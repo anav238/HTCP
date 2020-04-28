@@ -46,7 +46,7 @@
 					<div class="instructions">
 						<h1>HTML Adventure - Level <?php echo $data->level; ?></h1>
 						<p>
-                            <?php echo $data->problem; ?>
+                            <?php echo $data->description; ?>
 						</p>
 					</div>
 					<div class="codeArea">
