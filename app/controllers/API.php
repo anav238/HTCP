@@ -29,15 +29,15 @@ class API extends Controller
                     return json_encode(["message" => "You must specify a valid exercise type and level to use post."]);
                 else
                     $request = json_decode(file_get_contents('php://input'), true);
-                    $solution = $request["solution"];
-                    return $this->checkExerciseSolution($type, $level, $solution);
+                $solution = $request["solution"];
+                return $this->checkExerciseSolution($type, $level, $solution);
                 break;
         }
     }
 
     private function getSpecificExercise($type, $level) {
         $query = 'SELECT "Description", "Problem" FROM public."Exercises" WHERE "Type"=\'' . $type
-                . '\' and "Level"=' . $level;
+            . '\' and "Level"=' . $level;
         $result = pg_query($this->connection, $query);
         $exercise = array();
         while ($row = pg_fetch_row($result)) {
