@@ -15,7 +15,7 @@ class App
             unset($url[0]);
         }
         
-        if ($this->controller != 'githubconnect' && !isset($_SESSION['user'])) 
+        if ($this->controller != 'api' && $this->controller != 'githubconnect' && !isset($_SESSION['user']))
             $this->controller = 'login';
     
         else if ($this->controller == 'login' && isset($_SESSION['user'])) 

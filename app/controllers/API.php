@@ -12,27 +12,41 @@ class API extends Controller
 
     public function exercises($type = "", $level = "") {
         $type = strtoupper($type);
-        if ($level == "")
-            return $this->getArrayOfExercises($type);
-        if ($level == "current")
-            $level = $this->getCurrentLevelForUser($type);
-        if ($type == "HTML" || $type == "CSS") {
-            $query = 'SELECT "Description", "Problem" FROM public."Exercises" WHERE "Type"=\'' . $type
+        if ($type != "" && $type != "HTML" && $type != 'CSS')
+            return json_encode(["message" => "Invalid exercise type"]);
+        if ($level != "" && !is_numeric($level))
+            return json_encode(["message" => "Invalid level number"]);
+        switch($_SERVER['REQUEST_METHOD']) {
+            case 'GET':
+                if ($level == "")
+                    return $this->getArrayOfExercises($type);
+                if ($level == "current")
+                    $level = $this->getCurrentLevelForUser($type);
+                return $this->getSpecificExercise($type, $level);
+                break;
+            case 'POST':
+                if ($type == "" || $level == "")
+                    return json_encode(["message" => "You must specify a valid exercise type and level to use post."]);
+                else
+                    $request = json_decode(file_get_contents('php://input'), true);
+                    $solution = $request["solution"];
+                    return $this->checkExerciseSolution($type, $level, $solution);
+                break;
+        }
+    }
+
+    private function getSpecificExercise($type, $level) {
+        $query = 'SELECT "Description", "Problem" FROM public."Exercises" WHERE "Type"=\'' . $type
                 . '\' and "Level"=' . $level;
-            $result = pg_query($this->connection, $query);
-            $exercise = array();
-            while ($row = pg_fetch_row($result)) {
-                $exercise["level"] = $level;
-                $exercise["description"] = $row[0];
-                $exercise["problem"] = $row[1];
-            }
-            echo json_encode($exercise);
-            //http_send_status(200);
+        $result = pg_query($this->connection, $query);
+        $exercise = array();
+        while ($row = pg_fetch_row($result)) {
+            $exercise["level"] = $level;
+            $exercise["description"] = $row[0];
+            $exercise["problem"] = $row[1];
         }
-        else {
-            //http_send_status(404);
-            echo json_encode(["message" => "Exercise not found."]);
-        }
+        return json_encode($exercise);
+        //http_send_status(200);
     }
 
     private function getArrayOfExercises($type = "") {
@@ -68,5 +82,25 @@ class API extends Controller
         return $level;
     }
 
+    private function checkExerciseSolution($type, $level, $solution) {
+        $query = 'SELECT array_to_json("Solution") FROM public."Exercises" WHERE "Type"=\'' . $type
+            . '\' and "Level"=' . $level;
+        $result = pg_query($this->connection, $query);
+        $actual_solution = array();
+        while ($row = pg_fetch_row($result))
+            $actual_solution = $row[0];
+        $actual_solution = json_decode($actual_solution);
+        if (count($actual_solution) != count($solution)) {
+            echo json_encode(["message" => "Wrong solution size"]);
+            return;
+        }
+        for ($i = 0; $i < count($actual_solution); $i++) {
+            if ($actual_solution[$i] != $solution[$i]) {
+                echo json_encode(["message" => "Wrong solution"]);
+                return;
+            }
+        }
+        echo json_encode(["message" => "Success"]);
+    }
 
 }
