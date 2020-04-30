@@ -20,7 +20,6 @@ class App
     
         else if ($this->controller == 'login' && isset($_SESSION['user'])) 
             $this->controller = 'html';
-            
 
         require_once __DIR__.'/../controllers/'.$this->controller.'.php';
         $controller = new $this->controller;
@@ -31,9 +30,6 @@ class App
             }
         }
         $this->params = $url?array_values($url):[];
-        
-        
-
         call_user_func_array([$controller, $this->method], $this->params);
     }
 

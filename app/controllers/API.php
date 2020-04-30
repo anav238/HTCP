@@ -12,17 +12,21 @@ class API extends Controller
 
     public function exercises($type = "", $level = "") {
         $type = strtoupper($type);
-        if ($type != "" && $type != "HTML" && $type != 'CSS')
-            return json_encode(["message" => "Invalid exercise type"]);
-        if ($level != "" && !is_numeric($level))
-            return json_encode(["message" => "Invalid level number"]);
+        if ($type != "" && $type != "HTML" && $type != 'CSS') {
+            echo json_encode(["message" => "Invalid exercise type"]);
+            return;
+        }
+        if ($level != "" && $level != "current" && !is_numeric($level)) {
+            echo json_encode(["message" => "Invalid level number"]);
+            return;
+        }
         switch($_SERVER['REQUEST_METHOD']) {
             case 'GET':
                 if ($level == "")
-                    return $this->getArrayOfExercises($type);
+                    echo $this->getArrayOfExercises($type);
                 if ($level == "current")
                     $level = $this->getCurrentLevelForUser($type);
-                return $this->getSpecificExercise($type, $level);
+                echo $this->getSpecificExercise($type, $level);
                 break;
             case 'POST':
                 if ($type == "" || $level == "")
@@ -55,7 +59,7 @@ class API extends Controller
             $query .= ' where "Type"=' . $type;
         else {
             //http_send_status(404);
-            echo json_encode(["message" => "Exercises not found."]);
+            return json_encode(["message" => "Exercises not found."]);
         }
         $result = pg_query($this->connection, $query);
         $exercises = array();
@@ -90,17 +94,13 @@ class API extends Controller
         while ($row = pg_fetch_row($result))
             $actual_solution = $row[0];
         $actual_solution = json_decode($actual_solution);
-        if (count($actual_solution) != count($solution)) {
-            echo json_encode(["message" => "Wrong solution size"]);
-            return;
-        }
-        for ($i = 0; $i < count($actual_solution); $i++) {
-            if ($actual_solution[$i] != $solution[$i]) {
-                echo json_encode(["message" => "Wrong solution"]);
-                return;
-            }
-        }
-        echo json_encode(["message" => "Success"]);
+        if (count($actual_solution) != count($solution))
+            return json_encode(["message" => "Wrong solution size"]);
+        for ($i = 0; $i < count($actual_solution); $i++)
+            if ($actual_solution[$i] != $solution[$i])
+                return json_encode(["message" => "Wrong solution"]);
+
+        return json_encode(["message" => "Success"]);
     }
 
 }
