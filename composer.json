@@ -1,6 +1,10 @@
 {
   "require" : {
-    "silex/silex": "^2.0.4"
+    "silex/silex": "^2.0.4",
+    "ext-pgsql": "*",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-http": "*"
   },
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"

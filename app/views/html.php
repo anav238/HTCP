@@ -38,21 +38,22 @@
 				<li><a href="/html/3" class="button button-green">Level 3</a></li>
 				<li><a href="/html/4" class="button button-green">Level 4</a></li>
 				<li><a href="/html/5" class="button button-green">Level 5</a></li>
+				<li><a href="/html/5" class="button button-green">Level 6</a></li>
+				<li><a href="/html/5" class="button button-green">Level 7</a></li>
+				<li><a href="/html/5" class="button button-green">Level 8</a></li>
+				<li><a href="/html/5" class="button button-green">Level 9</a></li>
+				<li><a href="/html/5" class="button button-green">Level 10</a></li>
 			</ul>
 		</nav>
 		<div class="right">
 			<div class="content">
 				<div class="userArea">
 					<div class="instructions">
-						<h1>HTML Adventure - Level <?php echo $data->level; ?></h1>
-						<p>
-                            <?php echo $data->description; ?>
-						</p>
+						<h1>HTML Adventure - Level <span></span></h1>
+						<p></p>
 					</div>
 					<div class="codeArea">
-						<code>
-                            <?php echo $data->problem; ?>
-                        </code>
+						<code></code>
 						<a class="button button-green" id="submit">Submit</a>
 					</div>
 				</div>
@@ -67,6 +68,7 @@
 		
 	</main>
 
-	<script src="<?=$GLOBALS['JS_PATH']?>/script.js" type="text/javascript"></script>
+	<script src="<?=$GLOBALS['JS_PATH']?>/script.js"></script>
+
 </body>
 </html>

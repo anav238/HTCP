@@ -45,8 +45,7 @@
             $result_json = json_decode($result);
             curl_close($ch);
 
-            $access_token = $result_json->{"access_token"};
-            return $access_token;
+            return $result_json->{"access_token"};
         }
 
         public function loginUser($access_token) {
@@ -68,8 +67,6 @@
             $result = curl_exec($ch);
             $result_json = json_decode($result);
             $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            
-            echo "<img src='https://http.cat/" . $status_code . "'>"; 
 
             curl_close($ch);
 

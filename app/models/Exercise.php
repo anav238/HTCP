@@ -2,7 +2,6 @@
 class Exercise {
 
     private $connection;
-    private $table_name = "Exercises";
 
     public $type;
     public $level;
@@ -15,7 +14,7 @@ class Exercise {
         if (!isset($data['level'])) 
             $data['level'] = 1;
         if (!isset($data['type']))
-            $data['type'] = HTML; 
+            $data['type'] = "HTML";
         $this->type = $data['type'];
         $this->level = $data['level'];
 
