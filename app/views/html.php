@@ -15,7 +15,9 @@
 </head>
 <body>
 	<header>
-		<div class="hamburger"></div>
+		<div class="hamburger">
+			<div class="hamburger-line"></div>
+		</div>
 		<a class="site-title" href="/">
 			<small>
 				HTML & CSS

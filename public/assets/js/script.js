@@ -35,10 +35,12 @@ hamburger.addEventListener("click", () => {
     if(nav.style.display === "block") {
         nav.style.display = "none";
         hamburgerTriggered = false;
+        hamburger.classList.remove("hamburger-active");
     }
     else {
         nav.style.display = "block";
         hamburgerTriggered = true;
+        hamburger.classList.add("hamburger-active");
     }
 });
 
@@ -46,11 +48,13 @@ window.addEventListener("resize", () => {
     if(window.innerWidth > 767) {
         nav.style.display = "block";
         hamburgerTriggered = 0;
+        hamburger.classList.remove("hamburger-active");
     }
     else
     {
         if(!hamburgerTriggered) {
             nav.style.display = "none";
+            hamburger.classList.remove("hamburger-active");
         }
     }
 });

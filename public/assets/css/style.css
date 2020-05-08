@@ -121,6 +121,37 @@ header .hamburger {
     width: 45px;
     height: 45px;
     z-index: 3;
+    align-items: center;
+    border-radius: 7px;
+    box-shadow: 0 4px 1px 0 rgba(0, 0, 0, 0.18);
+}
+header .hamburger .hamburger-line {
+    position: relative;
+    margin: 0 auto;
+}
+header .hamburger .hamburger-line,
+header .hamburger .hamburger-line::before,
+header .hamburger .hamburger-line::after {
+    width: 20px;
+    height: 3px;
+    background-color: #ffffff;
+    transition: transform 0.2s;
+}
+header .hamburger .hamburger-line::before, header .hamburger .hamburger-line::after {
+    position: absolute;
+    content: '';
+}
+header .hamburger .hamburger-line::before {
+    bottom: 7px;
+}
+header .hamburger .hamburger-line::after {
+    top: 7px;
+}
+header .hamburger.hamburger-active .hamburger-line::before {
+    transform: translate(-6px, 3px) rotate(-45deg) scaleX(0.7);
+}
+header .hamburger.hamburger-active .hamburger-line::after {
+    transform: translate(-6px, -3px) rotate(45deg) scaleX(0.7)
 }
 header a.site-title {
     text-align: center;
@@ -390,7 +421,7 @@ nav ul li .button {
         display: none;
     }
     header .hamburger {
-        display: block;
+        display: flex;
     }
     nav {
         width: calc(100% - 50px);
