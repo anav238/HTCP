@@ -15,6 +15,7 @@
 </head>
 <body>
 	<header>
+		<div class="hamburger"></div>
 		<a class="site-title" href="/">
 			<small>
 				HTML & CSS
@@ -23,7 +24,7 @@
 			Adventure
 		</a>
 		<ul class="links">
-			<li><a class="button button-green button-active" href="#">HTML World</a></li>
+			<li><a class="button button-green button-active" href="/html">HTML World</a></li>
 			<li><a class="button button-red" href="/css">CSS World</a></li>
 			<li><a class="button button-blue" href="/profile">Profile</a></li>
 		</ul>
@@ -31,6 +32,11 @@
 	</header>
 	<main>
 		<nav class="nav nav-green">
+			<ul class="links">
+				<li><a class="button button-green button-active" href="/html">HTML World</a></li>
+				<li><a class="button button-red" href="/css">CSS World</a></li>
+				<li><a class="button button-blue" href="/profile">Profile</a></li>
+			</ul>
 			<h1>HTML Challenges</h1>
 			<ul>
 				<li><a href="/html/1" class="button button-green button-active">Level 1</a></li>
@@ -46,19 +52,18 @@
 			</ul>
 		</nav>
 		<div class="right">
-			<div class="content">
-				<div class="userArea">
-					<div class="instructions">
-						<h1>HTML Adventure - Level <span></span></h1>
-						<p></p>
-					</div>
-					<div class="codeArea">
-						<code></code>
-						<a class="button button-green" id="submit">Submit</a>
-					</div>
+			<div class="instructions">
+				<h1>HTML Adventure - Level <span></span></h1>
+				<p></p>
+			</div>
+			<div class="code">
+				<div class="codeArea">
+					<code></code>
+					<a class="button button-green" id="submit">Submit</a>
 				</div>
-				<iframe class="resultArea">
-				</iframe>
+				<div class="resultArea">
+					<iframe></iframe>
+				</div>
 			</div>
 			
 			<footer>

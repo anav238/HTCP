@@ -1,6 +1,7 @@
 let editor = document.querySelector(".codeArea code");
 let level = document.querySelector(".instructions span");
 let instructions = document.querySelector(".instructions p");
+
 fetch('/api/exercises/html/current')
     .then(response => response.json())
     .then(data => {
@@ -25,3 +26,31 @@ function refreshResult() {
         content = content.replace(/<input[^>]*>/, editorInputs[i].value);
     result.src = encodeURI(content);
 }
+
+let hamburger = document.querySelector("header .hamburger");
+let nav = document.querySelector("nav");
+let hamburgerTriggered = false;
+
+hamburger.addEventListener("click", () => {
+    if(nav.style.display === "block") {
+        nav.style.display = "none";
+        hamburgerTriggered = false;
+    }
+    else {
+        nav.style.display = "block";
+        hamburgerTriggered = true;
+    }
+});
+
+window.addEventListener("resize", () => {
+    if(window.innerWidth > 767) {
+        nav.style.display = "block";
+        hamburgerTriggered = 0;
+    }
+    else
+    {
+        if(!hamburgerTriggered) {
+            nav.style.display = "none";
+        }
+    }
+});

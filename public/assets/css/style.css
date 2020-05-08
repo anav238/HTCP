@@ -42,46 +42,6 @@
     src: url("../fonts/SourceSansPro-Bold.ttf");
     font-weight: 700;
 }
-body {
-    font-family: "Source Sans Pro", apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    margin: 0;
-    height: 100vh;
-}
-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--adv-yellow);
-    color: #000000;
-    padding: .75em 1.25em;
-    font-family: "Chakra Patch", sans-serif;
-    text-transform: uppercase;
-    position: relative;
-    z-index: 2;
-}
-header a.site-title {
-    text-align: center;
-    text-decoration: none;
-    line-height: 1;
-    font-size: 1.5em;
-    color: inherit;
-    font-weight: 700;
-    z-index: 3;
-}
-header a.site-title small {
-    font-weight: 600;
-    font-size: .85em;
-}
-header ul.links {
-    padding: 0 0 3px 0;
-    margin: 0;
-    z-index: 3;
-}
-header ul.links li {
-    display: inline;
-    margin: 0 4px;
-}
 .button {
     font-family: "Chakra Patch", sans-serif;
     text-transform: uppercase;
@@ -129,6 +89,61 @@ header ul.links li {
     border-color: var(--adv-yellow);
     color: var(--adv-yellow);
 }
+body {
+    font-family: "Source Sans Pro", apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    min-width: 100%;
+    position: absolute;
+}
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--adv-yellow);
+    color: #000000;
+    padding: .75em 25px;
+    font-family: "Chakra Patch", sans-serif;
+    text-transform: uppercase;
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+header .hamburger {
+    display: none;
+    position: absolute;
+    left: 25px;
+    cursor: pointer;
+    background: #000000;
+    width: 45px;
+    height: 45px;
+    z-index: 3;
+}
+header a.site-title {
+    text-align: center;
+    text-decoration: none;
+    line-height: 1;
+    font-size: 1.5em;
+    color: inherit;
+    font-weight: 700;
+    z-index: 3;
+}
+header a.site-title small {
+    font-weight: 600;
+    font-size: .85em;
+}
+header ul.links {
+    padding: 0 0 3px 0;
+    margin: 0;
+    z-index: 3;
+}
+header ul.links li {
+    display: inline;
+    margin: 0 4px;
+}
 .divider {
     position: absolute;
     top: 0;
@@ -161,24 +176,34 @@ footer {
     background-image: url("../img/ground.jpg");
     background-position: 50% 0;
     background-repeat: repeat-x;
-    background-size: 165px auto;
-    height: 165px;
+    background-size: 160px auto;
+    height: 110px;
+    padding: 50px 25px 25px 25px;
 }
 main {
-    height: calc(100vh - 102px);
-    margin-top: 30px;
+    height: calc(100vh - 104px);
+    margin-top: 104px;
     display: flex;
 }
 nav {
-    height: calc(100% - 50px);
     padding: 25px;
     white-space: nowrap;
     font-weight: 600;
     text-align: center;
-    position: relative;
     background-position: 50% 0%;
     background-repeat: repeat;
     background-size: 18px auto;
+    position: fixed;
+    width: 190px;
+    height: 100%;
+    height: calc(100vh - 154px);
+    overflow: auto;
+}
+nav ul.links {
+    display: none;
+    margin-top: 0;
+    padding-bottom: 1.5em;
+    border-bottom: 1px solid #000000;
 }
 nav h1 {
     font-family: "Chakra Patch", sans-serif;
@@ -194,17 +219,26 @@ nav.nav-green {
 nav.nav-green h1 {
     color: var(--adv-green);
 }
+nav.nav-green ul.links {
+    border-color: var(--adv-green);
+}
 nav.nav-red {
     background-image: url("../img/bg-grid-red.png");
 }
 nav.nav-red h1 {
     color: var(--adv-red);
 }
+nav.nav-red ul.links {
+    border-color: var(--adv-red);
+}
 nav.nav-blue {
     background-image: url("../img/bg-grid-blue.png");
 }
 nav.nav-blue h1 {
     color: var(--adv-blue);
+}
+nav.nav-blue ul.links {
+    border-color: var(--adv-blue);
 }
 nav ul {
     list-style-type: none;
@@ -243,28 +277,30 @@ nav ul li .button {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: -4px 0px 11px 0px rgba(0, 0, 0, 0.18);
     z-index: 1;
     width: 100%;
-    
+    margin-left: 240px;
+    overflow: auto;
 }
 .right a {
     color: white;
 }
-.right .content {
+.right .code {
     display: flex;
     justify-content: space-around;
 }
-.right .codeArea {
-    background-color: rgb(245,245,245);
+.right .codeArea, .right .resultArea iframe {
+    background-color: #ffffff;
     border: 3px solid var(--adv-yellow);
     border-radius: 14px;
     box-shadow: 0 4px 1px 0 rgba(0, 0, 0, 0.18);
     color: rgb(20,20,20);
+}
+.right .codeArea {
     font-size: 1.1em;
     line-height: 1.7em;
-    padding: 5px 15px 60px 15px;
     position: relative;
+    padding: 5px 15px 60px 15px;
 }
 .right .codeArea a {
     position: absolute;
@@ -273,60 +309,97 @@ nav ul li .button {
     right: 15px;
 }
 .right .codeArea input {
-    border: none;
+    border: 1px solid #c5c5c5;
     width: 30px;
 }
-
-.right .userArea {
-    padding: 25px;
-    max-width: 50%;
+.right .codeArea, .right .resultArea {
+    margin: 25px;
+    width: 50%;
 }
-.right .userArea h1 {
+.right .instructions {
+    padding: 25px;
+    width: calc(50% - 25px);
+    margin: 0 auto;
+}
+.right .instructions h1 {
     margin-top: 0;
     text-align: center;
     text-transform: uppercase;
     font-family: "Chakra Patch", sans-serif;
+    font-size: 1.85em;
 }
-
 .right .resultArea {
-    background-color: white;
-    color: black;
-    border: 3px solid var(--adv-yellow);
-    border-radius: 14px;
-    box-shadow: 0 4px 1px 0 rgba(0, 0, 0, 0.18);
-    box-sizing: border-box;
-    height: 590px;
-    margin: 35px 25px;
-    padding: 40px;
-    position: relative;
-    width: 40%;
+    margin-left: 0;
 }
-
-.resultArea#luigiStory {
+.right .resultArea iframe {
+    padding: 5px;
+    width: calc(100% - 15px);
+    height: calc(100% - 15px);
+    min-height: 300px;
+}
+.resultArea iframe#luigiStory {
     background-image: url("../img/bg-grid-green.png");
     background-size: 18px auto;
     font-size: 1.2em;
 }
-
-.resultArea#luigiStory img {
+.resultArea iframe#luigiStory img {
     max-width: 150px;
     position: absolute;
     bottom: 10px;
     left: 15px;
 }
-
-.resultArea#marioStory {
+.resultArea iframe#marioStory {
     background-image: url("../img/bg-mario-story.png");
     background-size: 50%;
 }
-
-.resultArea#marioStory img {
+.resultArea iframe#marioStory img {
     display: inline;
     max-height: 200px;
     max-width: 200px;
     margin: 30% 5px;
 }
-
-.resultArea#marioStory .goomba {
+.resultArea iframe#marioStory .goomba {
     max-width: 100px;
+}
+@media only screen and (max-width: 1199px) {
+    .right .code {
+        flex-direction: column;
+        width: 100%;
+    }
+    .right .codeArea {
+        width: calc(100% - 50px - 36px);
+    }
+    .right .resultArea {
+        width: calc(100% - 50px);
+        margin-left: 25px;
+        margin-top: 0;
+    }
+    .right .instructions {
+        width: calc(100% - 50px);
+        margin: 0 auto;
+    }
+}
+@media only screen and (max-width: 767px) {
+    header ul.links, nav {
+        display: none;
+    }
+    header {
+        justify-content: center;
+    }
+    header ul.links {
+        display: none;
+    }
+    header .hamburger {
+        display: block;
+    }
+    nav {
+        width: calc(100% - 50px);
+        z-index: 2;
+    }
+    nav ul.links {
+        display: block;
+    }
+    .right {
+        margin-left: 0;
+    }
 }
