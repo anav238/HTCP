@@ -2,6 +2,20 @@
 
 class User 
 {
+    public static function getCurrentLevel($username, $world) {
+        $connection = $GLOBALS['DB_CON'];
+
+        if ($world == "HTML")
+            $query = 'SELECT "html_level" FROM public."Users" where "Username"=\'' . $username . '\'';
+        else
+            $query = 'SELECT "css_level" FROM public."Users" where "Username"=\'' . $username . '\'';
+
+        $result = pg_query($connection, $query);
+
+        $row = pg_fetch_row($result);
+        return $row[0];
+    }
+
     public $username;
     public $avatar;
 

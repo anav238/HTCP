@@ -11,6 +11,9 @@ class Response {
     }
 }
 
+require_once __DIR__.'/../models/Exercise.php';
+require_once __DIR__.'/../models/User.php';
+
 $exerciseRoutes = [
     [
         "method" => "GET",
@@ -21,7 +24,7 @@ $exerciseRoutes = [
     ],
     [
         "method" => "GET",
-        "route" => "exercise/:type/current",
+        "route" => "exercises/:type/current",
         "handler" => "getCurrentExerciseOfType"
     ],
     [
@@ -45,68 +48,59 @@ function IsLoggedIn($req) {
 }
 
 function getExercises($req) {
-    Response::status(200);
-
-    $type = "HTML";
-    $level = 1;
-    var_dump($req['query']);
-
     switch($_SERVER['REQUEST_METHOD']) {
         case 'GET':
-            $data = getSpecificExercise($type, $level);
-            Response::status(200);
-            Response::json($data);
+            if (isset($req['query']['type']) && isset($req['query']['level'])) {
+                $data = Exercise::getSpecificExercise($req['query']['type'], $req['query']['level']);
+                Response::status(200);
+                Response::json($data);
+            }
+            else if (isset($req['query']['type'])) {
+                $data = Exercise::getAllExercisesOfType($req['query']['type']);
+                Response::status(200);
+                Response::json($data);
+            }
+            else {
+                Response::status(400);
+                Response::json([
+                    "status" => 400,
+                    "reason" => "You must provide a type as a query parameter."
+                ]);
+            }
             break;
     }
 }
 
-function getSpecificExercise($type, $level) {
-    $query = 'SELECT "Description", "Problem" FROM public."Exercises" WHERE "Type"=\'' . $type
-            . '\' and "Level"=' . $level;
-    $connection = $GLOBALS['DB_CON'];
-    $result = pg_query($connection, $query);
-        $exercise = array();
-        while ($row = pg_fetch_row($result)) {
-            $exercise["level"] = $level;
-            $exercise["description"] = $row[0];
-            $exercise["problem"] = $row[1];
-        }
-        return $exercise;
+function getCurrentExerciseOfType($req) {
+    switch($_SERVER['REQUEST_METHOD']) {
+        case 'GET':
+            $type = strtoupper($req['params']['type']);
+            $currentLevel = User::getCurrentLevel($_SESSION['user'], $type);
+            $data = Exercise::getSpecificExercise($type, $currentLevel);
+            Response::status(200);
+            Response::json($data);
+    }
 }
 
-
-function getTeam($req) {
-
-
-    // req['payload']
-
-    // DB GET $req['params']['teamId'];
-
-    Response::status(200);
-    Response::json($req['params']);
-
-
-
-    // echo "Get team {$req['params']['teamId']}";
-    // $req['params']['teamId'];
-
-
-    /// procesare din DB
-
-    // $res -> status(200);
-    // http_response_code(200)
-
-    // $res -> json($payload);
-    // header("Content-Type: application/json");
-    // echo json_encode($payload);
+function submitExercise($req) {
+    switch($_SERVER['REQUEST_METHOD']) {
+        case 'POST':
+            $type = strtoupper($req['query']['type']);
+            $level = $req['query']['level'];
+            $solution = $req['payload']->solution;
+            $result = Exercise::checkExerciseSolution($type, $level, $solution);
+            Response::status(200);
+            if ($result) {
+                Response::json([
+                    "status" => 400,
+                    "reason" => "Success!"
+                ]);
+            }
+            else {
+                Response::json([
+                    "status" => 400,
+                    "reason" => "Wrong solution!"
+                ]);
+            }
+    }
 }
-
-function addTeam($req) {
-    $modifiedPayload = $req['payload'];
-    $modifiedPayload -> id = uniqid();
-
-    Response::status(200);
-    Response::json($modifiedPayload);
-}
-
-
