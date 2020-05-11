@@ -2,7 +2,7 @@ let editor = document.querySelector(".codeArea code");
 let level = document.querySelector(".instructions span");
 let instructions = document.querySelector(".instructions p");
 
-fetch('/api/exercises/html/current')
+fetch('/api/exercises')
     .then(response => response.json())
     .then(data => {
         console.log(data);

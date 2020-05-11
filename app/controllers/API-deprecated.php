@@ -1,7 +1,7 @@
 <?php
 
 
-class API extends Controller
+class deprecated extends Controller
 {
     private $connection;
     public function __construct() {
