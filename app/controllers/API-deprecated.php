@@ -11,6 +11,14 @@ class API extends Controller
     public function index() {}
 
     public function exercises($type = "", $level = "") {
+        $allHeaders = getallheaders();
+        if ($allHeaders["Content-type"] != "application/json") {
+            http_response_code(400);
+            echo json_encode(["message" => "Expecting payload as JSON."]);
+            return;
+        }
+
+        header("Content-type: application/json");
         $type = strtoupper($type);
         if ($type != "" && $type != "HTML" && $type != 'CSS') {
             echo json_encode(["message" => "Invalid exercise type"]);
@@ -29,12 +37,15 @@ class API extends Controller
                 echo $this->getSpecificExercise($type, $level);
                 break;
             case 'POST':
-                if ($type == "" || $level == "")
-                    return json_encode(["message" => "You must specify a valid exercise type and level to use post."]);
+                if ($type == "" || $level == "") {
+                    http_response_code(404);
+                    echo json_encode(["message" => "You must specify a valid exercise type and level to use post."]);
+                    return;
+                }
                 else
                     $request = json_decode(file_get_contents('php://input'), true);
                 $solution = $request["solution"];
-                return $this->checkExerciseSolution($type, $level, $solution);
+                echo $this->checkExerciseSolution($type, $level, $solution);
                 break;
         }
     }
@@ -49,8 +60,8 @@ class API extends Controller
             $exercise["description"] = $row[0];
             $exercise["problem"] = $row[1];
         }
+        http_response_code(200);
         return json_encode($exercise);
-        //http_send_status(200);
     }
 
     private function getArrayOfExercises($type = "") {
@@ -58,7 +69,7 @@ class API extends Controller
         if ($type == 'HTML' || $type == 'CSS')
             $query .= ' where "Type"=' . $type;
         else {
-            //http_send_status(404);
+            http_response_code(404);
             return json_encode(["message" => "Exercises not found."]);
         }
         $result = pg_query($this->connection, $query);
@@ -69,6 +80,7 @@ class API extends Controller
             $exercise["problem"] = $row[1];
             $exercises[] = $exercise;
         }
+        http_response_code(200);
         return json_encode($exercises);
     }
 
@@ -94,12 +106,16 @@ class API extends Controller
         while ($row = pg_fetch_row($result))
             $actual_solution = $row[0];
         $actual_solution = json_decode($actual_solution);
-        if (count($actual_solution) != count($solution))
+        if (count($actual_solution) != count($solution)) {
+            http_response_code(200);
             return json_encode(["message" => "Wrong solution size"]);
+        }
         for ($i = 0; $i < count($actual_solution); $i++)
-            if ($actual_solution[$i] != $solution[$i])
+            if ($actual_solution[$i] != $solution[$i]) {
+                http_response_code(200);
                 return json_encode(["message" => "Wrong solution"]);
-
+            }
+        http_response_code(200);
         return json_encode(["message" => "Success"]);
     }
 
