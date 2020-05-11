@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>HTML & CSS Adventure</title>
-	<meta name="theme-color" content="#020307">
+	<meta name="theme-color" content="#008529">
 	<!--
 	<meta name="description" content="descriere relevanta"/>
 	<link rel="icon" type="image/x-icon" href="assets/img/icons/512.png" />
