@@ -28,51 +28,23 @@
 		<ul class="links">
 			<li><a class="button button-green" href="/html">HTML World</a></li>
 			<li><a class="button button-red" href="/css">CSS World</a></li>
-			<li><a class="button button-pink" href="/leaderboard">Leaderboard</a></li>
-			<li><a class="button button-blue button-active" href="/profile">Profile</a></li>
+			<li><a class="button button-pink button-active" href="/leaderboard">Leaderboard</a></li>
+			<li><a class="button button-blue" href="/profile">Profile</a></li>
 		</ul>
 		<div class="divider"></div>
 	</header>
 	<main>
-		<nav class="nav nav-blue nav-profile">
+		<nav class="nav nav-pink nav-profile">
 			<ul class="links">
 				<li><a class="button button-green" href="/html">HTML World</a></li>
 				<li><a class="button button-red" href="/css">CSS World</a></li>
-				<li><a class="button button-pink" href="/leaderboard">Leaderboard</a></li>
-				<li><a class="button button-blue button-active" href="/profile">Profile</a></li>
+				<li><a class="button button-pink button-active" href="/leaderboard">Leaderboard</a></li>
+				<li><a class="button button-blue" href="/profile">Profile</a></li>
 			</ul>
 		</nav>	
 		<div class="right right-profile">
 			<div class="profileData">
-				<img src="<?=$data->avatar?>" class="profilePicture">
-				<h1><?php echo $data->username; ?></h1>
-				<span>Register date: 11.05.2020</span>
-				<div class="stats">
-					<div>
-						<h2>HTML Levels completed</h2>
-						<span>10</span>
-					</div>
-					<div>
-						<h2>CSS Levels completed</h2>
-						<span>10</span>
-					</div>
-					<div>
-						<h2>HTML Rank</h2>
-						<span>1</span>
-					</div>
-					<div>
-						<h2>CSS Rank</h2>
-						<span>2</span>
-					</div>
-					<div>
-						<h2>Overall Score</h2>
-						<span>29784</span>
-					</div>
-					<div>
-						<h2>Average Time (seconds)</h2>
-						<span>40</span>
-					</div>
-				</div>
+				<!-- ... ->
 			</div>
 			<footer>
 

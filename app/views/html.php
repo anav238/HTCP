@@ -28,6 +28,7 @@
 		<ul class="links">
 			<li><a class="button button-green button-active" href="/html">HTML World</a></li>
 			<li><a class="button button-red" href="/css">CSS World</a></li>
+			<li><a class="button button-pink" href="/leaderboard">Leaderboard</a></li>
 			<li><a class="button button-blue" href="/profile">Profile</a></li>
 		</ul>
 		<div class="divider"></div>
@@ -37,6 +38,7 @@
 			<ul class="links">
 				<li><a class="button button-green button-active" href="/html">HTML World</a></li>
 				<li><a class="button button-red" href="/css">CSS World</a></li>
+				<li><a class="button button-pink" href="/leaderboard">Leaderboard</a></li>
 				<li><a class="button button-blue" href="/profile">Profile</a></li>
 			</ul>
 			<h1>HTML Challenges</h1>
