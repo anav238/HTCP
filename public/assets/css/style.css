@@ -285,6 +285,15 @@ nav.nav-blue h1 {
 nav.nav-blue ul.links {
     border-color: var(--adv-blue);
 }
+nav.nav-pink {
+    background-image: url("../img/bg-grid-pink.png");
+}
+nav.nav-pink h1 {
+    color: var(--adv-pink);
+}
+nav.nav-pink ul.links {
+    border-color: var(--adv-pink);
+}
 nav ul {
     list-style-type: none;
     padding: 0;
@@ -311,21 +320,25 @@ nav ul li .button {
 .right.right-profile {
     margin-left: 0;
 }
-.right .profileData {
-    background-image: url("../img/bg-grid-blue.png");
+.right .profileData, .right .leaderboard {
     background-size: 24px auto;
-    border: 3px solid var(--adv-blue);
     border-radius: 30px;
     box-shadow: -4px 0px 11px 0px rgba(0, 0, 0, 0.18);
     margin: 40px auto;
     padding: 30px;
     max-width: 1200px;
     width: 85%;
-    color: var(--adv-blue);
     text-align: center;
 }
-.right .profileData .profilePicture, .right .profileData h1 {
-
+.right .profileData {
+    background-image: url("../img/bg-grid-blue.png");
+    border: 3px solid var(--adv-blue);
+    color: var(--adv-blue);
+}
+.right .leaderboard {
+    background-image: url("../img/bg-grid-blue.png");
+    border: 3px solid var(--adv-blue);
+    color: var(--adv-blue);
 }
 .right .profileData .profilePicture {
     border: 3px solid var(--adv-blue);
