@@ -18,11 +18,13 @@ class Exercise {
         return $data;
     }
 
-    public static function getAllExercisesOfType($type) {
+    public static function getAvailableExercisesOfType($accessToken, $type) {
         $connection = $GLOBALS['DB_CON'];
         $type = strtoupper($type);
 
-        $query = 'SELECT "Level", "Description", "Problem" FROM public."Exercises" where "Type"=\'' . $type . '\'';
+        $currentUserLevel = User::getCurrentLevel($accessToken, $type);
+        $query = 'SELECT "Level", "Description", "Problem" FROM public."Exercises" where "Type"=\'' . $type . '\'
+                  and "Level"<=' . $currentUserLevel . ' ORDER BY "Level" ASC';
         $result = pg_query($connection, $query);
 
         $data = [];

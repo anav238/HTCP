@@ -15,10 +15,10 @@ class App
             unset($url[0]);
         }
         
-        if ($this->controller != 'api' && $this->controller != 'githubconnect' && !isset($_SESSION['user']))
+        if ($this->controller != 'api' && $this->controller != 'githubconnect' && !isset($_SESSION['accessToken']))
             $this->controller = 'login';
     
-        else if ($this->controller == 'login' && isset($_SESSION['user'])) 
+        else if ($this->controller == 'login' && isset($_SESSION['accessToken']))
             $this->controller = 'html';
 
         require_once __DIR__.'/../controllers/'.$this->controller.'.php';

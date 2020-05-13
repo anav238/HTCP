@@ -8,10 +8,10 @@
                 $access_token = $this->getAccessToken();
                 $this->loginUser($access_token);
                 header( "Location: /" );
-                exit;
+                //exit;
             }
             else {
-                header( "Location: /login" );
+                //header( "Location: /login" );
                 echo "Error";
             }
         }
@@ -74,8 +74,9 @@
             $avatar =  $result_json->{"avatar_url"};
 
             require_once __DIR__.'/../models/User.php';
-            $user = new User($username, $avatar);
-            $_SESSION['user'] = $username;
+            $newAccessToken = User::loginUser($username, $avatar);
+            $_SESSION['accessToken'] = $newAccessToken;
+            echo $_SESSION['accessToken'];
+            //$_SESSION['user'] = $username;
         }
     }
-?>
