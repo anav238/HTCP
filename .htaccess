@@ -3,4 +3,6 @@ Options -Indexes
 RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !/api/
 RewriteRule ^(.+)$ index.php?url=$1 [QSA]
+RewriteRule ^api/.+$ app/rest/rest-service.php [NC,L]

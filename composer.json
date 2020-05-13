@@ -4,7 +4,8 @@
     "ext-pgsql": "*",
     "ext-curl": "*",
     "ext-json": "*",
-    "ext-http": "*"
+    "ext-http": "*",
+    "ext-apache": "*"
   },
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"
