@@ -1,19 +1,38 @@
 <?php
 class Exercise {
 
+    public static function getExerciseById($id) {
+        $connection = $GLOBALS['DB_CON'];
+        $query = 'SELECT "Type", "Level", "Description", "Problem", "Attempts" FROM public."Exercises" where "ID"=\'' . $id . '\'';
+        $result = pg_query($connection, $query);
+
+        $data = [];
+        while ($row = pg_fetch_row($result)) {
+            $data['type'] = $row[0];
+            $data['level'] = $row[1];
+            $data['description'] = $row[2];
+            $data['problem'] = $row[3];
+            $data['attempts'] = $row[4];
+        }
+        return $data;
+    }
+
     public static function getSpecificExercise($type, $level) {
         $connection = $GLOBALS['DB_CON'];
         $type = strtoupper($type);
 
-        $query = 'SELECT "Description", "Problem" FROM public."Exercises" where "Type"=\'' . $type .
+        $query = 'SELECT "ID", "Description", "Problem", "Attempts" FROM public."Exercises" where "Type"=\'' . $type .
             '\' and "Level"=' . $level;
         $result = pg_query($connection, $query);
 
         $data = [];
         while ($row = pg_fetch_row($result)) {
+            $data['type'] = $type;
             $data['level'] = $level;
-            $data['description'] = $row[0];
-            $data['problem'] = $row[1];
+            $data['id'] = $row[0];
+            $data['description'] = $row[1];
+            $data['problem'] = $row[2];
+            $data['attempts'] = $row[3];
         }
         return $data;
     }
@@ -23,26 +42,28 @@ class Exercise {
         $type = strtoupper($type);
 
         $currentUserLevel = User::getCurrentLevel($accessToken, $type);
-        $query = 'SELECT "Level", "Description", "Problem" FROM public."Exercises" where "Type"=\'' . $type . '\'
+        $query = 'SELECT "ID", "Type", "Level", "Description", "Problem", "Attempts" FROM public."Exercises" where "Type"=\'' . $type . '\'
                   and "Level"<=' . $currentUserLevel . ' ORDER BY "Level" ASC';
         $result = pg_query($connection, $query);
 
         $data = [];
         while ($row = pg_fetch_row($result)) {
             $exercise = [];
-            $exercise['level'] = $row[0];
-            $exercise['description'] = $row[1];
-            $exercise['problem'] = $row[2];
+            $exercise['id'] = $row[0];
+            $exercise['type'] = $row[1];
+            $exercise['level'] = $row[2];
+            $exercise['description'] = $row[3];
+            $exercise['problem'] = $row[4];
+            $exercise['attempts'] = $row[5];
             array_push($data, $exercise);
         }
         return $data;
     }
 
-    public static function checkExerciseSolution($type, $level, $solution) {
+    public static function checkExerciseSolution($id, $solution) {
         $connection = $GLOBALS['DB_CON'];
 
-        $query = 'SELECT array_to_json("Solution") FROM public."Exercises" WHERE "Type"=\'' . $type
-            . '\' and "Level"=' . $level;
+        $query = 'SELECT array_to_json("Solution") FROM public."Exercises" WHERE "ID"=\'' . $id . '\'';
 
         $result = pg_query($connection, $query);
         $actual_solution = array();
@@ -57,5 +78,14 @@ class Exercise {
                 return false;
         }
         return true;
+    }
+
+    public static function incrementAttempts($id) {
+        $connection = $GLOBALS['DB_CON'];
+        $query = 'UPDATE public."Exercises" SET "Attempts"="Attempts"+1 where "ID"=\'' . $id . '\'';
+        $result = pg_query($connection, $query);
+        if ($result)
+            return true;
+        return false;
     }
 }

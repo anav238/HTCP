@@ -9,19 +9,16 @@ class User
         $row = pg_fetch_row($result);
         if ($row)
             return $row[0];
-        self::registerUser($username, $avatar);
+        return self::registerUser($username, $avatar);
     }
 
     public static function registerUser($username, $avatar) {
         $connection = $GLOBALS['DB_CON'];
         $data = array("Username" => $username, "Avatar" => $avatar, "Access Token" => uniqid());
         $res = pg_insert($connection, 'Users', $data);
-        if ($res) {
-            echo "POST data is successfully logged\n";
-        } else {
-            echo "User must have sent wrong inputs\n";
-        }
-        return $data['Access Token'];
+        if ($res)
+            return $data['Access Token'];
+        return null;
     }
 
     public static function isValidAccessToken($accessToken) {
@@ -38,6 +35,7 @@ class User
         $connection = $GLOBALS['DB_CON'];
         $query = 'SELECT "Username", "Avatar", "html_level", "css_level", "speed_score", "correctness_score", "Access Token" 
                   FROM public."Users" where "Access Token"=\'' . $accessToken . '\'';
+        echo $accessToken;
         $result = pg_query($connection, $query);
         $row = pg_fetch_row($result);
         if ($row) {
@@ -86,5 +84,15 @@ class User
             array_push($leaderboard, $userData);
         }
         return $leaderboard;
+    }
+
+    public static function levelUpUser($accessToken, $type) {
+        $connection = $GLOBALS['DB_CON'];
+        $levelLabel = strtolower($type . '_level');
+        $query = 'UPDATE public."Users" SET "' . $levelLabel . '"="'. $levelLabel . '"+1 where "Access Token"=\'' . $accessToken . '\'';
+        $result = pg_query($connection, $query);
+        if ($result)
+            return true;
+        return false;
     }
 }
