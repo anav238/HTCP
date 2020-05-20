@@ -124,6 +124,10 @@ if(window.location.pathname.includes("html")) {
             .then(response => response.json())
             .then(data => {
                 let newPageTitle = "HTML Level " + data.level + " - HTML & CSS Adventure";
+                window.history.replaceState({
+                    type: "HTML",
+                    level: data.level
+                }, newPageTitle, "/html/" + data.level);
                 document.title = newPageTitle;
                 document.querySelector("nav h1 + ul a[href*=html\\/" + data.level + "]").classList.add("button-active");
                 title.innerHTML = data.level;
