@@ -33,7 +33,7 @@
 		</ul>
 		<div class="divider"></div>
 	</header>
-	<main>
+	<main class="loading">
 		<nav class="nav nav-green">
 			<ul class="links">
 				<li><a class="button button-green button-active" href="/html">HTML World</a></li>
@@ -43,19 +43,16 @@
 			</ul>
 			<h1>HTML Challenges</h1>
 			<ul>
-				<li><a href="/html/1" class="button button-green button-active">Level 1</a></li>
-				<li><a href="/html/2" class="button button-green">Level 2</a></li>
-				<li><a href="/html/3" class="button button-green">Level 3</a></li>
-				<li><a href="/html/4" class="button button-green">Level 4</a></li>
-				<li><a href="/html/5" class="button button-green">Level 5</a></li>
-				<li><a href="/html/5" class="button button-green">Level 6</a></li>
-				<li><a href="/html/5" class="button button-green">Level 7</a></li>
-				<li><a href="/html/5" class="button button-green">Level 8</a></li>
-				<li><a href="/html/5" class="button button-green">Level 9</a></li>
-				<li><a href="/html/5" class="button button-green">Level 10</a></li>
+
 			</ul>
 		</nav>
 		<div class="right">
+			<div class="loading-info">
+				<div class="loading-info-spinner"></div>
+				<div class="loading-info-text">
+					Loading levels...
+				</div>
+			</div>
 			<div class="instructions">
 				<h1>HTML Adventure - Level <span></span></h1>
 				<p></p>

@@ -448,6 +448,48 @@ nav ul li .button {
 .resultArea iframe#marioStory .goomba {
     max-width: 100px;
 }
+.right .loading-info {
+    display: none;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+.right .loading-info .loading-info-spinner {
+    width: 35px;
+    height: 35px;
+    margin: 0 auto .35em;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+.right .loading-info .loading-info-text {
+    font-weight: 600;
+    text-align: center;
+}
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+main.loading nav,
+main.loading nav ul.links + h1,
+main.loading nav ul.links + h1 + ul,
+main.loading .right * {
+    display: none;
+}
+main.loading .right {
+    margin-left: 0;
+}
+main.loading nav ul.links {
+    border: none;
+}
+main.loading .right .loading-info {
+    display: flex;
+}
+main.loading .right .loading-info * {
+    display: block;
+}
 @media only screen and (max-width: 1199px) {
     .right .code {
         flex-direction: column;
