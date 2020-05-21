@@ -7,4 +7,3 @@
             $this->view('login');
         }
     }
-?>

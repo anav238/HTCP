@@ -24,11 +24,17 @@ function IsLoggedIn($req) {
 }
 
 function HasReachedLevel($req) {
-    if (!isset($req['query']['type']) || !isset($req['query']['level']))
-        return true;
-
-    $levelType = strtoupper($req['query']['type']);
-    $level = $req['query']['level'];
+    if (isset($req['params']['id'])) {
+        $data = Exercise::getExerciseById(getAccessToken(), $req['params']['id']);
+        $levelType = $data['type'];
+        $level = $data['level'];
+    }
+    else {
+        if (!isset($req['query']['type']) || !isset($req['query']['level']))
+            return true;
+        $levelType = strtoupper($req['query']['type']);
+        $level = $req['query']['level'];
+    }
 
     $currentLevel = User::getCurrentLevel(getAccessToken(), $levelType);
     if ($currentLevel < $level) {
@@ -40,4 +46,22 @@ function HasReachedLevel($req) {
         return false;
     }
     return true;
+}
+
+function HasNotSolvedLevel($req) {
+    $id = $req['params']['id'];
+    $data = Exercise::getExerciseById(getAccessToken(), $id);
+    $levelType = $data['type'];
+    $level = $data['level'];
+
+    $currentLevel = User::getCurrentLevel(getAccessToken(), $levelType);
+    if ($currentLevel == $level)
+        return true;
+
+    Response::status(403);
+    Response::json([
+            "status" => 403,
+            "reason" => "You already solved this exercise."]
+    );
+    return false;
 }

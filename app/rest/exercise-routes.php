@@ -16,20 +16,16 @@ $exerciseRoutes = [
     ],
     [
         "method" => "POST",
-        "route" => "exercises",
-        "query" => ["type", "level"],
-        "middlewares" => ["IsLoggedIn"],
+        "route" => "exercises/:id",
+        "middlewares" => ["IsLoggedIn", "HasReachedLevel", "HasNotSolvedLevel"],
         "handler" => "submitExercise"
     ]
 ];
 
 function getExercises($req) {
 
-    if ($_SERVER['REQUEST_METHOD'] != 'GET')
-        return;
-
     if (isset($req['query']['type']) && isset($req['query']['level'])) {
-        $data = Exercise::getSpecificExercise($req['query']['type'], $req['query']['level']);
+        $data = Exercise::getSpecificExercise(getAccessToken(),$req['query']['type'], $req['query']['level']);
         Response::status(200);
         Response::json($data);
     }
@@ -59,25 +55,24 @@ function getExercises($req) {
 }
 
 function getCurrentExerciseOfType($req) {
-    switch($_SERVER['REQUEST_METHOD']) {
-        case 'GET':
-            $type = strtoupper($req['params']['type']);
-            $currentLevel = User::getCurrentLevel($_SESSION['accessToken'], $type);
-            $data = Exercise::getSpecificExercise($type, $currentLevel);
-            Response::status(200);
-            Response::json($data);
-    }
+    $type = strtoupper($req['params']['type']);
+    $currentLevel = User::getCurrentLevel(getAccessToken(), $type);
+    $data = Exercise::getSpecificExercise(getAccessToken(), $type, $currentLevel);
+    Response::status(200);
+    Response::json($data);
 }
 
 function submitExercise($req) {
-    if ($_SERVER['REQUEST_METHOD'] != 'POST')
-        return;
-    $type = strtoupper($req['query']['type']);
-    $level = $req['query']['level'];
+    $id = $req['params']['id'];
     $solution = $req['payload']->solution;
-    $result = Exercise::checkExerciseSolution($type, $level, $solution);
+    $result = Exercise::checkExerciseSolution($id, $solution);
+    Exercise::incrementAttempts(getAccessToken(), $id);
+    $type = Exercise::getExerciseById(getAccessToken(), $id)['type'];
+
     Response::status(200);
     if ($result) {
+        User::levelUpUser(getAccessToken(), $type);
+        User::updateUserScores(getAccessToken(), $id);
         Response::json([
             "status" => 200,
             "reason" => "Success!"
@@ -89,4 +84,5 @@ function submitExercise($req) {
             "reason" => "Wrong solution!"
         ]);
     }
+
 }
