@@ -25,7 +25,7 @@ function IsLoggedIn($req) {
 
 function HasReachedLevel($req) {
     if (isset($req['params']['id'])) {
-        $data = Exercise::getExerciseById($req['params']['id']);
+        $data = Exercise::getExerciseById(getAccessToken(), $req['params']['id']);
         $levelType = $data['type'];
         $level = $data['level'];
     }
@@ -50,7 +50,7 @@ function HasReachedLevel($req) {
 
 function HasNotSolvedLevel($req) {
     $id = $req['params']['id'];
-    $data = Exercise::getExerciseById($id);
+    $data = Exercise::getExerciseById(getAccessToken(), $id);
     $levelType = $data['type'];
     $level = $data['level'];
 

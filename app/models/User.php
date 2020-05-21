@@ -80,7 +80,7 @@ class User
             $userData = array();
             $userData['username'] = $row[0];
             $userData['avatar'] = $row[1];
-            $userData[$orderingCriteria] = $row[2];
+            $userData[$orderingCriteria] = round($row[2], 2);
             array_push($leaderboard, $userData);
         }
         return $leaderboard;
@@ -93,6 +93,34 @@ class User
         $result = pg_query($connection, $query);
         if ($result)
             return true;
+        return false;
+    }
+
+    public static function updateUserScores($accessToken, $solvedExerciseId) {
+        $connection = $GLOBALS['DB_CON'];
+
+        $query = 'SELECT "DateOpened", "Attempts" from public."ExerciseAttempts" 
+                    where "ExerciseID"=\'' . $solvedExerciseId . '\' and "UserToken"=\'' .
+                    $accessToken . '\'';
+        $result = pg_query($connection, $query);
+        $row = pg_fetch_row($result);
+
+        if ($row) {
+            $dateOpened = date_create($row[0]);
+            $currentDate = date_create(strtotime($_SERVER['REQUEST_TIME']));
+            $attempts = $row[1];
+
+            $correctnessUpdate = round(100 / $attempts, 2);
+            $interval = date_diff($dateOpened, $currentDate);
+            $speedUpdate = round(100 / $interval->i, 2);
+
+            $query = 'UPDATE public."Users" SET "correctness_score"="correctness_score"+' . $correctnessUpdate .
+                ', "speed_score"="speed_score"+'. $speedUpdate . ' where "Access Token"=\'' . $accessToken . '\'';
+            $result = pg_query($connection, $query);
+            if ($result)
+                return true;
+            return false;
+        }
         return false;
     }
 }

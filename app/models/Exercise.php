@@ -1,7 +1,7 @@
 <?php
 class Exercise {
 
-    public static function getExerciseById($id) {
+    public static function getExerciseById($accessToken, $id) {
         $connection = $GLOBALS['DB_CON'];
         $query = 'SELECT "Type", "Level", "Description", "Problem", "Attempts" FROM public."Exercises" where "ID"=\'' . $id . '\'';
         $result = pg_query($connection, $query);
@@ -14,10 +14,11 @@ class Exercise {
             $data['problem'] = $row[3];
             $data['attempts'] = $row[4];
         }
+        self::markExerciseAsOpened($accessToken, $id);
         return $data;
     }
 
-    public static function getSpecificExercise($type, $level) {
+    public static function getSpecificExercise($accessToken, $type, $level) {
         $connection = $GLOBALS['DB_CON'];
         $type = strtoupper($type);
 
@@ -26,13 +27,14 @@ class Exercise {
         $result = pg_query($connection, $query);
 
         $data = [];
-        while ($row = pg_fetch_row($result)) {
+        if ($row = pg_fetch_row($result)) {
             $data['type'] = $type;
             $data['level'] = $level;
             $data['id'] = $row[0];
             $data['description'] = $row[1];
             $data['problem'] = $row[2];
             $data['attempts'] = $row[3];
+            self::markExerciseAsOpened($accessToken, $data['id']);
         }
         return $data;
     }
@@ -80,12 +82,30 @@ class Exercise {
         return true;
     }
 
-    public static function incrementAttempts($id) {
+    public static function incrementAttempts($accessToken, $id) {
         $connection = $GLOBALS['DB_CON'];
         $query = 'UPDATE public."Exercises" SET "Attempts"="Attempts"+1 where "ID"=\'' . $id . '\'';
+        $result = pg_query($connection, $query);
+        if (!$result)
+            return false;
+        $query = 'UPDATE public."ExerciseAttempts" SET "Attempts"="Attempts"+1 where "ExerciseID"=\'' . $id . '\' and
+                    "UserToken"=\'' . $accessToken . '\'';
         $result = pg_query($connection, $query);
         if ($result)
             return true;
         return false;
+    }
+
+    public static function markExerciseAsOpened($accessToken, $exerciseId) {
+        $connection = $GLOBALS['DB_CON'];
+        $query = 'SELECT "ExerciseID" from public."ExerciseAttempts" 
+                    where "ExerciseID"=\'' . $exerciseId . '\' and "UserToken"=\'' .
+                    $accessToken . '\'';
+        $result = pg_query($connection, $query);
+        $row = pg_fetch_row($result);
+        if (!$row) {
+            $data = array("ExerciseID" => $exerciseId, "UserToken" => $accessToken);
+            $result = pg_insert($connection, 'ExerciseAttempts', $data);
+        }
     }
 }
