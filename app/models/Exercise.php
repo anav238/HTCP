@@ -3,7 +3,7 @@ class Exercise {
 
     public static function getExerciseById($accessToken, $id) {
         $connection = $GLOBALS['DB_CON'];
-        $query = 'SELECT "Type", "Level", "Description", "Problem", "Attempts" FROM public."Exercises" where "ID"=\'' . $id . '\'';
+        $query = 'SELECT "Type", "Level", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises" where "ID"=\'' . $id . '\'';
         $result = pg_query($connection, $query);
 
         $data = [];
@@ -13,6 +13,7 @@ class Exercise {
             $data['description'] = $row[2];
             $data['problem'] = $row[3];
             $data['attempts'] = $row[4];
+            $data['extraHTML'] = $row[5];
         }
         self::markExerciseAsOpened($accessToken, $id);
         return $data;
@@ -22,7 +23,7 @@ class Exercise {
         $connection = $GLOBALS['DB_CON'];
         $type = strtoupper($type);
 
-        $query = 'SELECT "ID", "Description", "Problem", "Attempts" FROM public."Exercises" where "Type"=\'' . $type .
+        $query = 'SELECT "ID", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises" where "Type"=\'' . $type .
             '\' and "Level"=' . $level;
         $result = pg_query($connection, $query);
 
@@ -34,6 +35,7 @@ class Exercise {
             $data['description'] = $row[1];
             $data['problem'] = $row[2];
             $data['attempts'] = $row[3];
+            $data['extraHTML'] = $row[4];
             self::markExerciseAsOpened($accessToken, $data['id']);
         }
         return $data;
@@ -44,7 +46,7 @@ class Exercise {
         $type = strtoupper($type);
 
         $currentUserLevel = User::getCurrentLevel($accessToken, $type);
-        $query = 'SELECT "ID", "Type", "Level", "Description", "Problem", "Attempts" FROM public."Exercises" where "Type"=\'' . $type . '\'
+        $query = 'SELECT "ID", "Type", "Level", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises" where "Type"=\'' . $type . '\'
                   and "Level"<=' . $currentUserLevel . ' ORDER BY "Level" ASC';
         $result = pg_query($connection, $query);
 
@@ -57,6 +59,7 @@ class Exercise {
             $exercise['description'] = $row[3];
             $exercise['problem'] = $row[4];
             $exercise['attempts'] = $row[5];
+            $exercise['extraHTML'] = $row[6];
             array_push($data, $exercise);
         }
         return $data;
