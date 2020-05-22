@@ -35,7 +35,6 @@ class User
         $connection = $GLOBALS['DB_CON'];
         $query = 'SELECT "Username", "Avatar", "html_level", "css_level", "speed_score", "correctness_score", "Access Token" 
                   FROM public."Users" where "Access Token"=\'' . $accessToken . '\'';
-        echo $accessToken;
         $result = pg_query($connection, $query);
         $row = pg_fetch_row($result);
         if ($row) {
@@ -44,8 +43,8 @@ class User
                 'avatar' => $row[1],
                 'html_level' => $row[2],
                 'css_level' => $row[3],
-                'speed_score' => $row[4],
-                'correctness_score' => $row[5],
+                'speed_score' => round($row[4], 2),
+                'correctness_score' => round($row[5], 2),
                 'accessToken' => $row[6]);
         }
         return array();
