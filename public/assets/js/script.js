@@ -36,6 +36,17 @@ window.addEventListener("resize", () => {
 });
 
 /*
+    Function to show page when content is loaded (called in some fetch() functions)
+*/
+let loaded = 0;
+
+function showElements() {
+    if(!loaded) {
+        document.querySelector("main").classList.remove("loading");
+        loaded = 1;
+    }
+}
+/*
     Running when on root
 */
 if(window.location.pathname === "/") {
@@ -50,8 +61,6 @@ if(window.location.pathname === "/") {
     Running when on a HTML level (the URI contains "html")
 */
 if(window.location.pathname.includes("html")) {
-    let loaded = 0;
-
     let editor = document.querySelector(".codeArea code");
     let title = document.querySelector(".instructions span");
     let instructions = document.querySelector(".instructions p");
@@ -59,14 +68,6 @@ if(window.location.pathname.includes("html")) {
     let editorInputs = editor.getElementsByTagName("input");
     let result = document.querySelector("iframe");
     let button = document.getElementById("submit");
-
-    // Shows page elements after fetch loads
-    function showElements() {
-        if(!loaded) {
-            document.querySelector("main").classList.remove("loading");
-            loaded = 1;
-        }
-    }
 
     // Loads the level list and add events when clicking a level button
     let levelList = document.querySelector("nav h1 + ul");
@@ -104,9 +105,13 @@ if(window.location.pathname.includes("html")) {
     // Refresh the result area
     function refreshResult() {
         let content = "data:text/html;charset=utf-8," + editor.innerHTML;
-        content = content.replace(/<br[^>]*>/g, "");
         for (let i = 0; i < editorInputs.length; i++)
             content = content.replace(/<input[^>]*>/, editorInputs[i].value);
+        console.log(content);
+        content = content.replace(/<br[^>]*>/g, "")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/img src="/g, "img src=\"" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/");
         result.contentWindow.location.replace(encodeURI(content));
     }
     editor.addEventListener("keyup", refreshResult);
@@ -171,4 +176,21 @@ if(window.location.pathname.includes("html")) {
                 });
         }
     }, false);
+}
+
+/*
+    Running when on profile page (the URI contains "profile")
+*/
+if(window.location.pathname.includes("profile")) {
+    fetch('/api/users/ping')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector(".right .profileData img").src = data.avatar;
+            document.querySelector(".right .profileData h1").innerHTML = data.username;
+            document.querySelector(".right .profileData .stats div:nth-child(1) span").innerHTML = data.html_level;
+            document.querySelector(".right .profileData .stats div:nth-child(2) span").innerHTML = data.css_level;
+            document.querySelector(".right .profileData .stats div:nth-child(3) span").innerHTML = data.speed_score;
+            document.querySelector(".right .profileData .stats div:nth-child(4) span").innerHTML = data.correctness_score;
+            showElements();
+        })
 }

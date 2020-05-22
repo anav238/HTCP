@@ -33,7 +33,7 @@
 		</ul>
 		<div class="divider"></div>
 	</header>
-	<main>
+	<main class="loading">
 		<nav class="nav nav-blue nav-profile">
 			<ul class="links">
 				<li><a class="button button-green" href="/html">HTML World</a></li>
@@ -43,34 +43,32 @@
 			</ul>
 		</nav>	
 		<div class="right right-profile">
+			<div class="loading-info">
+				<div class="loading-info-spinner"></div>
+				<div class="loading-info-text">
+					Loading profile data...
+				</div>
+			</div>
 			<div class="profileData">
-				<img src="<?=$data->avatar?>" class="profilePicture">
-				<h1><?php echo $data->username; ?></h1>
-				<span>Register date: 11.05.2020</span>
+				<img src="http://localhost/public/assets/img/placeholder-profile-pic.png" class="profilePicture">
+				<h1></h1>
+				<!-- <span>Register date</span> -->
 				<div class="stats">
 					<div>
 						<h2>HTML Levels completed</h2>
-						<span>10</span>
+						<span></span>
 					</div>
 					<div>
 						<h2>CSS Levels completed</h2>
-						<span>10</span>
+						<span></span>
 					</div>
 					<div>
-						<h2>HTML Rank</h2>
-						<span>1</span>
+						<h2>Speed Score</h2>
+						<span></span>
 					</div>
 					<div>
-						<h2>CSS Rank</h2>
-						<span>2</span>
-					</div>
-					<div>
-						<h2>Overall Score</h2>
-						<span>29784</span>
-					</div>
-					<div>
-						<h2>Average Time (seconds)</h2>
-						<span>40</span>
+						<h2>Correctness Score</h2>
+						<span></span>
 					</div>
 				</div>
 			</div>

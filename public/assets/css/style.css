@@ -356,7 +356,7 @@ nav ul li .button {
 .right .profileData .stats {
     margin: 2em;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 .right .profileData .stats div h2 {
     font-weight: 600;
@@ -395,9 +395,14 @@ nav ul li .button {
     padding: 0.1em 1em;
     right: 15px;
 }
+.right .codeArea code {
+    word-break: break-all;
+}
 .right .codeArea input {
+    font-family: 'Courier New', Courier, monospace;
     border: 1px solid #c5c5c5;
-    width: 30px;
+    padding: 2px 3px;
+    margin: 2px;
 }
 .right .codeArea, .right .resultArea {
     margin: 25px;
@@ -508,7 +513,7 @@ main.loading .right .loading-info * {
         margin: 0 auto;
     }
     .right .profileData .stats {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 @media only screen and (max-width: 767px) {
@@ -533,9 +538,6 @@ main.loading .right .loading-info * {
     }
     .right {
         margin-left: 0;
-    }
-    .right .profileData .stats {
-        grid-template-columns: repeat(2, 1fr);
     }
 }
 @media only screen and (max-width: 599px) {
