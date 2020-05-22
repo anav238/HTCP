@@ -16,8 +16,9 @@ $exerciseRoutes = [
     ],
     [
         "method" => "POST",
-        "route" => "exercises/:id",
+        "route" => "exercises",
         "middlewares" => ["IsLoggedIn", "HasReachedLevel", "HasNotSolvedLevel"],
+        "query" => ["id"],
         "handler" => "submitExercise"
     ]
 ];
@@ -63,16 +64,20 @@ function getCurrentExerciseOfType($req) {
 }
 
 function submitExercise($req) {
-    $id = $req['params']['id'];
+    $id = $req['query']['id'];
     $solution = $req['payload']->solution;
     $result = Exercise::checkExerciseSolution($id, $solution);
-    Exercise::incrementAttempts(getAccessToken(), $id);
-    $type = Exercise::getExerciseById(getAccessToken(), $id)['type'];
+    $accessToken = getAccessToken();
+    Exercise::incrementAttempts($accessToken, $id);
+    $exercise = Exercise::getExerciseById($accessToken, $id);
+    $type = $exercise['type'];
+    $level = $exercise['level'];
 
     Response::status(200);
     if ($result) {
-        User::levelUpUser(getAccessToken(), $type);
-        User::updateUserScores(getAccessToken(), $id);
+        if ($level < 10)
+            User::levelUpUser($accessToken, $type);
+        User::updateUserScores($accessToken, $id);
         Response::json([
             "status" => 200,
             "reason" => "Success!"
