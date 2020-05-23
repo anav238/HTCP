@@ -11,7 +11,7 @@
 <body class="sign-in">
     <main>
         <div>
-            <h1>HTML&CSS <br> <span>Arcade</span></h1>
+            <h1>HTML & CSS <br><span>Arcade</span></h1>
             <a href="https://github.com/login/oauth/authorize?client_id=<?php echo $GLOBALS['GITHUB_CLIENT_ID']; ?>"><button><i class="fab fa-github"></i>Sign in with Github</button></a>
         </div>
     </main>

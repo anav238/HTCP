@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<div class="profileData">
-				<img src="http://localhost/public/assets/img/placeholder-profile-pic.png" class="profilePicture">
+				<img src="/public/assets/img/placeholder-profile-pic.png" class="profilePicture">
 				<h1></h1>
 				<!-- <span>Register date</span> -->
 				<div class="stats">

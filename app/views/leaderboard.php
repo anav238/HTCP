@@ -33,7 +33,7 @@
 		</ul>
 		<div class="divider"></div>
 	</header>
-	<main>
+	<main class="loading">
 		<nav class="nav nav-pink nav-profile">
 			<ul class="links">
 				<li><a class="button button-green" href="/html">HTML World</a></li>
@@ -43,9 +43,41 @@
 			</ul>
 		</nav>	
 		<div class="right right-profile">
-			<div class="profileData">
-				<table>
-				</table>
+			<div class="loading-info">
+				<div class="loading-info-spinner"></div>
+				<div class="loading-info-text">
+					Loading leaderboard...
+				</div>
+			</div>
+			<div class="leaderboard">
+				<div>
+					<h1>Corectness Leaderboard</h1>
+					<table>
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Username</th>
+								<th>Score</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div>
+					<h1>Speed Leaderboard</h1>
+					<table>
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Username</th>
+								<th>Score</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<footer>
 

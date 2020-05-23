@@ -38,12 +38,12 @@ window.addEventListener("resize", () => {
 /*
     Function to show page when content is loaded (called in some fetch() functions)
 */
-let loaded = 0;
+let loaded = false;
 
 function showElements() {
     if(!loaded) {
         document.querySelector("main").classList.remove("loading");
-        loaded = 1;
+        loaded = true;
     }
 }
 /*
@@ -107,7 +107,6 @@ if(window.location.pathname.includes("html")) {
         let content = "data:text/html;charset=utf-8," + editor.innerHTML;
         for (let i = 0; i < editorInputs.length; i++)
             content = content.replace(/<input[^>]*>/, editorInputs[i].value);
-        console.log(content);
         content = content.replace(/<br[^>]*>/g, "")
             .replace(/&lt;/g, "<")
             .replace(/&gt;/g, ">")
@@ -181,10 +180,45 @@ if(window.location.pathname.includes("html")) {
 /*
     Running when on profile page (the URI contains "profile")
 */
+if(window.location.pathname.includes("leaderboard")) {
+    Promise.all([
+        fetch('/api/users/correctnessLeaderboard'),
+        fetch('/api/users/speedLeaderboard')
+    ])
+        .then(responses => Promise.all(responses.map(response => response.json())))
+        .then(data => {
+            // Correctness leaderboard
+            let correctnessTable = document.querySelector(".right .leaderboard div:nth-child(1) table tbody");
+            for(let i in data[0]) {
+                let rank = parseInt(i) + 1;
+                correctnessTable.insertAdjacentHTML("beforeend", "<tr>\
+                <td>" + rank + "</td>\
+                <td><img src=\"" + data[0][i].avatar + "\" alt=\"" + data[0][i].username + "'s avatar\" />" + data[0][i].username + "</td>\
+                <td>" + data[0][i].correctness_score + "</td>\
+                </tr>");
+            }
+            // Speed leaderboard
+            let speedTable = document.querySelector(".right .leaderboard div:nth-child(2) table tbody");
+            for(let i in data[1]) {
+                let rank = parseInt(i) + 1;
+                speedTable.insertAdjacentHTML("beforeend", "<tr>\
+                <td>" + rank + "</td>\
+                <td><img src=\"" + data[1][i].avatar + "\" alt=\"" + data[1][i].username + "'s avatar\" />" + data[1][i].username + "</td>\
+                <td>" + data[1][i].speed_score + "</td>\
+                </tr>");
+            }
+            showElements();
+        });
+}
+
+/*
+    Running when on profile page (the URI contains "profile")
+*/
 if(window.location.pathname.includes("profile")) {
     fetch('/api/users/ping')
         .then(response => response.json())
         .then(data => {
+            document.title = data.username + " - HTML & CSS Adventure";
             document.querySelector(".right .profileData img").src = data.avatar;
             document.querySelector(".right .profileData h1").innerHTML = data.username;
             document.querySelector(".right .profileData .stats div:nth-child(1) span").innerHTML = data.html_level;
@@ -192,5 +226,5 @@ if(window.location.pathname.includes("profile")) {
             document.querySelector(".right .profileData .stats div:nth-child(3) span").innerHTML = data.speed_score;
             document.querySelector(".right .profileData .stats div:nth-child(4) span").innerHTML = data.correctness_score;
             showElements();
-        })
+        });
 }
