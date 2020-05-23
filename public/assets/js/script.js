@@ -50,11 +50,7 @@ function showElements() {
     Running when on root
 */
 if(window.location.pathname === "/") {
-    fetch('/api/exercises/html/current')
-        .then(response => response.json())
-        .then(data => {
-            window.location.href = "/html/" + data.level;
-        });
+    window.location.href = "/html";
 }
 
 /*
@@ -69,39 +65,6 @@ if(window.location.pathname.includes("html")) {
     let result = document.querySelector("iframe");
     let button = document.getElementById("submit");
 
-    // Loads the level list and add events when clicking a level button
-    let levelList = document.querySelector("nav h1 + ul");
-    fetch('/api/exercises/html/current')
-        .then(response => response.json())
-        .then(data => {
-            for(let i = 1; i <= data.level; i++) {
-                levelList.insertAdjacentHTML("beforeend", "<li><a href=\"/html/" + i + "\" class=\"button button-green\">Level " + i + "</a></li>")
-            }
-            let a = document.querySelectorAll("nav h1 + ul a[href*=html]");
-            for(let i = 0; i < a.length; i++) {
-                let levelNumber = a[i].getAttribute("href").substring(6);
-                a[i].addEventListener("click", (e) => {
-                    fetch('/api/exercises?type=html&level=' + levelNumber)
-                        .then(response => response.json())
-                        .then(data => {
-                            let newPageTitle = "HTML Level " + data.level + " - HTML & CSS Adventure";
-                            window.history.pushState({
-                                type: "HTML",
-                                level: data.level
-                            }, newPageTitle, "/html/" + data.level);
-                            document.title = newPageTitle;
-                            document.querySelector("nav h1 + ul a.button-active").classList.remove("button-active");
-                            a[i].classList.add("button-active");
-                            title.innerHTML = data.level;
-                            instructions.innerHTML = data.description;
-                            editor.innerHTML = data.problem;
-                            refreshResult();
-                        });
-                    e.preventDefault();
-                });
-            }
-        });
-    
     // Refresh the result area
     function refreshResult() {
         let content = "data:text/html;charset=utf-8," + editor.innerHTML;
@@ -115,70 +78,94 @@ if(window.location.pathname.includes("html")) {
     }
     editor.addEventListener("keyup", refreshResult);
 
-    // Getting level number from URI
-    let levelNumber;
-    if(window.location.pathname.match(/\d+/g))
-        levelNumber = window.location.pathname.match(/\d+/g)[0];
-    else
-        levelNumber = null;
+    // Showing level info
+    function loadExercise(exercise, changeActiveButton = false, state = "unset") {
+        if(changeActiveButton)
+            document.querySelector("nav h1 + ul a.button-active").classList.remove("button-active");
+        document.querySelector("nav h1 + ul a[href*=html\\/" + exercise.level + "]").classList.add("button-active");
+        let newPageTitle = "HTML Level " + exercise.level + " - HTML & CSS Adventure";
+        if(state === "replaceState") {
+            window.history.replaceState({
+                type: "HTML",
+                level: exercise.level
+            }, newPageTitle, "/html/" + exercise.level);
+            document.title = newPageTitle;
+        }
+        else if(state === "pushState") {
+            window.history.pushState({
+                type: "HTML",
+                level: exercise.level
+            }, newPageTitle, "/html/" + exercise.level);
+            document.title = newPageTitle;
+        }
+        title.innerHTML = exercise.level;
+        instructions.innerHTML = exercise.description;
+        editor.innerHTML = exercise.problem;
+        refreshResult();
+    }
 
-    // Loads the level from URI, if it's not specified, loads user's current level
-    if(levelNumber) {
-        fetch('/api/exercises?type=html&level=' + levelNumber)
-            .then(response => response.json())
-            .then(data => {
-                let newPageTitle = "HTML Level " + data.level + " - HTML & CSS Adventure";
-                window.history.replaceState({
-                    type: "HTML",
-                    level: data.level
-                }, newPageTitle, "/html/" + data.level);
-                document.title = newPageTitle;
-                document.querySelector("nav h1 + ul a[href*=html\\/" + data.level + "]").classList.add("button-active");
-                title.innerHTML = data.level;
-                instructions.innerHTML = data.description;
-                editor.innerHTML = data.problem;
-                refreshResult();
-                showElements();
-            });
-    }
-    else {
-        fetch('/api/exercises/html/current')
-            .then(response => response.json())
-            .then(data => {
-                let newPageTitle = "HTML Level " + data.level + " - HTML & CSS Adventure";
-                window.history.replaceState({
-                    type: "HTML",
-                    level: data.level
-                }, newPageTitle, "/html/" + data.level);
-                document.title = newPageTitle;
-                document.querySelector("nav h1 + ul a[href*=html\\/" + data.level + "]").classList.add("button-active");
-                title.innerHTML = data.level;
-                instructions.innerHTML = data.description;
-                editor.innerHTML = data.problem;
-                refreshResult();
-                showElements();
-            });
-    }
+    // Loading levels
+    fetch('/api/exercises')
+        .then(response => response.json())
+        .then(data => {
+            // Getting highest unlocked number and storing indexes of levels
+            let exercises = [], exercise = {}, highestLevel = 0;
+            for(let i in data) {
+                if(data[i].type === "HTML") {
+                    exercises[data[i].level] = i;
+                    if(highestLevel < data[i].level)
+                        highestLevel = data[i].level;
+                }
+            }
+
+            // Placing links for all the unlocked levels
+            let levelList = document.querySelector("nav h1 + ul");
+            for(let i = 1; i <= highestLevel; i++)
+                levelList.insertAdjacentHTML("beforeend", "<li><a href=\"/html/" + i + "\" class=\"button button-green\">Level " + i + "</a></li>");
+            
+            // Getting level number from URI
+            let requestedLevel;
+            if(window.location.pathname.match(/\d+/g))
+                requestedLevel = window.location.pathname.match(/\d+/g)[0];
+            else
+                requestedLevel = highestLevel;
+            
+            // Copying object to make it easier for us to do any other things
+            exercise = data[exercises[requestedLevel]];
+
+            // Showing the requested level page
+            loadExercise(exercise, false, "replaceState");
+
+            // Adding events when clicking a level link
+            let a = document.querySelectorAll("nav h1 + ul a[href*=html]");
+            for(let i = 0; i < a.length; i++) {
+                let levelNumber = a[i].getAttribute("href").substring(6);
+                a[i].addEventListener("click", (e) => {
+                    fetch('/api/exercises?type=html&level=' + levelNumber)
+                        .then(response => response.json())
+                        .then(data => {
+                            loadExercise(data, true, "pushState");
+                        });
+                    e.preventDefault();
+                });
+            }
+
+            // Unhide loaded content
+            showElements();
+        });
         
     // Loads a level after pressing back/forward buttons in browser
     window.addEventListener('popstate', ()  => {
         if(history.state.type === "HTML") {
             fetch('/api/exercises?type=html&level=' + history.state.level)
                 .then(response => response.json())
-                .then(data => {
-                    document.querySelector("nav h1 + ul a.button-active").classList.remove("button-active");
-                    document.querySelector("nav h1 + ul a[href*=html\\/" + data.level + "]").classList.add("button-active");
-                    title.innerHTML = data.level;
-                    instructions.innerHTML = data.description;
-                    editor.innerHTML = data.problem;
-                    refreshResult();
-                });
+                .then(data => loadExercise(data, true));
         }
     }, false);
 }
 
 /*
-    Running when on profile page (the URI contains "profile")
+    Running when on leaderboard page (the URI contains "leaderboard")
 */
 if(window.location.pathname.includes("leaderboard")) {
     Promise.all([
