@@ -24,8 +24,8 @@
             );
 
             $fields = array(
-                'client_id' => urlencode($GLOBALS['GITHUB_CLIENT_ID']),
-                'client_secret' => urlencode($GLOBALS['GITHUB_CLIENT_SECRET']),
+                'client_id' => urlencode(getenv("GITHUB_CLIENT_ID")),
+                'client_secret' => urlencode(getenv("GITHUB_CLIENT_SECRET")),
                 'code' => urlencode($_GET["code"])
             );
 

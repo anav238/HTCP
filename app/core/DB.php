@@ -10,8 +10,8 @@ class DB {
 
     // get the database connection
     public function __construct() {
-        $this->username = $GLOBALS['DB_USER'];
-        $this->password = $GLOBALS['DB_PASS'];
+        $this->username = getenv("DB_USER");
+        $this->password = getenv("DB_PASS");
         $connection = pg_connect("host=" . $this->host . " dbname=" . $this->database . " user=" . $this->username . " password=" . $this->password)
                 or die("Can't connect to database".pg_last_error());
         $GLOBALS['DB_CON'] = $connection;

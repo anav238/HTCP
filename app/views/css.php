@@ -11,7 +11,7 @@
 	<link rel="icon" type="image/x-icon" href="assets/img/icons/512.png" />
 	<link rel="manifest" href="assets/js/manifest.json">
 	-->
-	<link href="<?php echo $GLOBALS['CSS_PATH']; ?>/style.css" rel="stylesheet" />
+	<link href="<?php echo getenv("CSS_PATH"); ?>/style.css" rel="stylesheet" />
 </head>
 <body>
 	<header>
@@ -74,7 +74,7 @@
 		
 	</main>
 
-	<script src="<?=$GLOBALS['JS_PATH']?>/script.js" type="text/javascript"></script>
+	<script src="<?=getenv("JS_PATH")?>/script.js" type="text/javascript"></script>
 
 </body>
 </html>
