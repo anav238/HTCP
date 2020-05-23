@@ -3,9 +3,7 @@
     "silex/silex": "^2.0.4",
     "ext-pgsql": "*",
     "ext-curl": "*",
-    "ext-json": "*",
-    "ext-http": "*",
-    "ext-apache": "*"
+    "ext-json": "*"
   },
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"
