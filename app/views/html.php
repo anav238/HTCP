@@ -50,7 +50,7 @@
 			<div class="loading-info">
 				<div class="loading-info-spinner"></div>
 				<div class="loading-info-text">
-					Loading levels...
+					Loading level...
 				</div>
 			</div>
 			<div class="instructions">

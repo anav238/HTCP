@@ -553,11 +553,26 @@ main.loading .right {
 main.loading nav ul.links {
     border: none;
 }
-main.loading .right .loading-info {
+main.loading .right .loading-info, main.partial-loading .right .loading-info {
     display: flex;
+    z-index: 3;
 }
-main.loading .right .loading-info * {
+main.partial-loading .right .loading-info {
+    position: absolute;
+    margin: 0 auto;
+    width: calc(100% - 240px);
+    height: calc(100% - 104px);
+}
+main.loading .right .loading-info *, main.partial-loading .right .loading-info * {
     display: block;
+}
+main.partial-loading .right::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    width: calc(100% - 240px);
+    height: calc(100% - 104px);
+    background: rgba(0, 0, 0, 0.85);
 }
 @media only screen and (max-width: 1199px) {
     .right .code {
@@ -627,6 +642,10 @@ main.loading .right .loading-info * {
     }
     .right .leaderboard > div:nth-child(2) h1 {
         margin-top: 1em;
+    }
+    main.partial-loading .right::after,
+    main.partial-loading .right .loading-info {
+        width: 100%;
     }
 }
 @media only screen and (max-width: 599px) {

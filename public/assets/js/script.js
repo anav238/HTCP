@@ -43,9 +43,24 @@ let loaded = false;
 function showElements() {
     if(!loaded) {
         document.querySelector("main").classList.remove("loading");
+        document.querySelector("main").classList.remove("partial-loading");
         loaded = true;
     }
 }
+
+function hideElements() {
+    if(loaded) {
+        document.querySelector("main").classList.add("partial-loading");
+        loaded = false;
+
+        if(hamburgerTriggered && window.innerWidth < 768) {
+            nav.style.display = "none";
+            hamburgerTriggered = false;
+            hamburger.classList.remove("hamburger-active");
+        }
+    }
+}
+
 /*
     Running when on root
 */
@@ -141,10 +156,12 @@ if(window.location.pathname.includes("html")) {
             for(let i = 0; i < a.length; i++) {
                 let levelNumber = a[i].getAttribute("href").substring(6);
                 a[i].addEventListener("click", (e) => {
+                    hideElements();
                     fetch('/api/exercises?type=html&level=' + levelNumber)
                         .then(response => response.json())
                         .then(data => {
                             loadExercise(data, true, "pushState");
+                            showElements();
                         });
                     e.preventDefault();
                 });
@@ -157,9 +174,13 @@ if(window.location.pathname.includes("html")) {
     // Loads a level after pressing back/forward buttons in browser
     window.addEventListener('popstate', ()  => {
         if(history.state.type === "HTML") {
+            hideElements();
             fetch('/api/exercises?type=html&level=' + history.state.level)
                 .then(response => response.json())
-                .then(data => loadExercise(data, true));
+                .then(data => {
+                    loadExercise(data, true);
+                    showElements();
+                });
         }
     }, false);
 }
