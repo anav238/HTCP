@@ -3,8 +3,10 @@ class Exercise {
 
     public static function getExerciseById($accessToken, $id) {
         $connection = $GLOBALS['DB_CON'];
-        $query = 'SELECT "Type", "Level", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises" where "ID"=\'' . $id . '\'';
-        $result = pg_query($connection, $query);
+        $query = 'SELECT "Type", "Level", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises" 
+                    where "ID"=$1';
+        pg_prepare($connection, "", $query);
+        $result = pg_execute($connection, "", array($id));
 
         $data = [];
         while ($row = pg_fetch_row($result)) {
@@ -22,10 +24,10 @@ class Exercise {
     public static function getSpecificExercise($accessToken, $type, $level) {
         $connection = $GLOBALS['DB_CON'];
         $type = strtoupper($type);
-
-        $query = 'SELECT "ID", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises" where "Type"=\'' . $type .
-            '\' and "Level"=' . $level;
-        $result = pg_query($connection, $query);
+        $query = 'SELECT "ID", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises"
+                    where "Type"=$1 and "Level"=$2';
+        pg_prepare($connection, "", $query);
+        $result = pg_execute($connection, "", array($type, $level));
 
         $data = [];
         if ($row = pg_fetch_row($result)) {
@@ -46,9 +48,10 @@ class Exercise {
         $type = strtoupper($type);
 
         $currentUserLevel = User::getCurrentLevel($accessToken, $type);
-        $query = 'SELECT "ID", "Type", "Level", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises" where "Type"=\'' . $type . '\'
-                  and "Level"<=' . $currentUserLevel . ' ORDER BY "Level" ASC';
-        $result = pg_query($connection, $query);
+        $query = 'SELECT "ID", "Type", "Level", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises" 
+                    where "Type"=$1 and "Level"<=$2 ORDER BY "Level" ASC';
+        pg_prepare($connection, "", $query);
+        $result = pg_execute($connection, "", array($type, $currentUserLevel));
 
         $data = [];
         while ($row = pg_fetch_row($result)) {
@@ -68,9 +71,10 @@ class Exercise {
     public static function checkExerciseSolution($id, $solution) {
         $connection = $GLOBALS['DB_CON'];
 
-        $query = 'SELECT array_to_json("Solution") FROM public."Exercises" WHERE "ID"=\'' . $id . '\'';
+        $query = 'SELECT array_to_json("Solution") FROM public."Exercises" WHERE "ID"=$1';
+        pg_prepare($connection, "", $query);
+        $result = pg_execute($connection, "", array($id));
 
-        $result = pg_query($connection, $query);
         $actual_solution = array();
         while ($row = pg_fetch_row($result))
             $actual_solution = $row[0];
@@ -87,13 +91,17 @@ class Exercise {
 
     public static function incrementAttempts($accessToken, $id) {
         $connection = $GLOBALS['DB_CON'];
-        $query = 'UPDATE public."Exercises" SET "Attempts"="Attempts"+1 where "ID"=\'' . $id . '\'';
-        $result = pg_query($connection, $query);
+        $query = 'UPDATE public."Exercises" SET "Attempts"="Attempts"+1 where "ID"=$1';
+        pg_prepare($connection, "", $query);
+        $result = pg_execute($connection, "", array($id));
+
         if (!$result)
             return false;
-        $query = 'UPDATE public."ExerciseAttempts" SET "Attempts"="Attempts"+1 where "ExerciseID"=\'' . $id . '\' and
-                    "UserToken"=\'' . $accessToken . '\'';
-        $result = pg_query($connection, $query);
+        $query = 'UPDATE public."ExerciseAttempts" SET "Attempts"="Attempts"+1 where "ExerciseID"=$1 and
+                    "UserToken"=$2';
+        pg_prepare($connection, "", $query);
+        $result = pg_execute($connection, "", array($id, $accessToken));
+
         if ($result)
             return true;
         return false;
@@ -102,13 +110,14 @@ class Exercise {
     public static function markExerciseAsOpened($accessToken, $exerciseId) {
         $connection = $GLOBALS['DB_CON'];
         $query = 'SELECT "ExerciseID" from public."ExerciseAttempts" 
-                    where "ExerciseID"=\'' . $exerciseId . '\' and "UserToken"=\'' .
-                    $accessToken . '\'';
-        $result = pg_query($connection, $query);
+                    where "ExerciseID"=$1 and "UserToken"=$2';
+        pg_prepare($connection, "", $query);
+        $result = pg_execute($connection, "", array($exerciseId, $accessToken));
+
         $row = pg_fetch_row($result);
         if (!$row) {
             $data = array("ExerciseID" => $exerciseId, "UserToken" => $accessToken);
-            $result = pg_insert($connection, 'ExerciseAttempts', $data);
+            $result = pg_insert($connection, 'ExerciseAttempts', $data, PG_DML_ESCAPE);
         }
     }
 }
