@@ -88,7 +88,8 @@ if(window.location.pathname.includes("html")) {
         content = content.replace(/<br[^>]*>/g, "")
             .replace(/&lt;/g, "<")
             .replace(/&gt;/g, ">")
-            .replace(/img src="/g, "img src=\"" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/");
+            .replace(/img src="/g, "img src=\"" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/")
+            .replace(/url\('/g, "url('" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/");
         result.open();
         result.writeln(content);
         result.close();
@@ -122,17 +123,15 @@ if(window.location.pathname.includes("html")) {
     }
 
     // Loading levels
-    fetch('/api/exercises')
+    fetch('/api/exercises?type=html')
         .then(response => response.json())
         .then(data => {
             // Getting highest unlocked number and storing indexes of levels
             let exercises = [], exercise = {}, highestLevel = 0;
             for(let i in data) {
-                if(data[i].type === "HTML") {
-                    exercises[data[i].level] = i;
-                    if(highestLevel < data[i].level)
-                        highestLevel = data[i].level;
-                }
+                exercises[data[i].level] = i;
+                if(highestLevel < parseInt(data[i].level))
+                    highestLevel = data[i].level;
             }
 
             // Placing links for all the unlocked levels
@@ -209,7 +208,8 @@ if(window.location.pathname.includes("css")) {
         content = content.replace(/<br[^>]*>/g, "")
             .replace(/&lt;/g, "<")
             .replace(/&gt;/g, ">")
-            .replace(/img src="/g, "img src=\"" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/");
+            .replace(/img src="/g, "img src=\"" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/")
+            .replace(/url\('/g, "url('" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/");
         result.open();
         result.writeln(content);
         result.close();
@@ -244,17 +244,15 @@ if(window.location.pathname.includes("css")) {
     }
 
     // Loading levels
-    fetch('/api/exercises')
+    fetch('/api/exercises?type=css')
         .then(response => response.json())
         .then(data => {
             // Getting highest unlocked number and storing indexes of levels
             let exercises = [], exercise = {}, highestLevel = 0;
             for(let i in data) {
-                if(data[i].type === "CSS") {
-                    exercises[data[i].level] = i;
-                    if(highestLevel < data[i].level)
-                        highestLevel = data[i].level;
-                }
+                exercises[data[i].level] = i;
+                if(highestLevel < parseInt(data[i].level))
+                    highestLevel = data[i].level;
             }
 
             // Placing links for all the unlocked levels
