@@ -74,14 +74,15 @@ class User
         $connection = $GLOBALS['DB_CON'];
         if ($leaderboardType == "speed")
             $orderingCriteria = "speed_score";
-        else
+        else if ($leaderboardType == "correctness")
             $orderingCriteria = "correctness_score";
-
-        $query = 'SELECT "Username", "Avatar", $1 FROM public."Users" ORDER BY $1 DESC';
+        else
+            return;
+        $query = 'SELECT "Username", "Avatar", "'. $orderingCriteria . '" FROM public."Users" ORDER BY "'
+                    . $orderingCriteria . '" DESC';
 
         $leaderboard = array();
-        pg_prepare($connection, "", $query);
-        $result = pg_execute($connection, "", array($orderingCriteria));
+        $result = pg_query($connection, $query);
 
         while ($row = pg_fetch_row($result)) {
             $userData = array();

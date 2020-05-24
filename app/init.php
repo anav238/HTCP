@@ -8,3 +8,6 @@ $db_class = new DB();
 
 require_once 'core/App.php';
 require_once 'core/Controller.php';
+
+$host = $_SERVER['HTTP_HOST'];
+putenv("HOST=$host");

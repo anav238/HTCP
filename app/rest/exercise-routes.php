@@ -17,7 +17,7 @@ $exerciseRoutes = [
     [
         "method" => "POST",
         "route" => "exercises",
-        "middlewares" => ["IsLoggedIn", "HasReachedLevel", "HasNotSolvedLevel"],
+        "middlewares" => ["IsLoggedIn", "HasReachedLevel"],
         "query" => ["id"],
         "handler" => "submitExercise"
     ]
@@ -75,9 +75,10 @@ function submitExercise($req) {
 
     Response::status(200);
     if ($result) {
+        if ($level == User::getCurrentLevel($accessToken, $type))
+            User::updateUserScores($accessToken, $id);
         if ($level < 10)
             User::levelUpUser($accessToken, $type);
-        User::updateUserScores($accessToken, $id);
         Response::json([
             "status" => 200,
             "reason" => "Success!"

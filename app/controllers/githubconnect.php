@@ -7,7 +7,7 @@
             if (isset($_GET["code"])) {
                 $access_token = $this->getAccessToken();
                 $this->loginUser($access_token);
-                header( "Location: /" );
+                header( "Location: http://" . getenv('HOST') . '/');
                 //exit;
             }
             else {
@@ -76,7 +76,5 @@
             require_once __DIR__.'/../models/User.php';
             $newAccessToken = User::loginUser($username, $avatar);
             $_SESSION['accessToken'] = $newAccessToken;
-            echo $_SESSION['accessToken'];
-            //$_SESSION['user'] = $username;
         }
     }

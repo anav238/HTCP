@@ -117,7 +117,7 @@ class Exercise {
         $row = pg_fetch_row($result);
         if (!$row) {
             $data = array("ExerciseID" => $exerciseId, "UserToken" => $accessToken);
-            $result = pg_insert($connection, 'ExerciseAttempts', $data, PG_DML_ESCAPE);
+            $result = pg_insert($connection, 'ExerciseAttempts', $data, PGSQL_DML_ESCAPE);
         }
     }
 }
