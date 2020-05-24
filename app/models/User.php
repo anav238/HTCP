@@ -98,6 +98,8 @@ class User
         $connection = $GLOBALS['DB_CON'];
         if ($type != 'HTML' && $type != 'CSS')
             return false;
+        if (self::getCurrentLevel($accessToken, $type) >= Exercise::getMaxLevelOfType($type))
+            return false;
         $levelLabel = strtolower($type . '_level');
         $query = 'UPDATE public."Users" SET "' . $levelLabel . '"="' . $levelLabel . '"+1 where "Access Token"=$1';
         pg_prepare($connection, "", $query);

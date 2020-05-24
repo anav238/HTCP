@@ -120,4 +120,16 @@ class Exercise {
             $result = pg_insert($connection, 'ExerciseAttempts', $data, PGSQL_DML_ESCAPE);
         }
     }
+
+    public static function getMaxLevelOfType($type) {
+        $connection = $GLOBALS['DB_CON'];
+        $query = 'SELECT MAX("Level") from public."Exercises" where "Type"=$1';
+        pg_prepare($connection, "", $query);
+        $result = pg_execute($connection, "", array($type));
+
+        $row = pg_fetch_row($result);
+        if ($row)
+            return $row[0];
+        return -1;
+    }
 }

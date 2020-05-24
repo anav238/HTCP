@@ -7,7 +7,7 @@
             if (isset($_GET["code"])) {
                 $access_token = $this->getAccessToken();
                 $this->loginUser($access_token);
-                header( "Location: http://" . getenv('HOST') . '/');
+                header( "Location: /");
                 //exit;
             }
             else {

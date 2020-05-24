@@ -653,3 +653,58 @@ main.partial-loading .right::after {
         grid-template-columns: repeat(1, 1fr);
     }
 }
+
+
+@media only screen and (max-width: 640px) and (orientation: landscape) {
+    body.sign-in button {
+        font-size: .6em;
+        margin: 3px auto;
+        padding: 5px;
+        width: 250px;
+    }
+    .sign-in button i {
+        font-size: 1em;
+        margin-right: 3px;
+    }
+    .sign-in h1 {
+        margin-bottom: 10px;
+    }
+}
+
+body.sign-in main {
+    background: linear-gradient(180deg, #005da0, #bee1f4);
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.sign-in div {
+    text-align: center;
+    margin: auto;
+}
+
+.sign-in h1 {
+    color: white;
+    font-family: "Chakra Patch", sans-serif;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-top: 0;
+    text-transform: uppercase;
+}
+
+.sign-in h1 span {
+    color: var(--adv-yellow);
+    font-size: 2em;
+}
+
+.sign-in main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.sign-in button i {
+    font-size: 1em;
+    margin-right: 7px;
+}

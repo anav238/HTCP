@@ -77,8 +77,7 @@ function submitExercise($req) {
     if ($result) {
         if ($level == User::getCurrentLevel($accessToken, $type))
             User::updateUserScores($accessToken, $id);
-        if ($level < 10)
-            User::levelUpUser($accessToken, $type);
+        User::levelUpUser($accessToken, $type);
         Response::json([
             "status" => 200,
             "reason" => "Success!"
