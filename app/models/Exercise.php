@@ -63,8 +63,10 @@ class Exercise {
             $exercise['problem'] = $row[4];
             $exercise['attempts'] = $row[5];
             $exercise['extraHTML'] = $row[6];
+
             array_push($data, $exercise);
         }
+        self::markExerciseAsOpened($accessToken, end($data)['id']);
         return $data;
     }
 
@@ -109,6 +111,9 @@ class Exercise {
 
     public static function markExerciseAsOpened($accessToken, $exerciseId) {
         $connection = $GLOBALS['DB_CON'];
+        $accessToken = pg_escape_string($accessToken);
+        $exerciseId = pg_escape_string($exerciseId);
+
         $query = 'SELECT "ExerciseID" from public."ExerciseAttempts" 
                     where "ExerciseID"=$1 and "UserToken"=$2';
         pg_prepare($connection, "", $query);
@@ -117,7 +122,7 @@ class Exercise {
         $row = pg_fetch_row($result);
         if (!$row) {
             $data = array("ExerciseID" => $exerciseId, "UserToken" => $accessToken);
-            $result = pg_insert($connection, 'ExerciseAttempts', $data, PGSQL_DML_ESCAPE);
+            $result = pg_insert($connection, 'ExerciseAttempts', $data);
         }
     }
 

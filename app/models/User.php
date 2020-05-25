@@ -17,7 +17,8 @@ class User
     public static function registerUser($username, $avatar) {
         $connection = $GLOBALS['DB_CON'];
         $data = array("Username" => $username, "Avatar" => $avatar, "Access Token" => uniqid());
-        $res = pg_insert($connection, 'Users', $data, PGSQL_DML_ESCAPE);
+        echo $username . "<br>" . $avatar . "<br>" . $data['Access Token'] . "<br>";
+        $res = pg_insert($connection, 'Users', $data);
         if ($res)
             return $data['Access Token'];
         return null;
@@ -125,7 +126,10 @@ class User
 
             $correctnessUpdate = round(100 / $attempts, 2);
             $interval = date_diff($dateOpened, $currentDate);
-            $speedUpdate = round(100 / $interval->i, 2);
+            if ($interval->i == 0)
+                $speedUpdate = 100;
+            else
+                $speedUpdate = round(100 / $interval->i, 2);
 
             $query = 'UPDATE public."Users" SET "correctness_score"="correctness_score"+$1, 
                         "speed_score"="speed_score"+$2 where "Access Token"=$3';
