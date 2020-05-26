@@ -1,10 +1,10 @@
 <?php
 class DB {
 
-    private $host = "ec2-46-137-84-140.eu-west-1.compute.amazonaws.com";
+    private $host = "ec2-54-247-122-209.eu-west-1.compute.amazonaws.com";
     private $username;
     private $password;
-    private $database = "d610tqcmnd39uo";
+    private $database = "dd02l50juhgo7s";
 
     public $connection;
 
