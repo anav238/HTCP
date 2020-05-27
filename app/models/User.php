@@ -17,7 +17,6 @@ class User
     public static function registerUser($username, $avatar) {
         $connection = $GLOBALS['DB_CON'];
         $data = array("Username" => $username, "Avatar" => $avatar, "Access Token" => uniqid());
-        echo $username . "<br>" . $avatar . "<br>" . $data['Access Token'] . "<br>";
         $res = pg_insert($connection, 'Users', $data);
         if ($res)
             return $data['Access Token'];
@@ -78,7 +77,7 @@ class User
         else if ($leaderboardType == "correctness")
             $orderingCriteria = "correctness_score";
         else
-            return;
+            return [];
         $query = 'SELECT "Username", "Avatar", "'. $orderingCriteria . '" FROM public."Users" ORDER BY "'
                     . $orderingCriteria . '" DESC';
 

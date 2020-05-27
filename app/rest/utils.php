@@ -24,6 +24,10 @@ function getAccessToken() {
     return $accessToken;
 }
 
+function isApplicationToken($accessToken) {
+    return strlen($accessToken) == 20;
+}
+
 function parseRequest($routeConfig)
 {
     $url = $_SERVER['REQUEST_URI'];
