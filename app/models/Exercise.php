@@ -3,8 +3,8 @@ class Exercise {
 
     public static function getExerciseById($accessToken, $id) {
         $connection = $GLOBALS['DB_CON'];
-        $query = 'SELECT "Type", "Level", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises" 
-                    where "ID"=$1';
+        $query = 'SELECT "Type", "Level", "Description", "Problem", "Attempts", "ExtraHTML", "Solution"
+                        FROM public."Exercises" where "ID"=$1';
         pg_prepare($connection, "", $query);
         $result = pg_execute($connection, "", array($id));
 
@@ -16,16 +16,19 @@ class Exercise {
             $data['problem'] = $row[3];
             $data['attempts'] = $row[4];
             $data['extraHTML'] = $row[5];
+            if (isApplicationToken($accessToken))
+                $data['solution'] = $row[6];
         }
-        self::markExerciseAsOpened($accessToken, $id);
+        if (!isApplicationToken($accessToken))
+            self::markExerciseAsOpened($accessToken, $id);
         return $data;
     }
 
     public static function getSpecificExercise($accessToken, $type, $level) {
         $connection = $GLOBALS['DB_CON'];
         $type = strtoupper($type);
-        $query = 'SELECT "ID", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises"
-                    where "Type"=$1 and "Level"=$2';
+        $query = 'SELECT "ID", "Description", "Problem", "Attempts", "ExtraHTML", "Solution"
+                    FROM public."Exercises" where "Type"=$1 and "Level"=$2';
         pg_prepare($connection, "", $query);
         $result = pg_execute($connection, "", array($type, $level));
 
@@ -38,7 +41,10 @@ class Exercise {
             $data['problem'] = $row[2];
             $data['attempts'] = $row[3];
             $data['extraHTML'] = $row[4];
-            self::markExerciseAsOpened($accessToken, $data['id']);
+            if (isApplicationToken($accessToken))
+                $data['solution'] = $row[5];
+            else
+                self::markExerciseAsOpened($accessToken, $data['id']);
         }
         return $data;
     }
@@ -47,12 +53,15 @@ class Exercise {
         $connection = $GLOBALS['DB_CON'];
         $type = strtoupper($type);
 
-        $currentUserLevel = User::getCurrentLevel($accessToken, $type);
-        $query = 'SELECT "ID", "Type", "Level", "Description", "Problem", "Attempts", "ExtraHTML" FROM public."Exercises" 
-                    where "Type"=$1 and "Level"<=$2 ORDER BY "Level" ASC';
+        if (isApplicationToken($accessToken))
+            $currentUserLevel = self::getMaxLevelOfType($type);
+        else
+            $currentUserLevel = User::getCurrentLevel($accessToken, $type);
+        $query = 'SELECT "ID", "Type", "Level", "Description", "Problem", "Attempts", "ExtraHTML", "Solution"
+                        FROM public."Exercises" where "Type"=$1 and "Level"<=$2 ORDER BY "Level" ASC';
         pg_prepare($connection, "", $query);
         $result = pg_execute($connection, "", array($type, $currentUserLevel));
-
+        $isApplication = isApplicationToken($accessToken);
         $data = [];
         while ($row = pg_fetch_row($result)) {
             $exercise = [];
@@ -63,10 +72,12 @@ class Exercise {
             $exercise['problem'] = $row[4];
             $exercise['attempts'] = $row[5];
             $exercise['extraHTML'] = $row[6];
-
+            if ($isApplication)
+                $exercise['solution'] = $row[7];
             array_push($data, $exercise);
         }
-        self::markExerciseAsOpened($accessToken, end($data)['id']);
+        if (!$isApplication)
+            self::markExerciseAsOpened($accessToken, end($data)['id']);
         return $data;
     }
 

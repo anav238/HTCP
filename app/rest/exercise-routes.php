@@ -4,20 +4,20 @@ $exerciseRoutes = [
     [
         "method" => "GET",
         "route" => "exercises",
-        "middlewares" => ["IsLoggedIn", "HasReachedLevel"],
+        "middlewares" => ["HasAccessToken", "IsApplicationOrUser", "HasReachedLevel"],
         "query" => ["type", "level"],
         "handler" => "getExercises"
     ],
     [
         "method" => "GET",
         "route" => "exercises/:type/current",
-        "middlewares" => ["IsLoggedIn"],
+        "middlewares" => ["HasAccessToken", "IsUser"],
         "handler" => "getCurrentExerciseOfType"
     ],
     [
         "method" => "POST",
         "route" => "exercises",
-        "middlewares" => ["IsLoggedIn", "HasReachedLevel"],
+        "middlewares" => ["HasAccessToken", "IsUser", "HasReachedLevel"],
         "query" => ["id"],
         "handler" => "submitExercise"
     ]

@@ -63,7 +63,7 @@
 					<a class="button button-green" id="submit">Submit</a>
 				</div>
 				<div class="resultArea">
-					<iframe></iframe>
+					<iframe class="html"></iframe>
 				</div>
 			</div>
 			
@@ -71,7 +71,6 @@
 
 			</footer>
 		</div>
-		
 	</main>
 
 	<script src="<?=getenv("JS_PATH")?>/script.js"></script>

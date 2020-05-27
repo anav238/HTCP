@@ -1,0 +1,87 @@
+body {
+    background-color: #56afef;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.css {
+    display: flex;
+    align-items: flex-end;
+    height: calc(100% - 35px);
+    padding-left: 10px;
+    z-index: 1;
+}
+
+.css-1, .css-3 {
+    justify-content: space-around;
+}
+
+.css-2 {
+    justify-content: flex-start;
+}
+
+.ground, .platform {
+    background-color: #D39415;
+    background-image: url("../img/brick.png");
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    background-size: 40px 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 0; 
+    left: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+.platform {
+    width: 150px;
+}
+
+.wall {
+    background-color: #D39415;
+    background-image: url("../img/brick.png");
+    background-repeat: repeat-y;
+    background-position: 0 0;
+    background-size: 40px 40px;
+    height: 80%;
+    position: absolute;
+    bottom: 40px;
+    left: 110px;
+    width: 40px;
+}
+
+#mario {
+    background-image: url("../img/levels/mario.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 100px;
+}
+
+#luigi {
+    background-image: url("../img/levels/luigi.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 100px;
+}
+
+.goompa {
+    background-image: url("../img/levels/goomba.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 50px;
+}
+
+.piranha-plant {
+    background-image: url("../img/levels/piranha-plant.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 60px;
+    height: 100px;
+    margin-bottom: 5px;
+}

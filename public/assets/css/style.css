@@ -57,6 +57,7 @@
     font-size: 0.85em;
     padding: 0.5em 1.25em;
     transition: border-color 0.1s linear, background-color 0.1s linear, color 0.1s linear;
+    cursor: pointer;
 }
 .button-green {
     background-color: var(--adv-green);
@@ -73,9 +74,14 @@
 .button-pink {
     background-color: var(--adv-pink);
 }
+.button-loading {
+    background-color: #6f6f6f;
+    cursor: default;
+}
 .button:hover, .button.button-active {
     background: #ffffff;
     color: #000000;
+    border-color: #000000;
 }
 .button-green:hover, .button-green.button-active {
     border-color: var(--adv-green);
@@ -97,12 +103,60 @@
     border-color: var(--adv-pink);
     color: var(--adv-pink);
 }
+.button-loading:hover, .button-loading.button-active {
+    background-color: #6f6f6f;
+    border-color: #6f6f6f;
+    color: #ffffff;
+}
 body {
     font-family: "Source Sans Pro", apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin: 0;
     min-height: 100vh;
     min-width: 100%;
     position: absolute;
+}
+.popup {
+    display: none;
+    background: rgba(0, 0, 0, .5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup .popup-container {
+    background: #ffffff;
+    border: 3px solid var(--adv-blue);
+    border-radius: 7px;
+    box-shadow: 0 4px 1px 0 rgba(0, 0, 0, 0.18);
+    min-width: 400px;
+}
+.popup .popup-container .popup-container-header {
+    font-family: "Chakra Patch", sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.25em;
+    text-align: center;
+    padding: 10px 15px 0px;
+    color: var(--adv-blue);
+}
+.popup .popup-container .popup-container-text {
+    padding: 10px 15px 5px;
+    max-width: 500px;
+    text-align: center;
+}
+.popup .popup-container .popup-container-footer {
+    height: 4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup .popup-container .popup-container-footer * + * {
+    margin-left: 15px;
 }
 header {
     display: flex;
@@ -493,29 +547,10 @@ nav ul li .button {
     height: calc(100% - 15px);
     min-height: 300px;
 }
-.resultArea iframe#luigiStory {
-    background-image: url("../img/bg-grid-green.png");
-    background-size: 18px auto;
-    font-size: 1.2em;
-}
-.resultArea iframe#luigiStory img {
-    max-width: 150px;
-    position: absolute;
-    bottom: 10px;
-    left: 15px;
-}
-.resultArea iframe#marioStory {
-    background-image: url("../img/bg-mario-story.png");
-    background-size: 50%;
-}
-.resultArea iframe#marioStory img {
-    display: inline;
-    max-height: 200px;
-    max-width: 200px;
-    margin: 30% 5px;
-}
-.resultArea iframe#marioStory .goomba {
-    max-width: 100px;
+.right .resultArea iframe.css {
+    padding: 0px;
+    width: calc(100% - 5px);
+    height: calc(100% - 5px);
 }
 .right .loading-info {
     display: none;
