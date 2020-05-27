@@ -71,13 +71,6 @@
 
 			</footer>
 		</div>
-		<div class="popup">
-			<div class="popup-container">
-				<div class="popup-container-header">
-
-				</div>
-			</div>
-		</div>
 	</main>
 
 	<script src="<?=getenv("JS_PATH")?>/script.js"></script>

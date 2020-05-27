@@ -61,6 +61,30 @@ function hideElements() {
     }
 }
 
+function popup(title, text, exercise = null) {
+    document.body.insertAdjacentHTML("afterbegin", "<div class=\"popup\"><div class=\"popup-container\"><div class=\"popup-container-header\">" + title + "</div><div class=\"popup-container-text\">" + text + "</div><div class=\"popup-container-footer\"><a class=\"button button-blue\" id=\"close\">Close</a></div></div></div>");
+    let popup = document.querySelector(".popup");
+    let buttons = popup.querySelector(".popup .popup-container .popup-container-footer");
+    let closeButton = buttons.querySelector("#close");
+
+    closeButton.addEventListener("click", () => {
+        popup.style.display = "none";
+        popup.remove();
+    });
+
+    if(exercise) {
+        buttons.insertAdjacentHTML("afterbegin", "<div class=\"button button-green\" id=\"next\">Next level</a>");
+        let nextButton = buttons.querySelector("#next");
+        nextButton.addEventListener("click", () => {
+            loadExercise(exercise, true, "pushState");
+            popup.style.display = "none";
+            popup.remove();
+        });
+    }
+
+    popup.style.display = "flex";
+}
+
 /*
     Running when on root
 */
@@ -79,6 +103,8 @@ if(window.location.pathname.includes("html")) {
     let editorInputs = editor.getElementsByTagName("input");
     let result = document.querySelector("iframe").contentWindow.document;
 
+    let highestLevel = 0;
+    let currentLevel = 0;
     let levelId;
 
     // Refresh the result area
@@ -101,6 +127,7 @@ if(window.location.pathname.includes("html")) {
     // Showing level info
     function loadExercise(exercise, changeActiveButton = false, state = "unset") {
         levelId = exercise.id;
+        currentLevel = exercise.level;
         if(changeActiveButton)
             document.querySelector("nav h1 + ul a.button-active").classList.remove("button-active");
         document.querySelector("nav h1 + ul a[href*=html\\/" + exercise.level + "]").classList.add("button-active");
@@ -130,7 +157,7 @@ if(window.location.pathname.includes("html")) {
         .then(response => response.json())
         .then(data => {
             // Getting highest unlocked number and storing indexes of levels
-            let exercises = [], exercise = {}, highestLevel = 0;
+            let exercises = [], exercise = {};
             for(let i in data) {
                 exercises[data[i].level] = i;
                 if(highestLevel < parseInt(data[i].level))
@@ -193,6 +220,12 @@ if(window.location.pathname.includes("html")) {
     button.addEventListener('click', submitSolution);
     function submitSolution() {
         button.removeEventListener('click', submitSolution);
+        submit.innerHTML = "Loading...";
+        submit.classList.add("button-loading");
+        let lastLevelLink = document.querySelector("nav h1 + ul li:last-child a[href*=html]");
+        let lastLevelNumber = lastLevelLink.getAttribute("href").substring(6);
+        let levelList = document.querySelector("nav h1 + ul");
+
         let answer = { solution: [] };
         for(let i = 0; i < editorInputs.length; i++)
             answer.solution.push(editorInputs[i].value);
@@ -202,14 +235,51 @@ if(window.location.pathname.includes("html")) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-            button.addEventListener('click', submitSolution);
-            /*if(data.reason === "Success!") {
-
+            if(data.reason === "Success!") {
+                if(currentLevel != highestLevel) {
+                    submit.innerHTML = "Submit";
+                    submit.classList.remove("button-loading");
+                    button.addEventListener('click', submitSolution);
+                    popup("Hooray!", "The submitted solution is correct!");
+                }
+                else {
+                    fetch('/api/exercises/html/current')
+                        .then(response => response.json())
+                        .then(data => {
+                            if(lastLevelNumber != data.level) {
+                                highestLevel++;
+                                levelList.insertAdjacentHTML("beforeend", "<li><a href=\"/html/" + data.level + "\" class=\"button button-green\">Level " + data.level + "</a></li>");
+                                lastLevelLink = document.querySelector("nav h1 + ul li:last-child a[href*=html]");
+                                lastLevelLink.addEventListener("click", (e) => {
+                                    hideElements();
+                                    fetch('/api/exercises?type=html&level=' + data.level)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            loadExercise(data, true, "pushState");
+                                            showElements();
+                                        });
+                                    e.preventDefault();
+                                });
+                                submit.innerHTML = "Submit";
+                                submit.classList.remove("button-loading");
+                                button.addEventListener('click', submitSolution);
+                                popup("Hooray!", "The submitted solution is correct!<br /><i>Next level is now unlocked.</i>", data);
+                            }
+                            else {
+                                submit.innerHTML = "Submit";
+                                submit.classList.remove("button-loading");
+                                button.addEventListener('click', submitSolution);
+                                popup("Hooray!", "The submitted solution is correct!<br /><i>You finished all the levels.</i>");
+                            }
+                        });
+                }
             }
             else if(data.reason === "Wrong solution!") {
-
-            }*/
+                submit.innerHTML = "Submit";
+                submit.classList.remove("button-loading");
+                button.addEventListener('click', submitSolution);
+                popup("Oh no!", "The submitted solution is wrong!");
+            }
         });
     }
 }
