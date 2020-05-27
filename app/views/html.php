@@ -63,7 +63,7 @@
 					<a class="button button-green" id="submit">Submit</a>
 				</div>
 				<div class="resultArea">
-					<iframe></iframe>
+					<iframe class="html"></iframe>
 				</div>
 			</div>
 			
@@ -71,7 +71,13 @@
 
 			</footer>
 		</div>
-		
+		<div class="popup">
+			<div class="popup-container">
+				<div class="popup-container-header">
+
+				</div>
+			</div>
+		</div>
 	</main>
 
 	<script src="<?=getenv("JS_PATH")?>/script.js"></script>

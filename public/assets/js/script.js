@@ -78,7 +78,8 @@ if(window.location.pathname.includes("html")) {
     
     let editorInputs = editor.getElementsByTagName("input");
     let result = document.querySelector("iframe").contentWindow.document;
-    let button = document.getElementById("submit");
+
+    let levelId;
 
     // Refresh the result area
     function refreshResult() {
@@ -88,6 +89,7 @@ if(window.location.pathname.includes("html")) {
         content = content.replace(/<br[^>]*>/g, "")
             .replace(/&lt;/g, "<")
             .replace(/&gt;/g, ">")
+            .replace(/<form/g, "<form onsubmit=\"return false;\"")
             .replace(/img src="/g, "img src=\"" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/")
             .replace(/url\('/g, "url('" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/");
         result.open();
@@ -98,6 +100,7 @@ if(window.location.pathname.includes("html")) {
 
     // Showing level info
     function loadExercise(exercise, changeActiveButton = false, state = "unset") {
+        levelId = exercise.id;
         if(changeActiveButton)
             document.querySelector("nav h1 + ul a.button-active").classList.remove("button-active");
         document.querySelector("nav h1 + ul a[href*=html\\/" + exercise.level + "]").classList.add("button-active");
@@ -184,6 +187,31 @@ if(window.location.pathname.includes("html")) {
                 });
         }
     }, false);
+
+    // Submitting a solution
+    let button = document.getElementById("submit");
+    button.addEventListener('click', submitSolution);
+    function submitSolution() {
+        button.removeEventListener('click', submitSolution);
+        let answer = { solution: [] };
+        for(let i = 0; i < editorInputs.length; i++)
+            answer.solution.push(editorInputs[i].value);
+        fetch('/api/exercises?id=' + levelId, {
+            method: "POST",
+            body: JSON.stringify(answer)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            button.addEventListener('click', submitSolution);
+            /*if(data.reason === "Success!") {
+
+            }
+            else if(data.reason === "Wrong solution!") {
+
+            }*/
+        });
+    }
 }
 
 /*
@@ -211,7 +239,15 @@ if(window.location.pathname.includes("css")) {
             .replace(/img src="/g, "img src=\"" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/")
             .replace(/url\('/g, "url('" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/");
         result.open();
+
         result.writeln(content);
+        
+        let extraCSS = result.createElement("link");
+        extraCSS.href = window.location.protocol + "//" + window.location.host + "/public/assets/css/levels.css";
+        extraCSS.rel = "stylesheet";
+        extraCSS.type = "text/css";
+        result.head.insertBefore(extraCSS, result.head.childNodes[0]);
+
         result.close();
     }
     editor.addEventListener("keyup", refreshResult);
