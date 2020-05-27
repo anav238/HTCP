@@ -4,27 +4,25 @@ $userRoutes = [
     [
         "method" => "GET",
         "route" => "users/ping",
-        "middlewares" => ["IsLoggedIn"],
+        "middlewares" => ["HasAccessToken", "IsUser"],
         "handler" => "getUserData"
     ],
     [
         "method" => "GET",
         "route" => "users/speedLeaderboard",
-        "middlewares" => ["IsLoggedIn"],
+        "middlewares" => ["HasAccessToken", "IsUser"],
         "handler" => "getSpeedLeaderboard"
     ],
     [
         "method" => "GET",
         "route" => "users/correctnessLeaderboard",
-        "middlewares" => ["IsLoggedIn"],
+        "middlewares" => ["HasAccessToken", "IsUser"],
         "handler" => "getCorrectnessLeaderboard"
     ]
 ];
 
 function getUserData($req)
 {
-    if ($_SERVER['REQUEST_METHOD'] != 'GET')
-        return;
     $data = User::getUserData(getAccessToken());
     Response::status(200);
     Response::json($data);
@@ -32,8 +30,6 @@ function getUserData($req)
 
 function getSpeedLeaderboard($req)
 {
-    if ($_SERVER['REQUEST_METHOD'] != 'GET')
-        return;
     $data = User::getLeaderboard("speed");
     Response::status(200);
     Response::json($data);
@@ -41,8 +37,6 @@ function getSpeedLeaderboard($req)
 
 function getCorrectnessLeaderboard($req)
 {
-    if ($_SERVER['REQUEST_METHOD'] != 'GET')
-        return;
     $data = User::getLeaderboard("correctness");
     Response::status(200);
     Response::json($data);

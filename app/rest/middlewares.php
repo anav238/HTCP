@@ -1,16 +1,22 @@
 <?php
 
-function IsLoggedIn($req) {
+function IsApplicationOrUser($req) {
     $accessToken = getAccessToken();
+    if (strlen($accessToken) < 15)
+        return IsUser($req);
+    if (Application::isValidAccessToken($accessToken))
+        return true;
 
-    if (strlen($accessToken) == 0) {
-        Response::status(401);
-        Response::json([
-                "status" => 401,
-                "reason" => "You can only access this route if you're logged in."]
-        );
-        return false;
-    }
+    Response::status(400);
+    Response::json([
+            "status" => 400,
+            "reason" => "The provided access token is invalid."]
+    );
+    return false;
+}
+
+function IsUser($req) {
+    $accessToken = getAccessToken();
 
     if (User::isValidAccessToken($accessToken))
         return true;
@@ -23,9 +29,23 @@ function IsLoggedIn($req) {
     return false;
 }
 
+function HasAccessToken($req) {
+    $accessToken = getAccessToken();
+    if (strlen($accessToken) == 0) {
+        Response::status(401);
+        Response::json([
+                "status" => 401,
+                "reason" => "You can only access this route if you're logged in."]
+        );
+        return false;
+    }
+    return true;
+}
+
 function HasReachedLevel($req) {
+    $accessToken = getAccessToken();
     if (isset($req['query']['id'])) {
-        $data = Exercise::getExerciseById(getAccessToken(), $req['query']['id']);
+        $data = Exercise::getExerciseById($accessToken, $req['query']['id']);
         $levelType = $data['type'];
         $level = $data['level'];
     }
@@ -36,7 +56,10 @@ function HasReachedLevel($req) {
         $level = $req['query']['level'];
     }
 
-    $currentLevel = User::getCurrentLevel(getAccessToken(), $levelType);
+    if (isApplicationToken($accessToken))
+        return true;
+
+    $currentLevel = User::getCurrentLevel($accessToken, $levelType);
     if ($currentLevel < $level) {
         Response::status(403);
         Response::json([
