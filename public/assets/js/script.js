@@ -111,9 +111,8 @@ if(window.location.pathname.includes("html")) {
     // Refresh the result area
     function refreshResult() {
         let content = editor.innerHTML;
-        for (let i = 0; i < editorInputs.length; i++)
-        {
-            // Replacing the inputs with their values only in iframe
+        for (let i = 0; i < editorInputs.length; i++) {
+            // Replacing the whole inputs with just their values in the iframe
             content = content.replace(/<input[^>]*>/, editorInputs[i].value);
 
             // Disabling autocorrect and others for inputs
@@ -123,9 +122,23 @@ if(window.location.pathname.includes("html")) {
             editorInputs[i].setAttribute("spellcheck", false);
 
             // Adding events to every input to change focus when input is completed
-            editorInputs[i].addEventListener("keyup", (e) => {
-                if(e.key.length === 1 && editorInputs[i].value.length === editorInputs[i].maxLength && i !== editorInputs.length - 1)
+            editorInputs[i].addEventListener("input", () => {
+                if(editorInputs[i].value.length === editorInputs[i].maxLength && i !== editorInputs.length - 1)
                     editorInputs[i + 1].focus();
+            });
+            
+            // Adding events to every input to change focus with arrow keys
+            editorInputs[i].addEventListener("keydown", (e) => {
+                if((e.key === "ArrowRight" || e.key === "ArrowDown") && i !== editorInputs.length - 1 && editorInputs[i].selectionEnd === editorInputs[i].value.length) {
+                    editorInputs[i + 1].focus();
+                    editorInputs[i + 1].setSelectionRange(0, 0, "forward");
+                    e.preventDefault();
+                }
+                else if((e.key === "ArrowLeft" || e.key === "ArrowUp") && i !== 0 && editorInputs[i].selectionStart === 0) {
+                    editorInputs[i - 1].focus();
+                    editorInputs[i - 1].setSelectionRange(editorInputs[i - 1].value.length, editorInputs[i - 1].value.length, "backward");
+                    e.preventDefault();
+                }
             });
         }
         content = content.replace(/<br[^>]*>/g, "")
@@ -321,15 +334,44 @@ if(window.location.pathname.includes("css")) {
     // Refresh the result area
     function refreshResult() {
         let content = "<style>" + editor.innerHTML + "</style>" + resultHTML;
-        for (let i = 0; i < editorInputs.length; i++)
+        for (let i = 0; i < editorInputs.length; i++) {
+            // Replacing the whole inputs with just their values in the iframe
             content = content.replace(/<input[^>]*>/, editorInputs[i].value);
+
+            // Disabling autocorrect and others for inputs
+            editorInputs[i].setAttribute("autocomplete", "off");
+            editorInputs[i].setAttribute("autocorrect", "off");
+            editorInputs[i].setAttribute("autocapitalize", "off");
+            editorInputs[i].setAttribute("spellcheck", false);
+
+            // Adding events to every input to change focus when input is completed
+            editorInputs[i].addEventListener("input", () => {
+                if(editorInputs[i].value.length === editorInputs[i].maxLength && i !== editorInputs.length - 1)
+                    editorInputs[i + 1].focus();
+            });
+            
+            // Adding events to every input to change focus with arrow keys
+            editorInputs[i].addEventListener("keydown", (e) => {
+                if((e.key === "ArrowRight" || e.key === "ArrowDown") && i !== editorInputs.length - 1 && editorInputs[i].selectionEnd === editorInputs[i].value.length) {
+                    editorInputs[i + 1].focus();
+                    editorInputs[i + 1].setSelectionRange(0, 0, "forward");
+                    e.preventDefault();
+                }
+                else if((e.key === "ArrowLeft" || e.key === "ArrowUp") && i !== 0 && editorInputs[i].selectionStart === 0) {
+                    editorInputs[i - 1].focus();
+                    editorInputs[i - 1].setSelectionRange(editorInputs[i - 1].value.length, editorInputs[i - 1].value.length, "backward");
+                    e.preventDefault();
+                }
+            });
+        }
         content = content.replace(/<br[^>]*>/g, "")
             .replace(/&lt;/g, "<")
             .replace(/&gt;/g, ">")
+            .replace(/<a/g, "<a target=\"_blank\" rel=\"noopener noreferrer\"")
+            .replace(/<form/g, "<form onsubmit=\"return false;\"")
             .replace(/img src="/g, "img src=\"" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/")
             .replace(/url\('/g, "url('" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/");
         result.open();
-
         result.writeln(content);
         
         let extraCSS = result.createElement("link");
