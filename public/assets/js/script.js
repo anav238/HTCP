@@ -77,7 +77,7 @@ function hideElements() {
     }
 }
 
-function popup(title, text, exercise = null) {
+function popup(title, text, exercise = null, lastLevel = false) {
     document.body.insertAdjacentHTML("afterbegin", "<div class=\"popup\"><div class=\"popup-container\"><div class=\"popup-container-header\">" + title + "</div><div class=\"popup-container-text\">" + text + "</div><div class=\"popup-container-footer\"><a class=\"button button-blue\" id=\"close\">Close</a></div></div></div>");
     let popup = document.querySelector(".popup");
     let buttons = popup.querySelector(".popup .popup-container .popup-container-footer");
@@ -87,8 +87,14 @@ function popup(title, text, exercise = null) {
 
     if(exercise) {
         buttons.insertAdjacentHTML("afterbegin", "<div class=\"button button-green\" id=\"next\">Next level</a>");
-        let nextButton = buttons.querySelector("#next");
-        nextButton.addEventListener("click", nextButtonEvent);
+        buttons.querySelector("#next").addEventListener("click", nextButtonEvent);
+    }
+
+    if(lastLevel) {
+        buttons.insertAdjacentHTML("afterbegin", "<div class=\"button button-red\" id=\"css\">CSS World</a>");
+        buttons.querySelector("#css").addEventListener("click", () => {
+            window.location.href = "/css";
+        });
     }
 
     popup.style.display = "flex";
@@ -117,16 +123,30 @@ function popup(title, text, exercise = null) {
         else if(e.key === "Enter") {
             window.removeEventListener("keydown", popupShortcuts);
             if(exercise) nextButtonEvent();
+            else if(lastLevel) window.location.href = "/css";
             else closeButtonEvent();
         }
     }
 }
 
 /*
-    Running when on root
+    Running when on root, redirects to CSS levels when all
+    HTML levels are completed
 */
 if(window.location.pathname === "/") {
-    window.location.href = "/html";
+    let maxLevel = 10, highestLevel = 0;
+    fetch('/api/exercises?type=html')
+        .then(response => response.json())
+        .then(data => {
+            for(let i in data)
+                if(highestLevel < parseInt(data[i].level))
+                    highestLevel = data[i].level;
+            console.log(highestLevel);
+            if(highestLevel == maxLevel)
+                window.location.href = "/css";
+            else
+                window.location.href = "/html";
+        });
 }
 
 /*
@@ -382,7 +402,10 @@ if(levelType) {
                                 submit.classList.remove("button-loading");
                                 editor.addEventListener("keydown", submitSolutionShortcut);
                                 button.addEventListener("click", submitSolution);
-                                popup("Hooray!", "The submitted solution is correct!<br /><i>You finished all the levels.</i>");
+                                if(levelType === "html")
+                                    popup("Hooray!", "The submitted solution is correct!<br /><i>You finished all the HTML levels.</i>", null, true);
+                                else
+                                    popup("Hooray!", "The submitted solution is correct!<br /><i>You finished all the levels.</i>");
                             }
                         });
                 }
