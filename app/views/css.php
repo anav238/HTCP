@@ -63,7 +63,7 @@
 					<a class="button button-red" id="submit">Submit</a>
 				</div>
 				<div class="resultArea">
-					<iframe class="css"></iframe>
+					<iframe></iframe>
 				</div>
 			</div>
 			

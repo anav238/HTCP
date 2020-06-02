@@ -45,6 +45,7 @@ function showElements() {
         document.querySelector("main").classList.remove("loading");
         document.querySelector("main").classList.remove("partial-loading");
         loaded = true;
+        document.querySelectorAll(".codeArea code input")[0].focus();
     }
 }
 
@@ -111,10 +112,26 @@ if(window.location.pathname.includes("html")) {
     function refreshResult() {
         let content = editor.innerHTML;
         for (let i = 0; i < editorInputs.length; i++)
+        {
+            // Replacing the inputs with their values only in iframe
             content = content.replace(/<input[^>]*>/, editorInputs[i].value);
+
+            // Disabling autocorrect and others for inputs
+            editorInputs[i].setAttribute("autocomplete", "off");
+            editorInputs[i].setAttribute("autocorrect", "off");
+            editorInputs[i].setAttribute("autocapitalize", "off");
+            editorInputs[i].setAttribute("spellcheck", false);
+
+            // Adding events to every input to change focus when input is completed
+            editorInputs[i].addEventListener("keyup", (e) => {
+                if(e.key.length === 1 && editorInputs[i].value.length === editorInputs[i].maxLength && i !== editorInputs.length - 1)
+                    editorInputs[i + 1].focus();
+            });
+        }
         content = content.replace(/<br[^>]*>/g, "")
             .replace(/&lt;/g, "<")
             .replace(/&gt;/g, ">")
+            .replace(/<a/g, "<a target=\"_blank\" rel=\"noopener noreferrer\"")
             .replace(/<form/g, "<form onsubmit=\"return false;\"")
             .replace(/img src="/g, "img src=\"" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/")
             .replace(/url\('/g, "url('" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/");
