@@ -67,6 +67,7 @@
   padding: 0.5em 1.25em;
   transition: border-color 0.1s linear, background-color 0.1s linear, color 0.1s linear;
   cursor: pointer;
+  user-select: none;
 }
 
 .button-green {
@@ -602,7 +603,7 @@ nav ul li .button {
 
 .right .codeArea {
   font-size: 1.1em;
-  line-height: 1.7em;
+  line-height: 1.4em;
   position: relative;
   padding: 5px 15px 60px 15px;
 }
@@ -616,13 +617,22 @@ nav ul li .button {
 
 .right .codeArea code {
   word-break: break-all;
+  white-space: pre;
 }
 
 .right .codeArea input {
   font-family: 'Courier New', Courier, monospace;
-  border: 1px solid #c5c5c5;
+  border: 1px solid #ffde49;
   padding: 2px 3px;
   margin: 2px;
+  background: #f7f7f7;
+  border-radius: 7px;
+}
+
+.right .codeArea input:focus {
+  outline: none;
+  background: #f7e7a0;
+  border: 1px solid var(--adv-yellow);
 }
 
 .right .codeArea,

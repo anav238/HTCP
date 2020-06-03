@@ -185,12 +185,23 @@ if(levelType) {
             editorInputs[i].addEventListener("keydown", (e) => {
                 if((e.key === "ArrowRight" || e.key === "ArrowDown") && i !== editorInputs.length - 1 && editorInputs[i].selectionEnd === editorInputs[i].value.length) {
                     editorInputs[i + 1].focus();
-                    editorInputs[i + 1].setSelectionRange(0, 0, "forward");
+                    editorInputs[i + 1].setSelectionRange(0, 0);
                     e.preventDefault();
                 }
                 else if((e.key === "ArrowLeft" || e.key === "ArrowUp") && i !== 0 && editorInputs[i].selectionStart === 0) {
                     editorInputs[i - 1].focus();
-                    editorInputs[i - 1].setSelectionRange(editorInputs[i - 1].value.length, editorInputs[i - 1].value.length, "backward");
+                    editorInputs[i - 1].setSelectionRange(editorInputs[i - 1].value.length, editorInputs[i - 1].value.length);
+                    e.preventDefault();
+                }
+                else if(e.key === "Tab") {
+                    if(i === editorInputs.length - 1) {
+                        editorInputs[0].focus();
+                        editorInputs[0].setSelectionRange(editorInputs[0].value.length, editorInputs[0].value.length);
+                    }
+                    else {
+                        editorInputs[i + 1].focus();
+                        editorInputs[i + 1].setSelectionRange(editorInputs[i + 1].value.length, editorInputs[i + 1].value.length);
+                    }
                     e.preventDefault();
                 }
             });
