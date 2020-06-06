@@ -2,7 +2,7 @@
 
 session_start();
 
-if(file_exists('config.php'))
+if(stream_resolve_include_path('config.php'))
   require_once 'config.php';
 
 require_once 'core/DB.php';
