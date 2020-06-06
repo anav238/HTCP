@@ -176,11 +176,14 @@ body {
   text-align: center;
   padding: 10px 15px 0;
   color: var(--adv-blue);
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .popup .popup-container .popup-container-text {
   padding: 10px 15px 5px;
   max-width: 500px;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -367,7 +370,7 @@ nav.nav-profile ul.links {
 nav h1 {
   font-family: "Chakra Patch", sans-serif;
   text-transform: uppercase;
-  font-size: 1.25em;
+  font-size: 1.15em;
   margin-top: 0;
   font-weight: 700;
   color: var(--adv-green);
@@ -832,6 +835,10 @@ main.partial-loading .right::after {
 @media only screen and (max-width: 599px) {
   .right .profileData .stats {
     grid-template-columns: repeat(1, 1fr);
+  }
+  .popup .popup-container {
+    min-width: unset;
+    width: calc(85%);
   }
 }
 
