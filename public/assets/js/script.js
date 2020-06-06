@@ -59,7 +59,9 @@ function showElements() {
         document.querySelector("main").classList.remove("loading");
         document.querySelector("main").classList.remove("partial-loading");
         loaded = true;
-        if(levelType)
+        document.querySelector(".right").scrollTop = 0;
+        window.scrollY = 0;
+        if(levelType && window.innerWidth > 767)
             document.querySelectorAll(".codeArea code input")[0].focus();
     }
 }
@@ -102,13 +104,16 @@ function popup(title, text, exercise = null, lastLevel = false) {
     function closeButtonEvent() {
         popup.style.display = "none";
         popup.remove();
-        if(levelType)
+        if(levelType && window.innerWidth > 767)
             document.querySelectorAll(".codeArea code input")[lastActiveInput].focus();
     }
 
     function nextButtonEvent() {
         loadExercise(exercise, true, "pushState");
-        document.querySelectorAll(".codeArea code input")[0].focus();
+        document.querySelector(".right").scrollTop = 0;
+        window.scrollY = 0;
+        if(window.innerWidth > 767)
+            document.querySelectorAll(".codeArea code input")[0].focus();
         popup.style.display = "none";
         popup.remove();
     }
@@ -223,8 +228,7 @@ if(levelType) {
             content = content.replace(/<input[^>]*>/, editorInputs[i].value);
 
         // Replacing or editing line-breaks, escaped chars, anchors, forms, images and CSS links
-        content = content.replace(/<br[^>]*>/g, "")
-            .replace(/&lt;/g, "<")
+        content = content.replace(/&lt;/g, "<")
             .replace(/&gt;/g, ">")
             .replace(/<a/g, "<a target=\"_blank\" rel=\"noopener noreferrer\"")
             .replace(/<form/g, "<form onsubmit=\"return false;\"")
@@ -352,13 +356,13 @@ if(levelType) {
 
     function submitSolutionShortcut(e) {
         if(e.key === "Enter" && document.querySelector(".popup") === null) {
+            editorInputs[lastActiveInput].blur();
             editor.removeEventListener("keydown", submitSolutionShortcut);
             submitSolution();
         }
     }
 
     function submitSolution() {
-        editorInputs[lastActiveInput].focus();
         button.removeEventListener("click", submitSolution);
         submit.innerHTML = "Loading...";
         submit.classList.add("button-loading");
