@@ -67,6 +67,7 @@
   padding: 0.5em 1.25em;
   transition: border-color 0.1s linear, background-color 0.1s linear, color 0.1s linear;
   cursor: pointer;
+  user-select: none;
 }
 
 .button-green {
@@ -175,11 +176,14 @@ body {
   text-align: center;
   padding: 10px 15px 0;
   color: var(--adv-blue);
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .popup .popup-container .popup-container-text {
   padding: 10px 15px 5px;
   max-width: 500px;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -366,7 +370,7 @@ nav.nav-profile ul.links {
 nav h1 {
   font-family: "Chakra Patch", sans-serif;
   text-transform: uppercase;
-  font-size: 1.25em;
+  font-size: 1.15em;
   margin-top: 0;
   font-weight: 700;
   color: var(--adv-green);
@@ -602,7 +606,7 @@ nav ul li .button {
 
 .right .codeArea {
   font-size: 1.1em;
-  line-height: 1.7em;
+  line-height: 1.4em;
   position: relative;
   padding: 5px 15px 60px 15px;
 }
@@ -616,13 +620,22 @@ nav ul li .button {
 
 .right .codeArea code {
   word-break: break-all;
+  white-space: pre-wrap;
 }
 
 .right .codeArea input {
   font-family: 'Courier New', Courier, monospace;
-  border: 1px solid #c5c5c5;
+  border: 1px solid #ffde49;
   padding: 2px 3px;
   margin: 2px;
+  background: #f7f7f7;
+  border-radius: 7px;
+}
+
+.right .codeArea input:focus {
+  outline: none;
+  background: #f7e7a0;
+  border: 1px solid var(--adv-yellow);
 }
 
 .right .codeArea,
@@ -822,6 +835,10 @@ main.partial-loading .right::after {
 @media only screen and (max-width: 599px) {
   .right .profileData .stats {
     grid-template-columns: repeat(1, 1fr);
+  }
+  .popup .popup-container {
+    min-width: unset;
+    width: calc(85%);
   }
 }
 
