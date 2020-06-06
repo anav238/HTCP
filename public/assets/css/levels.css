@@ -77,11 +77,34 @@ body {
     height: 50px;
 }
 
-.piranha-plant {
-    background-image: url("../img/levels/piranha-plant.png");
+.piranha-in-tube {
+    width: 60px;
+}
+
+.tube {
+    background-image: url("../img/levels/tube.png");
     background-size: contain;
     background-repeat: no-repeat;
     width: 60px;
-    height: 100px;
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+.piranha-plant {
+    background-image: url("../img/levels/plant.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 60px;
+    height: 60px;
+    margin-left: -5px;
+    z-index: -1;
+}
+
+.boo {
+    background-image: url("../img/levels/boo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 60px;
+    height: 70px;
     margin-bottom: 5px;
 }

@@ -617,7 +617,7 @@ nav ul li .button {
 
 .right .codeArea code {
   word-break: break-all;
-  white-space: pre;
+  white-space: pre-wrap;
 }
 
 .right .codeArea input {
