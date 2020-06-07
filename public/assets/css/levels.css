@@ -14,7 +14,7 @@ body {
     z-index: 1;
 }
 
-.css-1, .css-3, .css-4, .css-6 {
+.css-1, .css-3, .css-4, .css-6, .css-9 {
     justify-content: space-around;
 }
 
@@ -180,4 +180,40 @@ body {
     margin-bottom: 0;
     padding-bottom: 0;
     width: calc(100% - 160px);
+}
+
+.css-9 {
+    justify-content: flex-start;
+}
+
+.castle {
+    background-image: url(../img/levels/castle-portal.png);
+    background-size: contain;
+    height: 50px;
+    width: 80px;
+    transform-origin: bottom;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    z-index: -1;
+}
+
+.css-10 {
+    background-image: url(../img/levels/castle-interior.jpg);
+    background-size: cover;
+    background-position: bottom;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.css-10 #mario {
+    width: 90px;
+    height: 140px;
+}
+
+#princess {
+    background-image: url(../img/levels/princess-peach.png);
+    background-size: contain;
+    width: 70px;
+    height: 140px;
 }
