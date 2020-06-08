@@ -50,34 +50,44 @@
 				</div>
 			</div>
 			<div class="leaderboard">
-				<div>
-					<h1>Corectness Leaderboard</h1>
-					<table>
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Username</th>
-								<th>Score</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</div>
-				<div>
-					<h1>Speed Leaderboard</h1>
-					<table>
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Username</th>
-								<th>Score</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</div>
+				<?php
+					if ($GLOBALS["leaderboardType"] == "correctness" || $GLOBALS["leaderboardType"] == "both") 
+						echo 
+							"<div>
+								<h1>Corectness Leaderboard</h1>
+								<table>
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Username</th>
+											<th>Score</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>";
+				?>
+				
+				<?php
+					if ($GLOBALS["leaderboardType"] == "speed" || $GLOBALS["leaderboardType"] == "both") 
+						echo 
+							"<div>
+								<h1>Speed Leaderboard</h1>
+								<table>
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Username</th>
+											<th>Score</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>";
+				?>
+				
 			</div>
 			<footer>
 

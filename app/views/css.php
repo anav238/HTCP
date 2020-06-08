@@ -60,6 +60,10 @@
 			<div class="code">
 				<div class="codeArea">
 					<code></code>
+					<?php
+						if ($GLOBALS["exerciseStatistics"] == true) 
+							echo "<div class='totalAttempts'></div>";
+					?>
 					<a class="button button-red" id="submit">Submit</a>
 				</div>
 				<div class="resultArea">

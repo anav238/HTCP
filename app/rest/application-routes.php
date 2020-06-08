@@ -4,6 +4,7 @@ $applicationRoutes = [
         "method" => "POST",
         "route" => "applications",
         "query" => ["email", "name"],
+        "middlewares" => ["ApplicationLoginOn"],
         "handler" => "createApplication"
     ]
 ];

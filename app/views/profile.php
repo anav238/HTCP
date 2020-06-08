@@ -52,14 +52,18 @@
 			<div class="profileData">
 				<img src="/public/assets/img/placeholder-profile-pic.png" class="profilePicture">
 				<h1></h1>
+				<?php
+					if ($GLOBALS["userAccessTokens"] == true) 
+						echo "<div class='accessToken'></div>";
+				?>
 				<!-- <span>Register date</span> -->
 				<div class="stats">
 					<div>
-						<h2>HTML Levels completed</h2>
+						<h2>HTML Level</h2>
 						<span></span>
 					</div>
 					<div>
-						<h2>CSS Levels completed</h2>
+						<h2>CSS Level</h2>
 						<span></span>
 					</div>
 					<div>

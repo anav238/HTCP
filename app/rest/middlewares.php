@@ -88,3 +88,15 @@ function HasNotSolvedLevel($req) {
     );
     return false;
 }
+
+function ApplicationLoginOn($req) {
+    if ($GLOBALS["applicationLogin"] == true)
+        return true;
+
+    Response::status(403);
+    Response::json([
+            "status" => 403,
+            "reason" => "Application login is not available."]
+    );
+    return false;
+}
