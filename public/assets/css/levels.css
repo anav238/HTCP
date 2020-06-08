@@ -1,17 +1,27 @@
 body {
-    background-color: #56afef;
+    background-color: #96edfe;
     margin: 0;
     padding: 0;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
 }
 
 .css {
+    background: url(../img/levels/background.jpg);
+    background-size: cover;
+    background-position: bottom left;
     display: flex;
     align-items: flex-end;
-    height: calc(100% - 35px);
+    height: calc(100% - 40px);
+    margin-bottom: 0;
+    padding-bottom: 0;
     padding-left: 10px;
     z-index: 1;
+}
+
+.css div {
+    background-position: bottom;
 }
 
 .css-1, .css-3, .css-4, .css-6, .css-9 {
@@ -37,10 +47,10 @@ body {
 }
 
 .css-2 .platform {
-    width: 150px;
+    width: 200px;
 }
 
-.wall {
+.css-2 .wall {
     background-color: #D39415;
     background-image: url("../img/brick.png");
     background-repeat: repeat-y;
@@ -49,7 +59,7 @@ body {
     height: 80%;
     position: absolute;
     bottom: 40px;
-    left: 110px;
+    left: 160px;
     width: 40px;
 }
 
@@ -60,6 +70,8 @@ body {
     margin-left: 5px;
     width: 80px;
     height: 100px;
+    position: relative;
+    top: 6px;
 }
 
 #luigi {
@@ -68,6 +80,8 @@ body {
     background-repeat: no-repeat;
     width: 80px;
     height: 100px;
+    position: relative;
+    top: 2px;
 }
 
 .goompa {
@@ -77,6 +91,8 @@ body {
     display: inline-block;
     width: 40px;
     height: 50px;
+    position: relative;
+    top: 2px;
 }
 
 .piranha-in-tube {
@@ -89,7 +105,6 @@ body {
     background-repeat: no-repeat;
     width: 60px;
     height: 40px;
-    margin-bottom: 5px;
 }
 
 .piranha-plant {
@@ -98,7 +113,6 @@ body {
     background-repeat: no-repeat;
     width: 60px;
     height: 60px;
-    margin-left: -5px;
     z-index: -1;
 }
 
@@ -149,20 +163,26 @@ body {
 #bowser {
     background-image: url(../img/levels/bowser.png);
     background-size: contain;
-    height: 200px;
+    height: 195px;
     width: 165px;
+    position: relative;
+    top: 2px;
 }
 
 .css-8 {
     height: 100%;
+    overflow: hidden;
 }
 
 .css-8 #mario {
     margin-bottom: 30px;
+    z-index: 2;
+    top: 0;
 }
 
 .css-8 .ground {
     width: 80px;
+    z-index: 1;
 }
 
 .css-8 .ground:last-of-type {
@@ -173,13 +193,17 @@ body {
     display: inline-block;
     margin-bottom: 0;
     padding-bottom: 0;
+    width: 40px;
 }
 
 .tubes {
     display: block;
     margin-bottom: 0;
     padding-bottom: 0;
+    height: 40px;
     width: calc(100% - 160px);
+    position: absolute;
+    left: 80px;
 }
 
 .css-9 {
@@ -195,7 +219,6 @@ body {
     position: absolute;
     bottom: 50px;
     left: 50%;
-    z-index: -1;
 }
 
 .css-10 {
