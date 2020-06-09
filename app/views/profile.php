@@ -50,8 +50,9 @@
 				</div>
 			</div>
 			<div class="profileData">
-				<img src="/public/assets/img/placeholder-profile-pic.png" class="profilePicture">
+				<img src="#" class="profilePicture">
 				<h1></h1>
+				<a href="/logout" class="button button-blue">Logout</a>
 				<?php
 					if ($GLOBALS["userAccessTokens"] == true) 
 						echo "<div class='accessToken'></div>";

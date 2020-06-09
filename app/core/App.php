@@ -10,12 +10,17 @@ class App
 
         $url = $this->parseUrl();
             
-        if (isset($url[0]) and file_exists(__DIR__.'/../controllers/'.$url[0].'.php')) {
-            $this->controller = $url[0];
-            unset($url[0]);
+        if (isset($url[0])) { 
+            if (file_exists(__DIR__.'/../controllers/'.$url[0].'.php')) {
+                $this->controller = $url[0];
+                unset($url[0]);
+            }
+            else 
+                $this->controller = "notfound";
         }
         
-        if ($this->controller != 'api' && $this->controller != 'githubconnect' && !isset($_SESSION['accessToken']))
+        if ($this->controller != 'api' && $this->controller != 'githubconnect' && $this->controller != "notfound"
+                && !isset($_SESSION['accessToken']))
             $this->controller = 'login';
     
         else if ($this->controller == 'login' && isset($_SESSION['accessToken']))

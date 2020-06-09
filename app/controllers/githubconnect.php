@@ -8,12 +8,9 @@
                 $access_token = $this->getAccessToken();
                 $this->loginUser($access_token);
                 header( "Location: /");
-                //exit;
             }
-            else {
-                //header( "Location: /login" );
-                echo "Error";
-            }
+            else 
+                header( "Location: /login" );
         }
 
         public function getAccessToken() {

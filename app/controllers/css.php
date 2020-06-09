@@ -1,10 +1,8 @@
 <?php
     class CSS extends Controller 
     {
-        public function index($level='1') 
+        public function index() 
         {
-            $data = ['level' => $level, 'type' => 'CSS'];
-            $exercise = $this->model('Exercise', $data);
-            $this->view('css', $exercise);
+            $this->view('css');
         }
     }
