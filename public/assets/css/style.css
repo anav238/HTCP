@@ -496,6 +496,18 @@ nav ul li .button {
   margin-bottom: 0;
 }
 
+.right .profileData #accessToken {
+  line-height: 1;
+}
+
+.right .profileData .button {
+  margin-top: 1em;
+  display: block;
+  margin: 1em auto 0 auto;
+  width: fit-content;
+  padding: 0.35em 1.25em;
+}
+
 .right .profileData .stats {
   margin: 2em;
   display: grid;
@@ -641,6 +653,21 @@ nav ul li .button {
   outline: none;
   background: #f7e7a0;
   border: 1px solid var(--adv-yellow);
+}
+
+.right .codeArea .attempts {
+  position: absolute;
+  bottom: 12px;
+  left: 15px;
+  padding: 0.1em 0;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  font-size: 0.85em;
+  font-family: "Chakra Patch", sans-serif;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  color: var(--adv-yellow);
+  border: 3px solid transparent;
 }
 
 .right .codeArea,

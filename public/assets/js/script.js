@@ -164,6 +164,12 @@ if(levelType) {
     
     let editorInputs = editor.getElementsByTagName("input");
     let result = document.querySelector("iframe").contentWindow.document;
+    
+    let attempts = null;
+    if(document.querySelector(".right .codeArea .attempts"))
+        attempts = document.querySelector(".right .codeArea .attempts");
+
+    let totalAttempts = 0;
 
     let highestLevel = 0;
     let currentLevel = 0;
@@ -250,10 +256,17 @@ if(levelType) {
     }
     editor.addEventListener("keyup", refreshResult);
 
+    function updateAttempts(number) {
+        if(attempts)
+            attempts.innerHTML = "Attempts: " + number;
+    }
+
     // Showing level info
     function loadExercise(exercise, changeActiveButton = false, state = "unset") {
         levelId = exercise.id;
         currentLevel = exercise.level;
+        totalAttempts = exercise.attempts;
+
         if(changeActiveButton)
             document.querySelector("nav h1 + ul a.button-active").classList.remove("button-active");
 
@@ -280,8 +293,8 @@ if(levelType) {
         title.innerHTML = exercise.level;
         instructions.innerHTML = exercise.description;
         editor.innerHTML = exercise.problem;
-        
 
+        updateAttempts(totalAttempts);
         prepareInputs();
         refreshResult();
     }
@@ -366,6 +379,8 @@ if(levelType) {
         button.removeEventListener("click", submitSolution);
         submit.innerHTML = "Loading...";
         submit.classList.add("button-loading");
+        updateAttempts(parseInt(totalAttempts) + 1);
+        totalAttempts++;
         let lastLevelLink = document.querySelector("nav h1 + ul li:last-child a[href*=" + levelType + "]");
         let lastLevelNumber = lastLevelLink.getAttribute("href").substring(levelType.length + 2);
         let levelList = document.querySelector("nav h1 + ul");
@@ -496,6 +511,10 @@ if(window.location.pathname.includes("profile")) {
             document.querySelector(".right .profileData .stats div:nth-child(2) span").innerHTML = data.css_level;
             document.querySelector(".right .profileData .stats div:nth-child(3) span").innerHTML = data.speed_score;
             document.querySelector(".right .profileData .stats div:nth-child(4) span").innerHTML = data.correctness_score;
+
+            if(document.querySelector(".right .profileData #accessToken"))
+                document.querySelector(".right .profileData #accessToken").innerHTML = "Access Token: " + data.accessToken;
+
             showElements();
         });
 }

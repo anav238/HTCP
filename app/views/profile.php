@@ -48,12 +48,11 @@
 			<div class="profileData">
 				<img src="#" class="profilePicture">
 				<h1></h1>
-				<a href="/logout" class="button button-blue">Logout</a>
 				<?php
 					if ($GLOBALS["userAccessTokens"] == true) 
-						echo "<div class='accessToken'></div>";
+						echo "<div id='accessToken'>Access Token: </div>";
 				?>
-				<!-- <span>Register date</span> -->
+				<a href="/logout" class="button button-red">Logout</a>
 				<div class="stats">
 					<div>
 						<h2>HTML Level</h2>

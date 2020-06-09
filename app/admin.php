@@ -8,7 +8,8 @@ $GLOBALS["leaderboardType"] = "both";
 // applicationLogin: true, false
 $GLOBALS["applicationLogin"] = true;
 
-$GLOBALS["userAvatars"] = "api";
+// userAvatars: "api", "github"
+$GLOBALS["userAvatars"] = "github";
 
 // userAccessTokens: true, false
 $GLOBALS["userAccessTokens"] = true;

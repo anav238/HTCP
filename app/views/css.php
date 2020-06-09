@@ -58,7 +58,7 @@
 					<code></code>
 					<?php
 						if ($GLOBALS["exerciseStatistics"] == true) 
-							echo "<div class='totalAttempts'></div>";
+							echo "<div class=\"attempts\"></div>";
 					?>
 					<a class="button button-red" id="submit">Submit</a>
 				</div>
