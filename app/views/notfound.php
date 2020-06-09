@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link href="<?=getenv("CSS_PATH")?>/style.css" rel="stylesheet" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>HTML & CSS Adventure</title>
+    <meta name="theme-color" content="#008529">
+    <meta name="description" content="Join your childhood retro games heroes on their journeys, discovering the magic of web development using the power of code!"/>
+	<link href="<?=getenv("CSS_PATH")?>/login.css" rel="stylesheet" />
 </head>
-<body class="sign-in">
+<body>
     <main>
-        <div>
-            <img src="<?=getenv("IMG_PATH")?>/sad-mario.png">
-            <h1>We couldn't find what you were looking for.</h1>
+        <div class="description">
+        <img src="<?=getenv("IMG_PATH")?>/sad-mario.png">
+        <h1>We couldn't find what you were looking for.</h1>
         </div>
-        <footer>
-
-        </footer>
     </main>
+    <footer></footer>
 </body>
 </html>

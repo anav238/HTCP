@@ -6,11 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Leaderboard - HTML & CSS Adventure</title>
 	<meta name="theme-color" content="#e11d78">
-	<!--
-	<meta name="description" content="descriere relevanta"/>
-	<link rel="icon" type="image/x-icon" href="assets/img/icons/512.png" />
-	<link rel="manifest" href="assets/js/manifest.json">
-	-->
+	<meta name="description" content="Join your childhood retro games heroes on their journeys, discovering the magic of web development using the power of code!"/>
 	<link href="<?=getenv("CSS_PATH")?>/style.css" rel="stylesheet" />
 </head>
 <body>
@@ -49,45 +45,35 @@
 					Loading leaderboard...
 				</div>
 			</div>
-			<div class="leaderboard">
-				<?php
-					if ($GLOBALS["leaderboardType"] == "correctness" || $GLOBALS["leaderboardType"] == "both") 
-						echo 
-							"<div>
-								<h1>Corectness Leaderboard</h1>
-								<table>
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>Username</th>
-											<th>Score</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-							</div>";
-				?>
-				
-				<?php
-					if ($GLOBALS["leaderboardType"] == "speed" || $GLOBALS["leaderboardType"] == "both") 
-						echo 
-							"<div>
-								<h1>Speed Leaderboard</h1>
-								<table>
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>Username</th>
-											<th>Score</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-							</div>";
-				?>
-				
+			<div class="leaderboard" id="<?php echo $GLOBALS["leaderboardType"] ?>">
+				<div>
+					<h1>Corectness Leaderboard</h1>
+					<table>
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Username</th>
+								<th>Score</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div>
+					<h1>Speed Leaderboard</h1>
+					<table>
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Username</th>
+								<th>Score</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>	
 			</div>
 			<footer>
 
