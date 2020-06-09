@@ -11,14 +11,25 @@ class Response {
     }
 }
 
+function handle404()
+{
+    Response::status(404);
+    Response::json([
+        "status" => 404,
+        "reason" => "The page you were looking for does not exist."
+    ]);
+}
+
 function getAccessToken() {
     $allHeaders = getallheaders();
     $accessToken = "";
+    //Checks if the access token appears in the header as a Bearer token
     if (isset($allHeaders['Authorization'])) {
         $accessToken = $allHeaders['Authorization'];
         if (substr($accessToken, 0, 7) == 'Bearer ')
             $accessToken = trim(substr($accessToken, 7));
     }
+    //Checks if the access token was set in the session (a user is using the website in the browser).
     else if (isset($_SESSION['accessToken']))
         $accessToken = $_SESSION['accessToken'];
     return $accessToken;
@@ -33,9 +44,9 @@ function parseRequest($routeConfig)
     $url = $_SERVER['REQUEST_URI'];
     $method = $_SERVER['REQUEST_METHOD'];
 
-    if ($method !== $routeConfig['method']) {
+    //Checks if the method is allowed for this specific route.
+    if ($method !== $routeConfig['method']) 
         return false;
-    }
 
     $regExpString = routeExpToRegExp($routeConfig['route']);
 
@@ -55,11 +66,6 @@ function parseRequest($routeConfig)
     return false;
 }
 
-function handle404()
-{
-    Response::status(404);
-}
-
 function routeExpToRegExp($route) {
     $regExpString = "";
     $parts = explode('/', $route);
@@ -68,6 +74,7 @@ function routeExpToRegExp($route) {
         $regExpString .= '\/';
 
         if ($p[0] === ':') {
+            //Matches any possible parameter for that specific part.
             $regExpString .= '([a-zA-Z0-9]+)';
         } else {
             $regExpString .= $p;
@@ -81,11 +88,12 @@ function routeExpToRegExp($route) {
 
 function getPayload() {
     $payload = file_get_contents('php://input');
-    if (strlen($payload)) {
+
+    if (strlen($payload)) 
         $payload = json_decode($payload);
-    } else {
+    else 
         $payload = NULL;
-    }
+
     return $payload;
 }
 

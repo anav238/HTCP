@@ -19,6 +19,7 @@ class App
                 $this->controller = "notfound";
         }
         
+        //If the user is not logged in and tries to access other pages on the website, he is redirected to the login page.
         if ($this->controller != 'api' && $this->controller != 'githubconnect' && $this->controller != "notfound"
                 && !isset($_SESSION['accessToken']))
             $this->controller = 'login';
@@ -43,6 +44,3 @@ class App
             return $url = explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
     }
 }
-//la ce nivel am ramas in fiecare lume.
-//leaderboard timp vs corectitudine
-?>

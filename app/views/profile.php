@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<div class="profileData">
-				<img src="#" class="profilePicture">
+				<img src="#" class="profilePicture" alt="Your profile picture">
 				<h1></h1>
 				<a href="/logout" class="button button-blue">Logout</a>
 				<?php
