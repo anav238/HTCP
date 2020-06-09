@@ -440,34 +440,46 @@ if(levelType) {
     Running when on leaderboard page (the URI contains "leaderboard")
 */
 if(window.location.pathname.includes("leaderboard")) {
-    Promise.all([
-        fetch('/api/users/correctnessLeaderboard'),
-        fetch('/api/users/speedLeaderboard')
-    ])
-        .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(data => {
-            // Correctness leaderboard
-            let correctnessTable = document.querySelector(".right .leaderboard div:nth-child(1) table tbody");
-            for(let i in data[0]) {
-                let rank = parseInt(i) + 1;
-                correctnessTable.insertAdjacentHTML("beforeend", "<tr>\
-                <td>" + rank + "</td>\
-                <td><img src=\"" + data[0][i].avatar + "\" alt=\"" + data[0][i].username + "'s avatar\" />" + data[0][i].username + "</td>\
-                <td>" + data[0][i].correctness_score + "</td>\
-                </tr>");
-            }
-            // Speed leaderboard
-            let speedTable = document.querySelector(".right .leaderboard div:nth-child(2) table tbody");
-            for(let i in data[1]) {
-                let rank = parseInt(i) + 1;
-                speedTable.insertAdjacentHTML("beforeend", "<tr>\
-                <td>" + rank + "</td>\
-                <td><img src=\"" + data[1][i].avatar + "\" alt=\"" + data[1][i].username + "'s avatar\" />" + data[1][i].username + "</td>\
-                <td>" + data[1][i].speed_score + "</td>\
-                </tr>");
-            }
-            showElements();
-        });
+    let configVar = document.querySelector(".right .leaderboard").id;
+
+    if(configVar === "both") {
+        Promise.all([
+            fetch('/api/users/correctnessLeaderboard'),
+            fetch('/api/users/speedLeaderboard')
+        ])
+            .then(responses => Promise.all(responses.map(response => response.json())))
+            .then(data => {
+                loadLeaderboard(data[0], 1, "correctness");
+                loadLeaderboard(data[1], 2, "speed");
+                showElements();
+            });
+    }
+    else {
+        document.querySelector(".right .leaderboard div:nth-child(1) h1").innerHTML = configVar.charAt(0).toUpperCase() + configVar.slice(1) + " Leaderboard";
+        document.querySelector(".right .leaderboard div:nth-child(1)").classList.add("singleTable");
+        document.querySelector(".right .leaderboard div:nth-child(2)").remove();
+        fetch('/api/users/' + configVar + 'Leaderboard')
+            .then(response => response.json())
+            .then(data => {
+                loadLeaderboard(data, 1, configVar);
+                showElements();
+            });
+    }
+
+    function loadLeaderboard(data, side = 1, type = "") {
+        let table = document.querySelector(".right .leaderboard div:nth-child(" + side + ") table tbody");
+        for(let i in data) {
+            if(type === "correctness") score = data[i].correctness_score;
+            else if(type === "speed") score = data[i].speed_score;
+
+            let rank = parseInt(i) + 1;
+            table.insertAdjacentHTML("beforeend", "<tr>\
+            <td>" + rank + "</td>\
+            <td><img src=\"" + data[i].avatar + "\" alt=\"" + data[i].username + "'s avatar\" />" + data[i].username + "</td>\
+            <td>" + score + "</td>\
+            </tr>");
+        }
+    }
 }
 
 /*

@@ -526,6 +526,11 @@ nav ul li .button {
   width: calc(50% - 30px);
 }
 
+.right .leaderboard div.singleTable {
+  padding-right: 0;
+  width: 75%;
+}
+
 .right .leaderboard h1 {
   margin-top: 0;
   text-align: center;
