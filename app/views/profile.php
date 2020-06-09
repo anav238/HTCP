@@ -46,7 +46,7 @@
 				</div>
 			</div>
 			<div class="profileData">
-				<img src="#" class="profilePicture">
+				<img src="#" class="profilePicture" alt="Your profile picture">
 				<h1></h1>
 				<?php
 					if ($GLOBALS["userAccessTokens"] == true) 

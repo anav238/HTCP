@@ -20,6 +20,7 @@ $allRoutes = [
     ...$applicationRoutes
 ];
 
+//Find the route responsible for handling the request
 foreach ($allRoutes as $routeConfig)
     if (parseRequest($routeConfig))
         exit;

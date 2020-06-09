@@ -7,4 +7,3 @@ class Leaderboard extends Controller
         $this->view('leaderboard');
     }
 }
-?>

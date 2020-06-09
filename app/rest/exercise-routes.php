@@ -38,11 +38,9 @@ function getExercises($req) {
     }
 
     else if (isset($req['query']['level'])) {
-        Response::status(400);
-        Response::json([
-            "status" => 400,
-            "reason" => "If you provide a level, you must also provide a type as a query parameter."
-        ]);
+        $data = Exercise::getAvailableExercisesOfLevel(getAccessToken(), $req['query']['type']);
+        Response::status(200);
+        Response::json($data);
     }
 
     else {
@@ -56,6 +54,7 @@ function getExercises($req) {
 }
 
 function getCurrentExerciseOfType($req) {
+    //Function used with the /api/:type/current route, for getting the current level of certain type when a user logs in.
     $type = strtoupper($req['params']['type']);
     $currentLevel = User::getCurrentLevel(getAccessToken(), $type);
     $data = Exercise::getSpecificExercise(getAccessToken(), $type, $currentLevel);
@@ -68,14 +67,17 @@ function submitExercise($req) {
     $solution = $req['payload']->solution;
     $result = Exercise::checkExerciseSolution($id, $solution);
     $accessToken = getAccessToken();
+    
     Exercise::incrementAttempts($accessToken, $id);
     $exercise = Exercise::getExerciseById($accessToken, $id);
     $type = $exercise['type'];
     $level = $exercise['level'];
 
     Response::status(200);
+    //$result is set to true if the provided solution is correct
     if ($result) {
         if ($level == User::getCurrentLevel($accessToken, $type)) {
+            //If the user didn't solve this level before, we update his score and level him up.
             User::updateUserScores($accessToken, $id);
             User::levelUpUser($accessToken, $type);
         }
