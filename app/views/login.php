@@ -29,15 +29,16 @@
                 </svg>
                 Sign in with GitHub
             </a>
+            <?php if ($GLOBALS["applicationLogin"] == true) { ?>
             <a id="developer">
                 Are you a developer?
             </a>
+            <?php } ?>
         </div>
     </main>
-
     <footer></footer>
-
+    <?php if ($GLOBALS["applicationLogin"] == true) { ?>
     <script src="<?=getenv("JS_PATH")?>/login.js"></script>
-
+    <?php } ?>
 </body>
 </html>

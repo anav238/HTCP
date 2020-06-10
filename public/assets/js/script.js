@@ -88,12 +88,12 @@ function popup(title, text, exercise = null, lastLevel = false) {
     closeButton.addEventListener("click", closeButtonEvent);
 
     if(exercise) {
-        buttons.insertAdjacentHTML("afterbegin", "<div class=\"button button-green\" id=\"next\">Next level</a>");
+        buttons.insertAdjacentHTML("afterbegin", "<a class=\"button button-green\" id=\"next\">Next level</a>");
         buttons.querySelector("#next").addEventListener("click", nextButtonEvent);
     }
 
     if(lastLevel) {
-        buttons.insertAdjacentHTML("afterbegin", "<div class=\"button button-red\" id=\"css\">CSS World</a>");
+        buttons.insertAdjacentHTML("afterbegin", "<a class=\"button button-red\" id=\"css\">CSS World</a>");
         buttons.querySelector("#css").addEventListener("click", () => {
             window.location.href = "/css";
         });
