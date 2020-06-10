@@ -4,6 +4,7 @@ $applicationRoutes = [
         "method" => "POST",
         "route" => "applications",
         "query" => ["email", "name"],
+        "middlewares" => ["ApplicationLoginOn"],
         "handler" => "createApplication"
     ]
 ];
@@ -19,9 +20,11 @@ function createApplication($req) {
     }
     $email = $req['query']['email'];
     $password = $req['query']['name'];
+
     require_once __DIR__.'/../models/Application.php';
     $data = array();
     $data['Access Token'] = Application::registerApplication($email, $password);
+    
     if (!$data['Access Token']) {
         Response::status(500);
         Response::json([

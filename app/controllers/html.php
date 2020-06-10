@@ -2,11 +2,9 @@
 
     class HTML extends Controller 
     {
-        public function index($level='1') 
+        public function index() 
         {
-            $data = ['level' => $level, 'type' => 'HTML'];
-            $exercise = $this->model('Exercise', $data);
-            $this->view('html', $exercise);
+            $this->view('html');
         }
     }
 ?>

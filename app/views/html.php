@@ -6,11 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>HTML & CSS Adventure</title>
 	<meta name="theme-color" content="#008529">
-	<!--
-	<meta name="description" content="descriere relevanta"/>
-	<link rel="icon" type="image/x-icon" href="assets/img/icons/512.png" />
-	<link rel="manifest" href="assets/js/manifest.json">
-	-->
+	<meta name="description" content="Join your childhood retro games heroes on their journeys, discovering the magic of web development using the power of code!"/>
 	<link href="<?=getenv("CSS_PATH")?>/style.css" rel="stylesheet" />
 </head>
 <body>
@@ -60,6 +56,10 @@
 			<div class="code">
 				<div class="codeArea">
 					<code></code>
+					<?php
+						if ($GLOBALS["exerciseStatistics"] == true) 
+							echo "<div class=\"attempts\"></div>";
+					?>
 					<a class="button button-green" id="submit">Submit</a>
 				</div>
 				<div class="resultArea">

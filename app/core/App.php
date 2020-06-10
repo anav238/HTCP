@@ -10,12 +10,18 @@ class App
 
         $url = $this->parseUrl();
             
-        if (isset($url[0]) and file_exists(__DIR__.'/../controllers/'.$url[0].'.php')) {
-            $this->controller = $url[0];
-            unset($url[0]);
+        if (isset($url[0])) { 
+            if (file_exists(__DIR__.'/../controllers/'.$url[0].'.php')) {
+                $this->controller = $url[0];
+                unset($url[0]);
+            }
+            else 
+                $this->controller = "notfound";
         }
         
-        if ($this->controller != 'api' && $this->controller != 'githubconnect' && !isset($_SESSION['accessToken']))
+        //If the user is not logged in and tries to access other pages on the website, he is redirected to the login page.
+        if ($this->controller != 'api' && $this->controller != 'githubconnect' && $this->controller != "notfound"
+                && !isset($_SESSION['accessToken']))
             $this->controller = 'login';
     
         else if ($this->controller == 'login' && isset($_SESSION['accessToken']))
@@ -38,6 +44,3 @@ class App
             return $url = explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
     }
 }
-//la ce nivel am ramas in fiecare lume.
-//leaderboard timp vs corectitudine
-?>

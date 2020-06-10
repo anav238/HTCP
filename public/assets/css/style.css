@@ -496,6 +496,18 @@ nav ul li .button {
   margin-bottom: 0;
 }
 
+.right .profileData #accessToken {
+  line-height: 1;
+}
+
+.right .profileData .button {
+  margin-top: 1em;
+  display: block;
+  margin: 1em auto 0 auto;
+  width: fit-content;
+  padding: 0.35em 1.25em;
+}
+
 .right .profileData .stats {
   margin: 2em;
   display: grid;
@@ -524,6 +536,11 @@ nav ul li .button {
   border-left: 3px solid var(--adv-pink);
   padding-left: 30px;
   width: calc(50% - 30px);
+}
+
+.right .leaderboard div.singleTable {
+  padding-right: 0;
+  width: 75%;
 }
 
 .right .leaderboard h1 {
@@ -636,6 +653,21 @@ nav ul li .button {
   outline: none;
   background: #f7e7a0;
   border: 1px solid var(--adv-yellow);
+}
+
+.right .codeArea .attempts {
+  position: absolute;
+  bottom: 12px;
+  left: 15px;
+  padding: 0.1em 0;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  font-size: 0.85em;
+  font-family: "Chakra Patch", sans-serif;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  color: var(--adv-yellow);
+  border: 3px solid transparent;
 }
 
 .right .codeArea,
@@ -840,60 +872,4 @@ main.partial-loading .right::after {
     min-width: unset;
     width: calc(85%);
   }
-}
-
-@media only screen and (max-width: 640px) and (orientation: landscape) {
-  body.sign-in button {
-    font-size: 0.6em;
-    margin: 3px auto;
-    padding: 5px;
-    width: 250px;
-  }
-
-  .sign-in button i {
-    font-size: 1em;
-    margin-right: 3px;
-  }
-
-  .sign-in h1 {
-    margin-bottom: 10px;
-  }
-}
-
-body.sign-in main {
-  background: linear-gradient(180deg, #005da0, #bee1f4);
-  background-size: cover;
-  margin: 0;
-  padding: 0;
-}
-
-.sign-in div {
-  text-align: center;
-  margin: auto;
-}
-
-.sign-in h1 {
-  color: white;
-  font-family: "Chakra Patch", sans-serif;
-  font-size: 1.5em;
-  font-weight: 600;
-  margin-top: 0;
-  text-transform: uppercase;
-}
-
-.sign-in h1 span {
-  color: var(--adv-yellow);
-  font-size: 2em;
-}
-
-.sign-in main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100vh;
-}
-
-.sign-in button i {
-  font-size: 1em;
-  margin-right: 7px;
 }

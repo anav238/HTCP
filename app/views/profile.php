@@ -6,11 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Profile - HTML & CSS Adventure</title>
 	<meta name="theme-color" content="#2f70b7">
-	<!--
-	<meta name="description" content="descriere relevanta"/>
-	<link rel="icon" type="image/x-icon" href="assets/img/icons/512.png" />
-	<link rel="manifest" href="assets/js/manifest.json">
-	-->
+	<meta name="description" content="Join your childhood retro games heroes on their journeys, discovering the magic of web development using the power of code!"/>
 	<link href="<?=getenv("CSS_PATH")?>/style.css" rel="stylesheet" />
 </head>
 <body>
@@ -50,16 +46,20 @@
 				</div>
 			</div>
 			<div class="profileData">
-				<img src="/public/assets/img/placeholder-profile-pic.png" class="profilePicture">
+				<img src="#" class="profilePicture" alt="Your profile picture">
 				<h1></h1>
-				<!-- <span>Register date</span> -->
+				<?php
+					if ($GLOBALS["userAccessTokens"] == true) 
+						echo "<div id='accessToken'>Access Token: </div>";
+				?>
+				<a href="/logout" class="button button-red">Logout</a>
 				<div class="stats">
 					<div>
-						<h2>HTML Levels completed</h2>
+						<h2>HTML Level</h2>
 						<span></span>
 					</div>
 					<div>
-						<h2>CSS Levels completed</h2>
+						<h2>CSS Level</h2>
 						<span></span>
 					</div>
 					<div>

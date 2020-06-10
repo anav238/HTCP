@@ -1,5 +1,6 @@
 <?php
 
+//Used for restricting access to data about exercises
 function IsApplicationOrUser($req) {
     $accessToken = getAccessToken();
     if (strlen($accessToken) < 15)
@@ -15,6 +16,8 @@ function IsApplicationOrUser($req) {
     return false;
 }
 
+//Used to restrict access to a part of the website's functionalities (only logged in users - not applications) 
+//are allowed to submit exercises, get their profile data and see the leaderboard.
 function IsUser($req) {
     $accessToken = getAccessToken();
 
@@ -42,6 +45,7 @@ function HasAccessToken($req) {
     return true;
 }
 
+//An user can submit a solution to a level only if he already reached this level.
 function HasReachedLevel($req) {
     $accessToken = getAccessToken();
     if (isset($req['query']['id'])) {
@@ -71,20 +75,15 @@ function HasReachedLevel($req) {
     return true;
 }
 
-function HasNotSolvedLevel($req) {
-    $id = $req['query']['id'];
-    $data = Exercise::getExerciseById(getAccessToken(), $id);
-    $levelType = $data['type'];
-    $level = $data['level'];
-
-    $currentLevel = User::getCurrentLevel(getAccessToken(), $levelType);
-    if ($currentLevel == $level)
+//Checks if application login was deactivated using the administration file.
+function ApplicationLoginOn($req) {
+    if ($GLOBALS["applicationLogin"] == true)
         return true;
 
     Response::status(403);
     Response::json([
             "status" => 403,
-            "reason" => "You already solved this exercise."]
+            "reason" => "Application login is not available."]
     );
     return false;
 }

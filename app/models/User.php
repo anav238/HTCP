@@ -16,6 +16,10 @@ class User
 
     public static function registerUser($username, $avatar) {
         $connection = $GLOBALS['DB_CON'];
+
+        if ($GLOBALS["userAvatars"] == "api") 
+            $avatar = "https://api.adorable.io/avatars/285/" . $username . ".png";
+
         $data = array("Username" => $username, "Avatar" => $avatar, "Access Token" => uniqid());
         $res = pg_insert($connection, 'Users', $data);
         if ($res)

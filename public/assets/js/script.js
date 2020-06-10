@@ -88,12 +88,12 @@ function popup(title, text, exercise = null, lastLevel = false) {
     closeButton.addEventListener("click", closeButtonEvent);
 
     if(exercise) {
-        buttons.insertAdjacentHTML("afterbegin", "<div class=\"button button-green\" id=\"next\">Next level</a>");
+        buttons.insertAdjacentHTML("afterbegin", "<a class=\"button button-green\" id=\"next\">Next level</a>");
         buttons.querySelector("#next").addEventListener("click", nextButtonEvent);
     }
 
     if(lastLevel) {
-        buttons.insertAdjacentHTML("afterbegin", "<div class=\"button button-red\" id=\"css\">CSS World</a>");
+        buttons.insertAdjacentHTML("afterbegin", "<a class=\"button button-red\" id=\"css\">CSS World</a>");
         buttons.querySelector("#css").addEventListener("click", () => {
             window.location.href = "/css";
         });
@@ -164,6 +164,12 @@ if(levelType) {
     
     let editorInputs = editor.getElementsByTagName("input");
     let result = document.querySelector("iframe").contentWindow.document;
+    
+    let attempts = null;
+    if(document.querySelector(".right .codeArea .attempts"))
+        attempts = document.querySelector(".right .codeArea .attempts");
+
+    let totalAttempts = 0;
 
     let highestLevel = 0;
     let currentLevel = 0;
@@ -250,10 +256,17 @@ if(levelType) {
     }
     editor.addEventListener("keyup", refreshResult);
 
+    function updateAttempts(number) {
+        if(attempts)
+            attempts.innerHTML = "Attempts: " + number;
+    }
+
     // Showing level info
     function loadExercise(exercise, changeActiveButton = false, state = "unset") {
         levelId = exercise.id;
         currentLevel = exercise.level;
+        totalAttempts = exercise.attempts;
+
         if(changeActiveButton)
             document.querySelector("nav h1 + ul a.button-active").classList.remove("button-active");
 
@@ -280,8 +293,8 @@ if(levelType) {
         title.innerHTML = exercise.level;
         instructions.innerHTML = exercise.description;
         editor.innerHTML = exercise.problem;
-        
 
+        updateAttempts(totalAttempts);
         prepareInputs();
         refreshResult();
     }
@@ -366,6 +379,8 @@ if(levelType) {
         button.removeEventListener("click", submitSolution);
         submit.innerHTML = "Loading...";
         submit.classList.add("button-loading");
+        updateAttempts(parseInt(totalAttempts) + 1);
+        totalAttempts++;
         let lastLevelLink = document.querySelector("nav h1 + ul li:last-child a[href*=" + levelType + "]");
         let lastLevelNumber = lastLevelLink.getAttribute("href").substring(levelType.length + 2);
         let levelList = document.querySelector("nav h1 + ul");
@@ -440,34 +455,46 @@ if(levelType) {
     Running when on leaderboard page (the URI contains "leaderboard")
 */
 if(window.location.pathname.includes("leaderboard")) {
-    Promise.all([
-        fetch('/api/users/correctnessLeaderboard'),
-        fetch('/api/users/speedLeaderboard')
-    ])
-        .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(data => {
-            // Correctness leaderboard
-            let correctnessTable = document.querySelector(".right .leaderboard div:nth-child(1) table tbody");
-            for(let i in data[0]) {
-                let rank = parseInt(i) + 1;
-                correctnessTable.insertAdjacentHTML("beforeend", "<tr>\
-                <td>" + rank + "</td>\
-                <td><img src=\"" + data[0][i].avatar + "\" alt=\"" + data[0][i].username + "'s avatar\" />" + data[0][i].username + "</td>\
-                <td>" + data[0][i].correctness_score + "</td>\
-                </tr>");
-            }
-            // Speed leaderboard
-            let speedTable = document.querySelector(".right .leaderboard div:nth-child(2) table tbody");
-            for(let i in data[1]) {
-                let rank = parseInt(i) + 1;
-                speedTable.insertAdjacentHTML("beforeend", "<tr>\
-                <td>" + rank + "</td>\
-                <td><img src=\"" + data[1][i].avatar + "\" alt=\"" + data[1][i].username + "'s avatar\" />" + data[1][i].username + "</td>\
-                <td>" + data[1][i].speed_score + "</td>\
-                </tr>");
-            }
-            showElements();
-        });
+    let configVar = document.querySelector(".right .leaderboard").id;
+
+    if(configVar === "both") {
+        Promise.all([
+            fetch('/api/users/correctnessLeaderboard'),
+            fetch('/api/users/speedLeaderboard')
+        ])
+            .then(responses => Promise.all(responses.map(response => response.json())))
+            .then(data => {
+                loadLeaderboard(data[0], 1, "correctness");
+                loadLeaderboard(data[1], 2, "speed");
+                showElements();
+            });
+    }
+    else {
+        document.querySelector(".right .leaderboard div:nth-child(1) h1").innerHTML = configVar.charAt(0).toUpperCase() + configVar.slice(1) + " Leaderboard";
+        document.querySelector(".right .leaderboard div:nth-child(1)").classList.add("singleTable");
+        document.querySelector(".right .leaderboard div:nth-child(2)").remove();
+        fetch('/api/users/' + configVar + 'Leaderboard')
+            .then(response => response.json())
+            .then(data => {
+                loadLeaderboard(data, 1, configVar);
+                showElements();
+            });
+    }
+
+    function loadLeaderboard(data, side = 1, type = "") {
+        let table = document.querySelector(".right .leaderboard div:nth-child(" + side + ") table tbody");
+        for(let i in data) {
+            if(type === "correctness") score = data[i].correctness_score;
+            else if(type === "speed") score = data[i].speed_score;
+
+            let rank = parseInt(i) + 1;
+            table.insertAdjacentHTML("beforeend", "<tr>\
+            <td>" + rank + "</td>\
+            <td><img src=\"" + data[i].avatar + "\" alt=\"" + data[i].username + "'s avatar\" />" + data[i].username + "</td>\
+            <td>" + score + "</td>\
+            </tr>");
+        }
+    }
 }
 
 /*
@@ -484,6 +511,10 @@ if(window.location.pathname.includes("profile")) {
             document.querySelector(".right .profileData .stats div:nth-child(2) span").innerHTML = data.css_level;
             document.querySelector(".right .profileData .stats div:nth-child(3) span").innerHTML = data.speed_score;
             document.querySelector(".right .profileData .stats div:nth-child(4) span").innerHTML = data.correctness_score;
+
+            if(document.querySelector(".right .profileData #accessToken"))
+                document.querySelector(".right .profileData #accessToken").innerHTML = "Access Token: " + data.accessToken;
+
             showElements();
         });
 }
