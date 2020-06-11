@@ -2,3 +2,7 @@
 * {
     font-family: "Trebuchet-MS", sans-serif;
 }
+
+img {
+    max-width: 100%;
+}

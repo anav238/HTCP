@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>HTCP - Scholarly HTML</title>
+    <title>HTCP - Ghidul utilizatorului</title>
     <link rel="stylesheet" href="css/scholarly.min.css">
     <script src="js/scholarly.min.js"></script>
   </head>
   <body prefix="schema: http://schema.org">
     <header>
-      <h1>HTCP - documentație Scholarly HTML</h1>
+      <h1>HTCP - ghidul utilizatorului</h1>
     </header>
     <div role="contentinfo">
       <dl>
@@ -22,7 +22,6 @@
         <dd>
           Alexandru-Adrian Toderică
           -
-          <a href="http://alextoderica.ro/">Website</a>,
           <a href="https://github.com/toderica">Github</a>
         </dd>
         <dt>Bugs &amp; Feedback</dt>
@@ -35,286 +34,186 @@
         </dd>
       </dl>
     </div>
-    <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
-      <h2>Cerință</h2>
-      <p>
-        Să se creeze o platformă Web ce ajută cu exersarea cunoștințelor de HTML și CSS. După autentificarea cu o rețea socială 
-        la alegere (GitHub, Facebook, Twitter, etc), aplicația va pune la dispoziția utilizatorilor, printr-o interfață atractivă, 
-        nivele cu diverse provocări, unde aceștia vor trebui să scrie cod pentru a trece mai departe.
-      </p>
-      <p>
-        Aplicația va salva progresul fiecărui utilizator, acesta putând continua de unde a rămas, mai târziu. În plus, 
-        aceasta va oferi statistici, referitoare la clasamentele globale cât și pentru fiecare utilizator în parte. 
-        De asemenea, platforma va expune și un API REST/GraphQL prin care alte aplicații vor putea prelua în format 
-        JSON sau XML atât provocarile, cât și răspunsurile corecte.
-      </p>
-    </section>
-    <section id="introduction" role="doc-introduction">
-      <h2>Introducere</h2>
-      <p>
-        Pentru ca interfața să fie cât mai atractivă și aplicația cât mai interesantă, am ales ca tema acesteia să fie Mario,
-        iar fiecare tip de nivel (HTML sau CSS) să se contureze ca o poveste a unui protagonist: Luigi care își dorește să își 
-        schimbe cariera și să devină Web Developer și Mario, care pornește într-o aventură spre castelul Prințesei Peach, 
-        întâlnind o serie de obstacole pe care jucătorii vor trebui să le depășească cu ajutorul unor proprietăți CSS. Nivelele 
-        sunt originale, destinate începătorilor, iar pentru a le veni în ajutor majoritatea nivelelor oferă un link către documentația
-        MDN relevantă. 
-      </p>
-    </section>
-    <section id="architecture">
-      <h2>Arhitectura aplicației</h2>
-      <p>
-        Din punct de vedere arhitectural, am recurs la MVC adaptat la utilizarea unui API. Astfel, o parte din conținutul din View este 
-        adăugat dinamic din JavaScript, care folosește Ajax pentru a cere datele necesare de la API. Modelele oferă o serie de 
-        funcții pentru acces direct la baza de date, fiind folosite de către funcțiile din API pentru executarea operațiilor cerute.
-        Controllerele sunt folosite conform modelului MVC tradițional, pentru randarea view-urilor.
-      </p>
-      <section id="routing">
-        <h3>Rutarea</h3>
+    <section id="connecting">
+      <h2>Conectarea</h2>
+      <figure typeof="sa:image">
+        <img src="img/sign-in.png">
+        <figcaption>Pagina de conectare</figcaption>
+      </figure>
+      <section id="user-connection">
+        <h3>Conectarea pentru utilizatori obișnuiți</h3>
         <p>
-          Rutarea este implementată în app/core/App.php, unde este parsat URL-ul și pe baza lui este stabilit controllerul, metoda 
-          din controller care se va apela și argumentele cu care se va apela această metodă. În cazul în care controllerul stabilit 
-          din URL nu există, utilizatorul va fi redirecționat către pagina 404.
+          Pentru a accesa exercițiile, mai întâi este necesar să vă conectați apăsând pe Sign in with Github. Dacă este prima 
+          oară când accesați aplicația, în continuare veți fi trimis pe o pagină de Github unde vă este cerută permisiunea pentru 
+          utilizarea datelor voastre publice: 
         </p>
-        <p>
-          În App.php se verifică și dacă utilizatorul este conectat. Dacă acesta nu este conectat și încearcă să acceseze o pagină 
-          ce necesită acest lucru, controllerul va deveni login, iar metoda va deveni index, realizându-se astfel o redirecționare 
-          către pagina de login.
-        </p>
-      </section>
-    </section>
-    <section id="configuration">
-      <h2>Configurarea aplicației</h2>
-      <p>
-        Pentru configurarea aplicației, folosim o serie de variabile de mediu ce conțin datele confidențiale despre aplicație, 
-        cum ar fi credențialele pentru baza de date și client secret-ul de la Github. De asemenea, folosim variabile de mediu și
-        pentru stocarea căilor către resurse: imagini, CSS și JavaScript, astfel încât dacă intervin modificări asupra acestora să 
-        modificăm adresele într-un singur loc.
-      </p>
-      <p>
-        Pentru lucrul local, variabilele de mediu sunt setate în fișierul app/config.php, care este adăugat în .gitignore și 
-        nu este încărcat pe Github, protejând astfel confidențialitatea informațiilor. În mediul de deploy, aceste variabile 
-        de mediu sunt setate din setările proiectului pe Heroku. 
-      </p>
-    </section>
-    <section id="social-media-connection">
-      <h2>Conectare cu rețelele sociale</h2>
-      <p>
-        Pentru conectarea pe site, este necesar un cont de Github, iar utilizatorul trebuie să își dea permisiunea ca aplicația să îi 
-        folosească datele publice din acest cont (username-ul și avatarul). La click pe butonul Sign in with Github de pe pagina de login, 
-        acesta va fi redirecționat către pagina de Github unde își poate oferi permisiunea. Dacă refuză, va fi redirecționat din nou 
-        spre pagina de login. Dacă acceptă, va fi redirecționat către /githubconnect, controllerul unde se găsește logica pentru 
-        obținerea datelor despre utilizator folosind codul transmis de către Github ca query parameter. Odată obținut acest cod,
-        am folosit curl pentru a face un POST la https://github.com/login/oauth/access_token cu datele necesare și am primit înapoi
-        un access token, pe care l-am folosit apoi pentru a face un GET la https://api.github.com/user, unde sunt returnate 
-        datele publice ale utilizatorului. Cu ajutorul modelului User, se verifică în baza de date dacă username-ul există deja, 
-        iar în caz contrar se creează o intrare nouă pentru acesta. După aceea, este setat în $_SESSION access token-ul corespunzător,
-        iar utilizatorule este redirecționat către exerciții. De menționat că acest proces este executat instant, iar utilizatorul 
-        nu observă pagina intermediară. Permisiunea este cerută doar prima oară când utilizatorul încearcă să se înregistreze.
-      </p>
-      <p>Codul pentru înregistrarea unui utilizator este: </p>
-      <pre>
-        <code>
-public static function registerUser($username, $avatar) {
-  $connection = $GLOBALS['DB_CON'];
-
-  if ($GLOBALS["userAvatars"] == "api") 
-      $avatar = "https://api.adorable.io/avatars/285/" . $username . ".png";
-
-  $data = array("Username" => $username, "Avatar" => $avatar, "Access Token" => uniqid());
-  $res = pg_insert($connection, 'Users', $data);
-  if ($res)
-      return $data['Access Token'];
-  return null;
-}
-        </code>
-      </pre>
-      <p>
-        Conectarea cu Github a fost făcută conform <a href="https://developer.github.com/v3/guides/basics-of-authentication/">documentației oficiale</a>.
-      </p>
-    </section>
-    <section id="database">
-      <h2>Baza de date</h2>
-      <p>
-        Pentru stocarea de date am folosit o bază de date PostgreSQL găzduită pe Heroku, același mediu în care am făcut
-        deploy. Acest lucru a simplificat mult și lucrul local la proiect, nefiind nevoie ca ambii membrii ai echipei să
-        introducă manual datele. În continuare vom prezenta structura tabelelor din această bază de date.
-      </p>
-      <section id="users-table">
-        <h3>Tabelul Users</h3>
         <figure typeof="sa:image">
-          <img src="img/users-table-structure.png">
-          <figcaption>Fig.1 - Structura tabelului Users</figcaption>
+          <img src="img/github-permissions.png">
+          <figcaption>Cerere permisiuni</figcaption>
         </figure>
         <p>
-          Acest tabel conține datele despre utilizatorii aplicației. La click pe butonul Sign in with Github de pe pagina 
-          de login, dacă utilizatorul își dă permisiunea sunt preluate informațiile sale publice: username-ul și avatarul.
-          Dacă username-ul respectiv nu a fost introdus deja în tabelul Users, va fi creat un utilizator nou. Câmpurile html_level
-          și css_level vor fi inițializate cu valoarea 1, speed_score și correctness_score cu 0, iar Access Token va fi generat
-          automat cu ajutorul funcției PHP uniqid().
+          Pentru a continua, va trebui să apăsați pe butonul verde cu textul Authorize anav238. După ce faceți click pe acest buton, 
+          veți fi redirecționat către pagina de exerciții HTML.
         </p>
       </section>
-      <section id="exercises-table">
-        <h3>Tabelul Exercises</h3>
+      <section id="app-connection">
+        <h3>Conectarea pentru aplicații</h3>
+        <p>
+          Pentru a accesa exercițiile ca aplicație externă, va trebui să dați click pe link-ul Are you a developer? de sub butonul 
+          cu textul Sign in with Github. Dacă acesta nu apare, înseamnă că accesul aplicațiilor externe la API a fost dezactivat 
+          de către un administrator. Dacă apare și dați click pe link, se va deschide următorul popup: 
+        </p>
         <figure typeof="sa:image">
-          <img src="img/exercises-table-structure.png">
-          <figcaption>Fig.1 - Structura tabelului Exercises</figcaption>
+          <img src="img/app-token-popup.png">
+          <figcaption>Cerere permisiuni</figcaption>
         </figure>
         <p>
-          Acest tabel conține date despre exercițiile aplicației. Câmpul ExtraHTML este folosit la exercițiile de CSS, pentru 
-          ca utilizatorul să se poată concentra doar pe CSS-ul exercițiului, fără a fi necesar ca acesta să vizualizeze și HTML-ul 
-          corespunzător. Câmpul Attempts reține statistici globale despre fiecare exercițiu în parte, fiind incrementat de fiecare 
-          dată când un utilizator dă submit la un exercițiu.
+          Pentru a obține tokenul va trebui să completați datele cerute și apoi să apăsați pe butonul Get Token. În caz că îl 
+          pierdeți, puteți accesa oricând pagina și să introduceți aceeași adresă de email pentru a obține același token. Pentru 
+          a vedea documentația Swagger a API-ului, dați click pe link-ul Go to API documentation. Pentru a închide popup-ul, 
+          dați click pe butonul Close.
         </p>
-      </section>
-      <section id="exercise-attempts-table">
-        <h3>Tabelul ExerciseAttempts</h3>
-        <figure typeof="sa:image">
-          <img src="img/exercise-attempts-table-structure.png">
-          <figcaption>Fig.1 - Structura tabelului ExerciseAttempts</figcaption>
-        </figure>
         <p>
-          Acest tabel conține date despre încercările fiecărui utilizator de a rezolva fiecare exercițiu. 
-          Este inserată o intrare nouă atunci când utilizatorul deblochează un exercițiu. Când un utilizator dă submit la 
-          un exercițiu (este apelată metoda POST pe /api/exercises), este incrementat câmpul Attempts al intrării corespunzătoare.
-          Faptul că ExerciseID și UserToken formează cheia primară a tabelului asigură unicitatea combinației.
-        </p>
-      </section>
-      <section id="applications-table">
-        <h3>Tabelul Applications</h3>
-        <figure typeof="sa:image">
-          <img src="img/applications-table-structure.png">
-          <figcaption>Fig.1 - Structura tabelului Applications</figcaption>
-        </figure>
-        <p>
-          Acest tabel conține toate aplicațiile externe înregistrate, acestea având acces prin API la toate informațiile despre 
-          exerciții, inclusiv soluții.
-        </p>
-      </section>
-      <section id="security">
-        <h3>Securitate</h3>
-        <p>
-          Pentru a preveni SQL Injections, toate operațiile pe baza de date folosesc Prepared Statements.
+          În continuare veți putea folosi aplicația cu Postman sau alt program asemanator, adăugând token-ul primit în header, 
+          câmpul Authorization, ca Bearer Token.
         </p>
       </section>
     </section>
-    <section id="rest-api">
-      <h3>REST API</h3>
+    <section id="main-menu">
+      <h2>Meniul principal</h2>
       <p>
-        Aplicația se folosește de un API REST, ce oferă avantajul unei experiențe mai bune pentru utilizator, nefiind necesar 
-        refresh-ul paginii la trecerea de la un nivel la altul. De asemenea, aplicația poate fi utilizată direct din Postman
-        sau alte programe asemănătoare, utilizatorul având acces din pagina sa de profil la un access token care se adaugă 
-        în header-ul unui request, la Authorization, ca Bearer token. 
+        După autentificare, veți fi redirecționați către exerciții. În partea de sus a paginii se regășește denumirea site-ului, 
+        cât și câte un buton ce reprezintă o legătură pentru fiecare din cele patru pagini. Butonul corespunzător paginii curente 
+        va fi evidențiat cu un fundal alb. 
       </p>
+      <figure typeof="sa:image">
+        <img src="img/header.png">
+        <figcaption>Meniul principal pe ecrane mari</figcaption>
+      </figure>
       <p>
-        Pentru utilizarea aplicației de către aplicații externe, acestea trebuie să se înregistreze pe pagina de login, cu 
-        click pe link-ul Are you a developer?. Acestea vor primi un access token pe care îl pot folosi pentru preluarea 
-        datelor despre exerciții. Spre deosebire de utilizatorii obișnuiți, aplicațiile au dreptul să utilizeze doar ruta 
-        /exercises, dar pot obține prin aceasta și soluțiile exercițiilor, la care ceilalți utilizatori nu au acces.
+        Pe ecranele mici, aceste butoane sunt afișate în meniul de tip hamburger, la click pe butonul negru.
       </p>
+      <figure typeof="sa:image">
+        <img src="img/hamburger.png">
+        <figcaption>Meniul principal pe ecrane mici</figcaption>
+      </figure>
       <p>
-        Pentru a diferenția aceste 2 tipuri de utilizatori, am generat diferit access tokenii, pentru aplicații fiind creat 
-        cu funcția random_bytes și având o lungime mai mare, iar pentru utilizatori obișnuiți fiind generat cu funcția PHP
-        uniqid().
+        Butoanele din meniul principal funcționează astfel: 
       </p>
-      <p>
-        Pentru a vedea documentația în Swagger a aplicației, click <a href="https://app.swaggerhub.com/apis/htc53/HTCP/1.0.0">aici</a>.
-      </p>
-      <section id="rest-api-detalii-implementare">
-        <h4>Detalii de implementare</h4>
-        <p>
-          Orice accesare a rutei /api este gestionată în app/rest/rest-service.php, care se folosește de o serie de configurări 
-          pentru rutele /api/exercises, /api/users și /api/applications, identifică configurarea care se potrivește cu URL-ul (dacă
-          nu o găsește, utilizatorul va fi redirecționat către o pagină cu eroarea 404) și apelează metoda care îi corespunde, dacă sunt
-          îndeplinite o serie de condiții. Aceste condiții sunt verificate prin middlewares, implementați cu ajutorul metodei:
-        </p>
-        <pre>
-          <code>
-function checkMiddlewares($routeConfig, $params, $query, $payload) {
-if (isset($routeConfig['middlewares'])) {
-    foreach($routeConfig['middlewares'] as $middlewareName) {
-        $didPass = call_user_func($middlewareName, [
-            "params" => $params,
-            "query" => $query,
-            "payload" => $payload
-        ]);
-        if (!$didPass)
-            exit();
-    }
-}
-          </code>
-        </pre>
-        <p>
-          Un exemplu de configurări pentru rute (extras din app/rest/exercise-routes.php):
-        </p>
-          <pre>
-            <code>
-$exerciseRoutes = [
-    [
-        "method" => "GET",
-        "route" => "exercises",
-        "middlewares" => ["HasAccessToken", "IsApplicationOrUser", "HasReachedLevel"],
-        "query" => ["type", "level"],
-        "handler" => "getExercises"
-    ],
-    [
-        "method" => "GET",
-        "route" => "exercises/:type/current",
-        "middlewares" => ["HasAccessToken", "IsUser"],
-        "handler" => "getCurrentExerciseOfType"
-    ],
-    [
-        "method" => "POST",
-        "route" => "exercises",
-        "middlewares" => ["HasAccessToken", "IsUser", "HasReachedLevel"],
-        "query" => ["id"],
-        "handler" => "submitExercise"
-    ]
-];
-            </code>
-          </pre>
-        </p>
-      </section>
+      <ul>
+        <li>
+          HTML WORLD - duce pe pagina cu exerciții HTML, unde se va deschide automat exercițiul la care ați rămas (dacă 
+          e prima oară când folosiți site-ul, se va deschide exercițiul 1); putem observa că este pagina activă, având culoarea 
+          de fundal alb.
+        </li>
+        <li>
+          CSS WORLD - duce pe pagina cu exerciții CSS, unde se va deschide automat exercițiul la care ați rămas (dacă 
+          e prima oară când folosiți site-ul, se va deschide exercițiul 1).
+        </li>
+        <li>
+          LEADERBOARD - duce pe pagina ce conține topul celor mai buni jucători. Aici poți afla cine au fost cei mai rapizi 
+          jucători sau cine a trimis soluțiile cele mai corecte, și poți vedea și unde te clasezi în acest top.
+        </li>
+        <li>
+          PROFILE - aici poți vedea statistici personale, nivelul HTML, respectiv nivelul CSS la care ești, scorurile pe 
+          care le-ai obținut la corectitudine și viteză și, dacă opțiunea a fost activată de către administratori, un Access 
+          Token care poate fi folosit pentru a juca din Postman sau alte programe asemănătoare, în loc de jucarea standard 
+          pe site cu interfață grafică.
+        </li>
+      </ul>
     </section>
-    <section id="modul-administrare">
-      <h3>Modulul de administrare a aplicației</h3>
+    <section id="disconnecting">
+      <h2>Deconectarea</h2>
       <p>
-        Pentru administrarea aplicației se folosește un fișier de config, numit admin.php. Variabilele de configurare disponibile
-        sunt: 
+        Pentru a vă deconecta de pe site, accesați pagina Profile din meniul principal și dați click pe butonul cu textul 
+        Sign out.
+      </p>
+      <figure typeof="sa:image">
+        <img src="img/profile.png">
+        <figcaption>Pagina de profil cu butonul Logout.</figcaption>
+      </figure>
+    </section>
+    <section id="practicing">
+      <h2>Rezolvarea exercițiilor</h2>
+      <p>
+        Rezolvarea exercițiilor se face pe paginile HTML WORLD și CSS WORLD. Pe ecrane mari, acestea au următoarea structură:
+      </p>
+      <figure typeof="sa:image">
+        <img src="img/exercise-page-structure.png">
+        <figcaption>Structura unei pagini de exerciții</figcaption>
+      </figure>
+      <p>
+        Pe ecrane mici, structura va fi aceeași, dar lista de nivele va putea fi accesată doar prin click pe butonul negru din 
+        meniul principal, iar chenarele vor fi așezate unul sub celălalt. În continuare vom explica cum funcționează elementele pe 
+        ecranele mari.
+      </p>
+      <p>
+        În partea din stânga a paginii se găsește un meniu ce conține titlul (HTML CHALLENGES sau CSS CHALLENGES, după caz), urmat 
+        de un număr de butoane egal cu numărul de nivele deblocate. Dacă este prima oară când jucați, singurul buton care va apărea 
+        va fi cel pentru primul nivel. 
+      </p>
+      <p>
+        În partea din dreapta a paginii, pe centru se găsește descrierea exercițiului, care vă introduce în povestea jocului și 
+        oferă indicații prețioase pentru rezolvarea exercițiului, inclusiv (pentru majoritatea nivelelor) documentație utilă de 
+        pe Mozilla Developer Network, pe care o puteți găsi apăsând pe link-urile de sub textul Useful documentation. Înainte de a începe un exercițiu, citiți cu 
+        atenție această secțiune. Dacă documentația nu este oferită, se precizează în descriere că trebuie să o căutați. Sursa 
+        pe care o recomandăm este tot Mozilla Developer Network.
+      </p>
+      <p>
+        Dedesubtul descrierii, pagina este împărțită în 2 chenare. Chenarul din stânga cuprinde codul problemei, ce conține unul sau 
+        mai multe spații pe care trebuie să le completați, numărul de încercări pe care le-au făcut toți utilizatorii la acel exercițiu 
+        (dacă această opțiune este activată de către administratori) și un buton de submit. Chenarul din dreapta cuprinde rezultatul 
+        codului vostru, care se va actualiza automat pe măsură ce introduceți răspunsuri în casetele text. Scopul jocului este ca conținutul chenarului din 
+        stânga să arate așa cum este cerut în descrierea exercițiului. Pentru navigare rapidă între casetele text ale exercițiului, 
+        vă puteți folosi de săgețile de la tastatură: săgeată stânga și săgeată sus conduc la inputul anterior, iar săgeată dreapta și 
+        săgeată jos conduc la inputul următor. Un indiciu prețios legat de rezolvare este dimensiunea inputului, care este egală 
+        cu dimensiunea textului corespunzător din soluție. După ce un input este completat până la lungimea maximă, focusul va fi mutat
+        pe următorul input.
+      </p>
+      <p>
+        Când considerați că ați rezolvat exercițiul, dați click pe butonul SUBMIT. Dacă rezolvarea este corectă, se va afișa următorul popup:
+      </p>
+      <figure typeof="sa:image">
+        <img src="img/popup-success-next-level.png">
+        <figcaption>Popup la trimiterea unei rezolvări corecte</figcaption>
+      </figure>
+      <p>
+        Pentru a fi redirecționați către nivelul următor, dați click pe butonul NEXT LEVEL sau apăsați tasta ENTER. Pentru a reveni 
+        la nivelul pe care tocmai l-ați terminat, dați click pe butonul CLOSE. Veți putea trece mai târziu la nivelul următor prin 
+        intermediul butonului ce va apărea în meniul de stânga. Puteți repeta oricând un nivel, dar scorul nu vi se va modifica 
+        decât prima oară când îl rezolvați.
+      </p>
+      <p>
+        Dacă ați rezolvat greșit exercițiul, vi se va afișa popup-ul următor: 
+      </p>
+      <figure typeof="sa:image">
+        <img src="img/popup-fail.png">
+        <figcaption>Popup la trimiterea unei rezolvări greșite</figcaption>
+      </figure>
+      <p>
+        Pentru a încerca din nou, dați click pe butonul CLOSE sau apăsați tasta ESCAPE. 
+      </p>
+      <section id="score">
+        <h3>Actualizarea scorului</h3>
+        <p>
+          Scorul dumneavoastră va fi actualizat de fiecare dată când rezolvați pentru prima oară un nivel. Acesta se calculează 
+          în felul următor: 
+        </p>
         <ul>
           <li>
-            exerciseStatistics(<strong>true</strong>/false) - când este setat cu valoarea true, în zona de cod dedicată exercițiilor va fi 
-            afișat și numărul total de încercări pentru acel exercițiu (același pentru toți utilizatorii)
-          </li>
+            Pentru corectitudine - vechiul scor de corectitudine(correctness_score de pe profil) + 
+            100 / numărul de încercări până la rezolvarea corectă a exercițiului
+          </li> 
           <li>
-            leaderboardType("speed", "correctness", <strong>"both"</strong>) - setează metrica care ar trebui să apară pe 
-            pe pagina leaderboard.
-          </li>
-          <li>
-            applicationLogin(<strong>true</strong>, false) - activează sau dezactivează posibilitatea aplicațiilor externe 
-            de a folosi site-ul.
-          </li>
-          <li>
-            userAvatars(<strong>"github"</strong>, api) - stabilește sursa avatarelor pentru utilizatorii noi. La selectarea 
-            opțiunii api, avatarele vor fi generate cu ajutorul <a href="http://avatars.adorable.io/">Adorable Avatars</a> pe 
-            baza username-ului de Github al utilizatorului.
-          </li>
-          <li>
-            userAccessTokens(<strong>true</strong>, false) - activează sau dezactivează afișarea access token-ului utilizatorului 
-            pe pagina sa de profil.
+            Pentru viteză - vechiul scor de viteză (speed_score de pe profil) + 100 / numărul de minute scurse 
+            de la deblocarea nivelului. Dacă rezolvați nivelul în mai puțin de 1 minut, la vechiul scor se vor aduna 
+            100 de puncte. 
           </li>
         </ul>
-      </p>
-    </section>
-    <section id="deployment-and-github">
-      <h3>Version control și deployment</h3>
-      <p>
-        Ca sistem de version control, am folosit Github.
-      </p>
-      <p>
-        Atât baza de date, cât și site-ul sunt găzduite pe Heroku. Site-ul poate fi accesat <a href="http://arcade.alextoderica.ro/">aici</a>
-        Ca metodă de deploy, am folosit deploy automat de pe branch-ul master de pe Github. Noi am lucrat pe alt branch (fie branch-ul local fie 
-        un branch separat), iar la adăugarea unui feature nou făceam pull request și merge pe master.
-      </p>
+        <p>
+          Pentru a vedea noul scor, intrați pe pagina Profile sau pe pagina Leaderboard, la intrarea corespunzătoare dumneavoastră.
+        </p>
+      </section>
     </section>
   </body>
 </html>
