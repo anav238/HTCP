@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>HTCP - Scholarly HTML</title>
+    <title>HTCP - Ghidul utilizatorului</title>
     <link rel="stylesheet" href="css/scholarly.min.css">
     <script src="js/scholarly.min.js"></script>
   </head>
@@ -22,7 +22,6 @@
         <dd>
           Alexandru-Adrian Toderică
           -
-          <a href="http://alextoderica.ro/">Website</a>,
           <a href="https://github.com/toderica">Github</a>
         </dd>
         <dt>Bugs &amp; Feedback</dt>
@@ -73,6 +72,146 @@
           pierdeți, puteți accesa oricând pagina și să introduceți aceeași adresă de email pentru a obține același token. Pentru 
           a vedea documentația Swagger a API-ului, dați click pe link-ul Go to API documentation. Pentru a închide popup-ul, 
           dați click pe butonul Close.
+        </p>
+        <p>
+          În continuare veți putea folosi aplicația cu Postman sau alt program asemanator, adăugând token-ul primit în header, 
+          câmpul Authorization, ca Bearer Token.
+        </p>
+      </section>
+    </section>
+    <section id="main-menu">
+      <h2>Meniul principal</h2>
+      <p>
+        După autentificare, veți fi redirecționați către exerciții. În partea de sus a paginii se regășește denumirea site-ului, 
+        cât și câte un buton ce reprezintă o legătură pentru fiecare din cele patru pagini. Butonul corespunzător paginii curente 
+        va fi evidențiat cu un fundal alb. 
+      </p>
+      <figure typeof="sa:image">
+        <img src="img/header.png">
+        <figcaption>Meniul principal pe ecrane mari</figcaption>
+      </figure>
+      <p>
+        Pe ecranele mici, aceste butoane sunt afișate în meniul de tip hamburger, la click pe butonul negru.
+      </p>
+      <figure typeof="sa:image">
+        <img src="img/hamburger.png">
+        <figcaption>Meniul principal pe ecrane mici</figcaption>
+      </figure>
+      <p>
+        Butoanele din meniul principal funcționează astfel: 
+      </p>
+      <ul>
+        <li>
+          HTML WORLD - duce pe pagina cu exerciții HTML, unde se va deschide automat exercițiul la care ați rămas (dacă 
+          e prima oară când folosiți site-ul, se va deschide exercițiul 1); putem observa că este pagina activă, având culoarea 
+          de fundal alb.
+        </li>
+        <li>
+          CSS WORLD - duce pe pagina cu exerciții CSS, unde se va deschide automat exercițiul la care ați rămas (dacă 
+          e prima oară când folosiți site-ul, se va deschide exercițiul 1).
+        </li>
+        <li>
+          LEADERBOARD - duce pe pagina ce conține topul celor mai buni jucători. Aici poți afla cine au fost cei mai rapizi 
+          jucători sau cine a trimis soluțiile cele mai corecte, și poți vedea și unde te clasezi în acest top.
+        </li>
+        <li>
+          PROFILE - aici poți vedea statistici personale, nivelul HTML, respectiv nivelul CSS la care ești, scorurile pe 
+          care le-ai obținut la corectitudine și viteză și, dacă opțiunea a fost activată de către administratori, un Access 
+          Token care poate fi folosit pentru a juca din Postman sau alte programe asemănătoare, în loc de jucarea standard 
+          pe site cu interfață grafică.
+        </li>
+      </ul>
+    </section>
+    <section id="disconnecting">
+      <h2>Deconectarea</h2>
+      <p>
+        Pentru a vă deconecta de pe site, accesați pagina Profile din meniul principal și dați click pe butonul cu textul 
+        Sign out.
+      </p>
+      <figure typeof="sa:image">
+        <img src="img/profile.png">
+        <figcaption>Pagina de profil cu butonul Logout.</figcaption>
+      </figure>
+    </section>
+    <section id="practicing">
+      <h2>Rezolvarea exercițiilor</h2>
+      <p>
+        Rezolvarea exercițiilor se face pe paginile HTML WORLD și CSS WORLD. Pe ecrane mari, acestea au următoarea structură:
+      </p>
+      <figure typeof="sa:image">
+        <img src="img/exercise-page-structure.png">
+        <figcaption>Structura unei pagini de exerciții</figcaption>
+      </figure>
+      <p>
+        Pe ecrane mici, structura va fi aceeași, dar lista de nivele va putea fi accesată doar prin click pe butonul negru din 
+        meniul principal, iar chenarele vor fi așezate unul sub celălalt. În continuare vom explica cum funcționează elementele pe 
+        ecranele mari.
+      </p>
+      <p>
+        În partea din stânga a paginii se găsește un meniu ce conține titlul (HTML CHALLENGES sau CSS CHALLENGES, după caz), urmat 
+        de un număr de butoane egal cu numărul de nivele deblocate. Dacă este prima oară când jucați, singurul buton care va apărea 
+        va fi cel pentru primul nivel. 
+      </p>
+      <p>
+        În partea din dreapta a paginii, pe centru se găsește descrierea exercițiului, care vă introduce în povestea jocului și 
+        oferă indicații prețioase pentru rezolvarea exercițiului, inclusiv (pentru majoritatea nivelelor) documentație utilă de 
+        pe Mozilla Developer Network, pe care o puteți găsi apăsând pe link-urile de sub textul Useful documentation. Înainte de a începe un exercițiu, citiți cu 
+        atenție această secțiune. Dacă documentația nu este oferită, se precizează în descriere că trebuie să o căutați. Sursa 
+        pe care o recomandăm este tot Mozilla Developer Network.
+      </p>
+      <p>
+        Dedesubtul descrierii, pagina este împărțită în 2 chenare. Chenarul din stânga cuprinde codul problemei, ce conține unul sau 
+        mai multe spații pe care trebuie să le completați, numărul de încercări pe care le-au făcut toți utilizatorii la acel exercițiu 
+        (dacă această opțiune este activată de către administratori) și un buton de submit. Chenarul din dreapta cuprinde rezultatul 
+        codului vostru, care se va actualiza automat pe măsură ce introduceți răspunsuri în casetele text. Scopul jocului este ca conținutul chenarului din 
+        stânga să arate așa cum este cerut în descrierea exercițiului. Pentru navigare rapidă între casetele text ale exercițiului, 
+        vă puteți folosi de săgețile de la tastatură: săgeată stânga și săgeată sus conduc la inputul anterior, iar săgeată dreapta și 
+        săgeată jos conduc la inputul următor. Un indiciu prețios legat de rezolvare este dimensiunea inputului, care este egală 
+        cu dimensiunea textului corespunzător din soluție. După ce un input este completat până la lungimea maximă, focusul va fi mutat
+        pe următorul input.
+      </p>
+      <p>
+        Când considerați că ați rezolvat exercițiul, dați click pe butonul SUBMIT. Dacă rezolvarea este corectă, se va afișa următorul popup:
+      </p>
+      <figure typeof="sa:image">
+        <img src="img/popup-success-next-level.png">
+        <figcaption>Popup la trimiterea unei rezolvări corecte</figcaption>
+      </figure>
+      <p>
+        Pentru a fi redirecționați către nivelul următor, dați click pe butonul NEXT LEVEL sau apăsați tasta ENTER. Pentru a reveni 
+        la nivelul pe care tocmai l-ați terminat, dați click pe butonul CLOSE. Veți putea trece mai târziu la nivelul următor prin 
+        intermediul butonului ce va apărea în meniul de stânga. Puteți repeta oricând un nivel, dar scorul nu vi se va modifica 
+        decât prima oară când îl rezolvați.
+      </p>
+      <p>
+        Dacă ați rezolvat greșit exercițiul, vi se va afișa popup-ul următor: 
+      </p>
+      <figure typeof="sa:image">
+        <img src="img/popup-fail.png">
+        <figcaption>Popup la trimiterea unei rezolvări greșite</figcaption>
+      </figure>
+      <p>
+        Pentru a încerca din nou, dați click pe butonul CLOSE sau apăsați tasta ESCAPE. 
+      </p>
+      <section id="score">
+        <h3>Actualizarea scorului</h3>
+        <p>
+          Scorul dumneavoastră va fi actualizat de fiecare dată când rezolvați pentru prima oară un nivel. Acesta se calculează 
+          în felul următor: 
+        </p>
+        <ul>
+          <li>
+            Pentru corectitudine - vechiul scor de corectitudine(correctness_score de pe profil) + 
+            100 / numărul de încercări până la rezolvarea corectă a exercițiului
+          </li> 
+          <li>
+            Pentru viteză - vechiul scor de viteză (speed_score de pe profil) + 100 / numărul de minute scurse 
+            de la deblocarea nivelului. Dacă rezolvați nivelul în mai puțin de 1 minut, la vechiul scor se vor aduna 
+            100 de puncte. 
+          </li>
+        </ul>
+        <p>
+          Pentru a vedea noul scor, intrați pe pagina Profile sau pe pagina Leaderboard, la intrarea corespunzătoare dumneavoastră.
         </p>
       </section>
     </section>
