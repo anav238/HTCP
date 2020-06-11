@@ -17,13 +17,12 @@
         <dd>
           Ana Vasiliu
           -
-          <a href="https://github.com/anav238">Github</a>
+          <a href="https://github.com/anav238">GitHub</a>
         </dd>
         <dd>
           Alexandru-Adrian Toderică
           -
-          <a href="http://alextoderica.ro/">Website</a>,
-          <a href="https://github.com/toderica">Github</a>
+          <a href="https://github.com/toderica">GitHub</a>
         </dd>
         <dt>Bugs &amp; Feedback</dt>
         <dd>
@@ -86,24 +85,24 @@
       <h2>Configurarea aplicației</h2>
       <p>
         Pentru configurarea aplicației, folosim o serie de variabile de mediu ce conțin datele confidențiale despre aplicație, 
-        cum ar fi credențialele pentru baza de date și client secret-ul de la Github. De asemenea, folosim variabile de mediu și
+        cum ar fi credențialele pentru baza de date și client secret-ul de la GitHub. De asemenea, folosim variabile de mediu și
         pentru stocarea căilor către resurse: imagini, CSS și JavaScript, astfel încât dacă intervin modificări asupra acestora să 
         modificăm adresele într-un singur loc.
       </p>
       <p>
         Pentru lucrul local, variabilele de mediu sunt setate în fișierul app/config.php, care este adăugat în .gitignore și 
-        nu este încărcat pe Github, protejând astfel confidențialitatea informațiilor. În mediul de deploy, aceste variabile 
+        nu este încărcat pe GitHub, protejând astfel confidențialitatea informațiilor. În mediul de deploy, aceste variabile 
         de mediu sunt setate din setările proiectului pe Heroku. 
       </p>
     </section>
     <section id="social-media-connection">
       <h2>Conectare cu rețelele sociale</h2>
       <p>
-        Pentru conectarea pe site, este necesar un cont de Github, iar utilizatorul trebuie să își dea permisiunea ca aplicația să îi 
-        folosească datele publice din acest cont (username-ul și avatarul). La click pe butonul Sign in with Github de pe pagina de login, 
-        acesta va fi redirecționat către pagina de Github unde își poate oferi permisiunea. Dacă refuză, va fi redirecționat din nou 
+        Pentru conectarea pe site, este necesar un cont de GitHub, iar utilizatorul trebuie să își dea permisiunea ca aplicația să îi 
+        folosească datele publice din acest cont (username-ul și avatarul). La click pe butonul Sign in with GitHub de pe pagina de login, 
+        acesta va fi redirecționat către pagina de GitHub unde își poate oferi permisiunea. Dacă refuză, va fi redirecționat din nou 
         spre pagina de login. Dacă acceptă, va fi redirecționat către /githubconnect, controllerul unde se găsește logica pentru 
-        obținerea datelor despre utilizator folosind codul transmis de către Github ca query parameter. Odată obținut acest cod,
+        obținerea datelor despre utilizator folosind codul transmis de către GitHub ca query parameter. Odată obținut acest cod,
         am folosit curl pentru a face un POST la https://github.com/login/oauth/access_token cu datele necesare și am primit înapoi
         un access token, pe care l-am folosit apoi pentru a face un GET la https://api.github.com/user, unde sunt returnate 
         datele publice ale utilizatorului. Cu ajutorul modelului User, se verifică în baza de date dacă username-ul există deja, 
@@ -129,7 +128,7 @@ public static function registerUser($username, $avatar) {
         </code>
       </pre>
       <p>
-        Conectarea cu Github a fost făcută conform <a href="https://developer.github.com/v3/guides/basics-of-authentication/">documentației oficiale</a>.
+        Conectarea cu GitHub a fost făcută conform <a href="https://developer.github.com/v3/guides/basics-of-authentication/">documentației oficiale</a>.
       </p>
     </section>
     <section id="database">
@@ -143,10 +142,10 @@ public static function registerUser($username, $avatar) {
         <h3>Tabelul Users</h3>
         <figure typeof="sa:image">
           <img src="img/users-table-structure.png">
-          <figcaption>Fig.1 - Structura tabelului Users</figcaption>
+          <figcaption>Fig. 1 - Structura tabelului Users</figcaption>
         </figure>
         <p>
-          Acest tabel conține datele despre utilizatorii aplicației. La click pe butonul Sign in with Github de pe pagina 
+          Acest tabel conține datele despre utilizatorii aplicației. La click pe butonul Sign in with GitHub de pe pagina 
           de login, dacă utilizatorul își dă permisiunea sunt preluate informațiile sale publice: username-ul și avatarul.
           Dacă username-ul respectiv nu a fost introdus deja în tabelul Users, va fi creat un utilizator nou. Câmpurile html_level
           și css_level vor fi inițializate cu valoarea 1, speed_score și correctness_score cu 0, iar Access Token va fi generat
@@ -157,7 +156,7 @@ public static function registerUser($username, $avatar) {
         <h3>Tabelul Exercises</h3>
         <figure typeof="sa:image">
           <img src="img/exercises-table-structure.png">
-          <figcaption>Fig.1 - Structura tabelului Exercises</figcaption>
+          <figcaption>Fig. 2 - Structura tabelului Exercises</figcaption>
         </figure>
         <p>
           Acest tabel conține date despre exercițiile aplicației. Câmpul ExtraHTML este folosit la exercițiile de CSS, pentru 
@@ -170,7 +169,7 @@ public static function registerUser($username, $avatar) {
         <h3>Tabelul ExerciseAttempts</h3>
         <figure typeof="sa:image">
           <img src="img/exercise-attempts-table-structure.png">
-          <figcaption>Fig.1 - Structura tabelului ExerciseAttempts</figcaption>
+          <figcaption>Fig. 3 - Structura tabelului ExerciseAttempts</figcaption>
         </figure>
         <p>
           Acest tabel conține date despre încercările fiecărui utilizator de a rezolva fiecare exercițiu. 
@@ -183,7 +182,7 @@ public static function registerUser($username, $avatar) {
         <h3>Tabelul Applications</h3>
         <figure typeof="sa:image">
           <img src="img/applications-table-structure.png">
-          <figcaption>Fig.1 - Structura tabelului Applications</figcaption>
+          <figcaption>Fig. 4 - Structura tabelului Applications</figcaption>
         </figure>
         <p>
           Acest tabel conține toate aplicațiile externe înregistrate, acestea având acces prin API la toate informațiile despre 
@@ -295,8 +294,8 @@ $exerciseRoutes = [
           </li>
           <li>
             userAvatars(<strong>"github"</strong>, api) - stabilește sursa avatarelor pentru utilizatorii noi. La selectarea 
-            opțiunii api, avatarele vor fi generate cu ajutorul <a href="http://avatars.adorable.io/">Adorable Avatars</a> pe 
-            baza username-ului de Github al utilizatorului.
+            opțiunii api, avatarele vor fi generate cu ajutorul <a href="http://avatars.adorable.io/" target="_blank" rel="noopener noreferrer">
+            Adorable Avatars</a> pe baza username-ului de GitHub al utilizatorului.
           </li>
           <li>
             userAccessTokens(<strong>true</strong>, false) - activează sau dezactivează afișarea access token-ului utilizatorului 
@@ -305,14 +304,419 @@ $exerciseRoutes = [
         </ul>
       </p>
     </section>
+    <section id="interfata-cu-utilizatorul">
+      <h3>Interfața cu utilizatorul</h3>
+      <p>
+        Așa cum am amintit și în <a href="#introduction">Introducere</a>, am dorit ca site-ul să fie cât mai atractiv, prietenos și interesant, așa că
+        am abordat o temă specifică jocurilor de tip <i>Super Mario Bros.</i>, cu Mario și Luigi protagoniști. La încărcarea site-ului, utilizatorului
+        îi va fi afișat pagina de autentificare, iar odată ce se autentifică folosind contul de GitHub, acesta va avea acces și la celelalte patru pagini.
+      </p>
+      <section id="interfata-pagina-login">
+        <h4>Pagina de autentificare</h4>
+        <figure typeof="sa:image">
+          <img src="img/pagina-autentificare.png">
+          <figcaption>Fig. 5 - Pagina de autentificare, vizibilă pe un telefon orientat landscape</figcaption>
+        </figure>
+        <p>
+          Aceasta este pagina de autentificare, unde utilizatorului îi este afișat denumirea aplicației, un motto, o descriere și un buton pentru autentificare.
+          Aspectul este foarte prietenos: în stânga și dreapta denumirii se vor afișa câte o imagine, una cu Mario și cealaltă cu Luigi. În cazul ecranelor înguste
+          orientate portrat (de exemplu, telefonul), aceștia vor fi afișati pe pământ, prezent în partea de jos a paginii. 
+        </p>
+        <p>
+          În cazul în care variabila de configurare "applicationLogin" are valoarea <i>true</i>, sub butonul de autentificare va fi afișat și un alt buton mai mic,
+          fără fundal, care la acționarea lui va deschide un formular în care utilizatorul poate face rost de un <i>Access Token</i> prin trimiterea adresei de email
+          și a numelui cu ajutorul formularului afișat, fără a fi nevoit să se autentifice cu contul de GitHub.
+        </p>
+        <figure typeof="sa:image">
+          <img src="img/application-login.png">
+          <figcaption>Fig. 6 - Access Token-ul primit după trimiterea formularului</figcaption>
+        </figure>
+        <p>
+          Codul pentru trimiterea formularului din pagina de autentificare:
+        </p>
+        <pre>
+          <code>
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let email = form.querySelector("#email").value;
+  let name = form.querySelector("#name").value;
+  popup.classList.add("popup-loading");
+  form.remove();
+  submitButton.remove();
+  popupContent.innerHTML = "Retrieving access token...";
+  fetch("/api/applications?email=" + email + "&name=" + name, {
+      method: "POST"
+  })
+  .then(response => response.json())
+  .then(data => {
+      popup.classList.remove("popup-loading");
+      popupContent.innerHTML = "Your access token is:&lt;div class=\"token\">" + data["Access Token"] + "&lt;/div>&lt;div class=\"form-data\">" + email + "&lt;br />" + name + "&lt;/div>&lt;a href=\"https://app.swaggerhub.com/apis/htc53/HTCP/1.0.0\" target=\"_blank\" rel=\"noopener noreferrer\">Go to API documentation.&lt;/a>";
+  });
+});
+          </code>
+        </pre>
+        <p>
+          Procesul de autentificare a utilizatorului folosind GitHub este detaliat <a href="#social-media-connection">aici</a>.
+        </p>
+      </section>
+      <section id="interfata-nivele">
+        <h4>Nivelele de HTML și CSS</h4>
+        <p>
+          După autentificarea utilizatorului, acestuia îi va fi afișat ultimul nivel de HTML deblocat, respectiv ultimul nivel de CSS deblocat,
+          dacă acesta a finalizat toate nivelele de HTML.
+        </p>
+        <figure typeof="sa:image">
+          <img src="img/header.png">
+          <figcaption>Fig. 7 - Antetul corpului paginii, afișat în fiecare pagină</figcaption>
+        </figure>
+        <p>
+          În partea de deasupra a paginilor de nivele HTML, cât și a paginilor <i>Leaderboard</i> și <i>Profile</i>, se regășește denumirea
+          site-ului, cât și câte un buton ce reprezintă o legătură pentru fiecare din cele patru pagini. Pe ecranele mici, aceste butoane
+          sunt afișate în meniul de tip <i>hamburger</i>.
+        </p>
+        <table>
+          <tr>
+            <td>
+              <figure typeof="sa:image">
+                <img src="img/html-levels.png">
+                <figcaption>Fig. 8 - Lista de nivele HTML, în partea din stânga a paginii</figcaption>
+              </figure>
+            </td>
+            <td>
+              <figure typeof="sa:image">
+                <img src="img/hamburger.png">
+                <figcaption>Fig. 9 - Meniul hamburger și lista de nivele CSS</figcaption>
+              </figure>
+            </td>
+          </tr>
+        </table>
+        <p>
+          La nivelele de HTML și CSS, în partea din stânga a paginii putem găsi până la zece butoane (în funcție de numărul de nivele
+          deblocate) ce au rolul de a încărca nivelul indicat de acesta. Pe ecranele mici, aceste butoane sunt afișate în meniul de tip <i>hamburger</i>.
+        </p>
+        <p>
+          La acționarea butoanelor menționate anterior, acestea vor încărca nivelul cerut fără a reîncărca pagina, apelând API-ul aplicației:
+        </p>
+        <pre>
+          <code>
+// Adding events when clicking a level link
+let a = document.querySelectorAll("nav h1 + ul a[href*=" + levelType + "]");
+for(let i = 0; i < a.length; i++) {
+    let levelNumber = a[i].getAttribute("href").substring(levelType.length + 2);
+    a[i].addEventListener("click", (e) => {
+        hideElements(); // Showing the loading spinner
+        fetch('/api/exercises?type=' + levelType + '&level=' + levelNumber)
+            .then(response => response.json())
+            .then(data => {
+                loadExercise(data, true, "pushState"); // Changing the level info with fetched data
+                showElements(); // Removing the loading spinner
+            });
+        e.preventDefault();
+    });
+}
+          </code>
+        </pre>
+        <p>
+          În partea dreapta a paginii avem nivelul propriu-zis. La prima încărcare a paginii, se va încărca fie ultimul deblocat de HTML (sau CSS dacă toate
+          nivelele de HTML sunt deblocate), ori nivelul cerut de adresa URI. Această zonă este împărțită în alte trei zone:
+          <ul>
+            <li>titlul, enunțul nivelului și (opțional) legături către documentație;</li>
+            <li>editorul de cod pentru nivelul încărcat, codul fiind HTML sau CSS ce conține căsuțe text cu rolul de a fi completate de utilizator;</li>
+            <li>zona cu rezultatul codului completat de utilizator, actualizat în timp real (la fiecare <i>"keyup"</i>).</li>
+          </ul>
+        </p>
+        <figure typeof="sa:image">
+          <img src="img/html-level.png" width="790">
+          <figcaption>Fig. 10 - Nivel HTML</figcaption>
+        </figure>
+        <figure typeof="sa:image">
+          <img src="img/css-level.png" width="790">
+          <figcaption>Fig. 11 - Nivel CSS</figcaption>
+        </figure>
+        <p>Funcția de actualizare a informațiilor din această zonă, folosită și în bucata de cod de mai sus:</p>
+        <pre>
+          <code>
+// Showing level info
+function loadExercise(exercise, changeActiveButton = false, state = "unset") {
+    // Changing global vars
+    levelId = exercise.id;
+    currentLevel = exercise.level;
+    totalAttempts = exercise.attempts;
+
+    // Changing the active button from level list
+    if(changeActiveButton)
+        document.querySelector("nav h1 + ul a.button-active").classList.remove("button-active");
+    document.querySelector("nav h1 + ul a[href*=" + levelType + "\\/" + exercise.level + "]").classList.add("button-active");
+
+    // Changing title and adding/replacing entry in user's history
+    let newPageTitle = levelType.toUpperCase() + " Level " + exercise.level + " - HTML & CSS Adventure";
+    if(state === "replaceState") {
+        window.history.replaceState({
+            type: levelType.toUpperCase(),
+            level: exercise.level
+        }, newPageTitle, "/" + levelType + "/" + exercise.level);
+        document.title = newPageTitle;
+    }
+    else if(state === "pushState") {
+        window.history.pushState({
+            type: levelType.toUpperCase(),
+            level: exercise.level
+        }, newPageTitle, "/" + levelType + "/" + exercise.level);
+        document.title = newPageTitle;
+    }
+
+    // In CSS levels we take the HTML code from the database
+    if(levelType === "css")
+        resultHTML = exercise.extraHTML;
+
+    // Now we're actually changing things
+    title.innerHTML = exercise.level;
+    instructions.innerHTML = exercise.description;
+    editor.innerHTML = exercise.problem;
+
+    updateAttempts(totalAttempts); // Updating "Attempts" if config var is true
+    prepareInputs(); // Adding listener to inputs to make keyboard shortcuts work
+    refreshResult(); // Refreshing the result area
+}
+          </code>
+        </pre>
+        <p>
+          Editorul de cod va conține la rândul său un cod HTML sau CSS, cu anumite părți din cod ce sunt transformate în căsuțe text,
+          cu rolul de a fi completate corespunzător de utilizator. Acestea reacționează și la diverse scurtături (tastele direcționale,
+          tasta "Tab") și, de asemenea, se schimbă focus-ul la input-ul următor când s-a completat un input în întregime. La fiecare
+          ridicătură de tastă (eveniment de tipul "keyup"), zonei cu vizualizarea rezultatului:
+          <ul>
+            <li>(în cazul nivelelor HTML) i se modifică conținutul cu codul din editor, completat de valoarea câmpurilor text;</li>
+            <li>(în cazul nivelelor CSS) i se modifică stilurile date de editorul din cod, completat de valoarea câmpurilor text.</li>
+          </ul>
+        </p>
+        <p>
+          Zona rezultatului codului din editor reprezintă un <i>iframe</i>, iar modalitățile descrise mai sus de actualizare a acestuia
+          sunt detaliate în această funcție:
+        </p>
+        <pre>
+          <code>
+// Refresh the result area
+// Refresh the result area
+function refreshResult() {
+    let content = editor.innerHTML;
+
+    if(levelType === "css") // resultHTML is the HTML code from the database, for CSS levels
+        content = "&lt;style>" + editor.innerHTML + "&lt;/style>" + resultHTML;
+        
+    // Replacing the whole inputs with just their values in the iframe
+    for (let i = 0; i &lt; editorInputs.length; i++)
+        content = content.replace(/&lt;input[^>]*>/, editorInputs[i].value);
+
+    // Replacing or editing line-breaks, escaped chars, anchors, forms, images and CSS links
+    content = content.replace(/&amp;lt;/g, "<")
+        .replace(/&amp;gt;/g, ">")
+        .replace(/&lt;a/g, "&lt;a target=\"_blank\" rel=\"noopener noreferrer\"")
+        .replace(/&lt;form/g, "&lt;form onsubmit=\"return false;\"")
+        .replace(/img src="/g, "img src=\"" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/")
+        .replace(/url\('/g, "url('" + window.location.protocol + "//" + window.location.host + "/public/assets/img/levels/");
+
+    result.open();
+    result.writeln(content);
+
+    // Linking our stylesheet for the CSS levels
+    if(levelType === "css") {
+        let extraCSS = result.createElement("link");
+        extraCSS.href = window.location.protocol + "//" + window.location.host + "/public/assets/css/levels.css";
+        extraCSS.rel = "stylesheet";
+        extraCSS.type = "text/css";
+        result.head.insertBefore(extraCSS, result.head.childNodes[0]);
+    }
+    result.close();
+}
+
+editor.addEventListener("keyup", refreshResult);
+          </code>
+        </pre>
+        <p>
+          În zona editorului de cod este prezent și numărul de încercări totale al exercițiului, dacă variabila de configurare
+          <i>exerciseStatistics</i> are valoarea <i>true</i>.
+        </p>
+        <figure typeof="sa:image">
+          <img src="img/popup-success.png">
+          <figcaption>
+            Fig. 12 - Pop-up ce conține o notificare că utilizatorul a finalizat toate nivelele HTML; se observă și butonul adițional
+          </figcaption>
+        </figure>
+        <p>
+          La acționarea butonului "Submit" sau la acționarea tastei Enter (când este o căsuță text activă) aplicația trimite cerere către API pentru
+          a verifica soluția propusă de utilizator. Dacă este oferită o soluție incorectă, va apărea un pop-up ce va notifica utilizatorul că soluția
+          este incorectă, având un singur buton cu rol de a închide popup-ul (acesta se închide și acționând tastele "Enter" sau "Escape"). La o
+          soluție corectă, există patru situații care pot apărea (în toate situațiile utilizatorul este notificat că a trimis soluția corectă):
+          <ul>
+            <li>
+              dacă utilizatorul rezolvă ultimul nivel deblocat și nu e ultimul nivel de acel tip, acesta va avea afișat un buton adițional cu rolul de a merge
+              la următorul nivel și va apărea un buton nou în lista de nivele, cu rolul de a accesa noul nivel deblocat;
+            </li>
+            <li>dacă utilizatorul rezolvă un nivel care nu este ultimul nivel deblocat de un anume tip, acestuia nu i se va afișa alt buton adițional;</li>
+            <li>dacă utilizatorul rezolvă ultimul nivel de HTML, acesta va avea afișat un buton adițional cu rolul de a merge la ultimul nivel deblocat de CSS;</li>
+            <li>dacă utilizatorul rezolvă ultimul nivel de CSS, acesta va fi notificat că a finalizat toate nivelele și nu i se va afișa alt buton adițional.</li>
+          </ul>
+        </p>
+        <p>
+          Codul incomplet al funcției de trimitere soluție:
+        </p>
+        <pre>
+          <code>
+function submitSolution() {
+  /*
+    * The code is much larger, we're skipping some parts
+    */
+  let answer = { solution: [] }; // Creating answer object...
+  for(let i = 0; i < editorInputs.length; i++) {
+      answer.solution.push(editorInputs[i].value); // ...with the values from the inputs
+  }
+  fetch('/api/exercises?id=' + levelId, {
+      method: "POST",
+      body: JSON.stringify(answer)
+  })
+  .then(response => response.json())
+  .then(data => {
+      if(data.reason === "Success!") {
+          if(currentLevel != highestLevel) {
+              // ...
+              popup("Hooray!", "The submitted solution is correct!");
+          }
+          else {
+              fetch('/api/exercises/' + levelType + '/current')
+                  .then(response => response.json())
+                  .then(data => {
+                      if(lastLevelNumber != data.level) {
+                          // ...
+                          // Adding a new button in level list + adding event to the added button (similar like a piece of code above)
+                          popup("Hooray!", "The submitted solution is correct!&lt;br />&lt;i>Next level is now unlocked.&lt;/i>", data);
+                      }
+                      else {
+                          // ...
+                          if(levelType === "html")
+                              popup("Hooray!", "The submitted solution is correct!&lt;br />&lt;i>You finished all the HTML levels.&lt;/i>", null, true);
+                          else
+                              popup("Hooray!", "The submitted solution is correct!&lt;br />&lt;i>You finished all the levels.&lt;/i>");
+                      }
+                  });
+          }
+      }
+      else if(data.reason === "Wrong solution!") {
+          // ...
+          popup("Oh no!", "The submitted solution is wrong!");
+      }
+  });
+}
+          </code>
+        </pre>
+      </section>
+      <section id="interfata-clasament">
+        <h4>Clasament</h4>
+        <p>
+          Odată ajunși la pagina <i>Leaderboard</i> putem observa că pagina nu mai este împărțită în două și că am renunțat la lista de nivele.
+          Acest lucru va fi întâmpinat și la pagina <i>Profile</i>. După valoarea variabilei de configurare <i>leaderboardType</i>, în pagină se va afișa
+          una din următoarele:
+          <ul>
+            <li>tabelul cu clasamentul bazat pe corectitudine, dacă valoarea variabilei este <i>"correctness"</i>;</li>
+            <li>tabelul cu clasamentul bazat pe viteza de rezolvare, dacă valoarea variabilei este <i>"speed"</i>;</li>
+            <li>ambele tabele de mai sus, dacă valoarea variabilei este <i>"both"</i>.</li>
+          </ul>
+        </p>
+        <figure typeof="sa:image">
+          <img src="img/leaderboards.png" width="790">
+          <figcaption>
+            Fig. 13 - Pagina "leaderboard", cu variabila de configurare "leaderboardType" = both
+          </figcaption>
+        </figure>
+        <p>
+          Pentru fiecare utilizator din clasament, se afișează locul, imaginea de profil, numele de utilizator și punctajul.
+        </p>
+        <p>
+          În cazul în care se afișează ambele clasamente, se va afișa cel bazat pe corectitudine în stânga și cel bazat pe viteza de rezolvare în dreapta.
+          Pe ecranele cu lățime mică, clasamentele se vor afișa una sub alta. Codul pentru situația când se afișează ambele clasamente:
+        </p>
+        <pre>
+          <code>
+Promise.all([
+  fetch('/api/users/correctnessLeaderboard'),
+  fetch('/api/users/speedLeaderboard')
+])
+.then(responses => Promise.all(responses.map(response => response.json())))
+.then(data => {
+  loadLeaderboard(data[0], 1, "correctness"); // Show first fetch response in first side
+  loadLeaderboard(data[1], 2, "speed");  // Show second fetch response in second side
+  showElements();
+});
+          </code>
+        </pre>
+      </section>
+      <section id="interfata-profil">
+        <h4>Pagina de profil</h4>
+        <figure typeof="sa:image">
+          <img src="img/profile.png">
+          <figcaption>
+            Fig. 14 - Pagina "Profile", cu variabila de configurare "userAccessTokens" = true
+          </figcaption>
+        </figure>
+        <p>Pagina de profil afișează diverse informații despre utilizator și anume:</p>
+        <ul>
+          <li>
+            imaginea de profil care, în funcție de valoarea variabilei de configurare <i>userAvatars</i>, este preluată fie de pe GitHub,
+            fie generate cu ajutorul API-ului de la <a href="http://avatars.adorable.io" target="_blank" rel="noopener noreferrer">Adorable
+            Avatars</a>, folosind numele de utilizator de pe GitHub, de exemplu: <code>https://api.adorable.io/avatars/285/toderica.png</code>
+          </li>
+          <li>numele de utilizator, identic cu cel de pe GitHub;</li>
+          <li>
+            în cazul în care variabila de configurare <i>userAccessTokens</i> are valoarea <i>true</i>, se afișează Access Token-ul sub numele
+            de utilizator;
+          </li>
+          <li>
+            un buton cu rolul de a deconecta utilizatorul de la aplicație, amplasat sub numele de utilizator sau Access Token, dacă acesta este
+            afișat;
+          </li>
+          <li>o grilă cu următoarele statistici:</li>
+          <ul>
+            <li>ultimul nivel de HTML deblocat;</li>
+            <li>ultimul nivel de CSS deblocat;</li>
+            <li>scorul pentru viteza de rezolvare;</li>
+            <li>scorul pentru corectitudinea rezolvărilor.</li>
+          </ul>
+        </ul>
+        <p>
+          Codul pentru afișarea informațiilor în pagină:
+        </p>
+        <pre>
+          <code>
+if(window.location.pathname.includes("profile")) {
+  fetch('/api/users/ping')
+      .then(response => response.json())
+      .then(data => {
+          document.title = data.username + " - HTML & CSS Adventure";
+          document.querySelector(".right .profileData img").src = data.avatar;
+          document.querySelector(".right .profileData h1").innerHTML = data.username;
+          document.querySelector(".right .profileData .stats div:nth-child(1) span").innerHTML = data.html_level;
+          document.querySelector(".right .profileData .stats div:nth-child(2) span").innerHTML = data.css_level;
+          document.querySelector(".right .profileData .stats div:nth-child(3) span").innerHTML = data.speed_score;
+          document.querySelector(".right .profileData .stats div:nth-child(4) span").innerHTML = data.correctness_score;
+
+          if(document.querySelector(".right .profileData #accessToken"))
+              document.querySelector(".right .profileData #accessToken").innerHTML = "Access Token: " + data.accessToken;
+
+          showElements(); // Removing loading spinner
+      });
+}
+          </code>
+        </pre>
+      </section>
+    </section>
     <section id="deployment-and-github">
       <h3>Version control și deployment</h3>
       <p>
-        Ca sistem de version control, am folosit Github.
+        Ca sistem de version control, am folosit GitHub.
       </p>
       <p>
         Atât baza de date, cât și site-ul sunt găzduite pe Heroku. Site-ul poate fi accesat <a href="http://arcade.alextoderica.ro/">aici</a>
-        Ca metodă de deploy, am folosit deploy automat de pe branch-ul master de pe Github. Noi am lucrat pe alt branch (fie branch-ul local fie 
+        Ca metodă de deploy, am folosit deploy automat de pe branch-ul master de pe GitHub. Noi am lucrat pe alt branch (fie branch-ul local fie 
         un branch separat), iar la adăugarea unui feature nou făceam pull request și merge pe master.
       </p>
     </section>
